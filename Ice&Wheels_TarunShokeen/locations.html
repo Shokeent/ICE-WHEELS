@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Skating Locations - Ice&Wheels</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <h1 class="logo">ICE&WHEELS</h1>
+    </header>
+    
+    <main class="locations-container">
+        <section class="filters-section">
+            <h2>Filters</h2>
+            <hr>
+            <p class="filter-description">Find family-friendly spots, advanced routes, and everything in between – tailored to your skating style.</p>
+            
+            <div class="filter-group">
+                <h3>Type</h3>
+                <div class="filter-options">
+                    <button class="filter-btn" data-filter="type" data-value="ice">Ice Skating</button>
+                    <button class="filter-btn active" data-filter="type" data-value="roller">Roller Skating</button>
+                </div>
+            </div>
+            
+            <div class="filter-group">
+                <h3>Location</h3>
+                <div class="filter-options">
+                    <button class="filter-btn" data-filter="location" data-value="downtown">Downtown</button>
+                    <button class="filter-btn active" data-filter="location" data-value="midtown">Midtown</button>
+                    <button class="filter-btn" data-filter="location" data-value="north-york">North York</button>
+                    <button class="filter-btn" data-filter="location" data-value="etobicoke">Etobicoke</button>
+                    <button class="filter-btn" data-filter="location" data-value="scarborough">Scarborough</button>
+                </div>
+            </div>
+            
+            <div class="filter-group">
+                <h3>Surface</h3>
+                <div class="filter-options">
+                    <button class="filter-btn" data-filter="surface" data-value="indoor">Indoor</button>
+                    <button class="filter-btn active" data-filter="surface" data-value="outdoor">Outdoor</button>
+                </div>
+            </div>
+            
+            <div class="filter-group">
+                <h3>Amenities</h3>
+                <div class="filter-options">
+                    <button class="filter-btn" data-filter="amenities" data-value="rentals">Skate Rentals</button>
+                    <button class="filter-btn active" data-filter="amenities" data-value="washrooms">Washrooms</button>
+                    <button class="filter-btn" data-filter="amenities" data-value="food">Food Stalls</button>
+                    <button class="filter-btn" data-filter="amenities" data-value="parking">Parking</button>
+                </div>
+            </div>
+            
+            <div class="filter-group">
+                <h3>Status</h3>
+                <div class="filter-options">
+                    <button class="filter-btn active" data-filter="status" data-value="open">Open</button>
+                    <button class="filter-btn" data-filter="status" data-value="closed">Closed</button>
+                    <button class="filter-btn" data-filter="status" data-value="maintenance">Maintenance</button>
+                </div>
+            </div>
+            
+            <button id="search-btn" class="search-button">SEARCH</button>
+        </section>
+        
+        <section class="results-section">
+            <div id="results-container"></div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Ice&Wheels - Your Guide to Skating in GTA</p>
+    </footer>
+
+    <script src="script/data.js"></script>
+    <script src="script/locations.js"></script>
+</body>
+</html>

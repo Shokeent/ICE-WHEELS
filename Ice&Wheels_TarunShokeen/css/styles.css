@@ -1,0 +1,430 @@
+/* base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Importing Inria Sans  */
+@import url('https://fonts.googleapis.com/css2?family=Inria+Sans:wght@300;400;700&display=swap');
+
+body {
+    font-family: 'Inria Sans', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #fff;
+    font-weight: 400;
+}
+
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 5%;
+    background-color: #fff;
+}
+
+.logo {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #5e4411;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+}
+
+nav ul li {
+    margin-left: 2rem;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 400;
+    transition: color 0.3s;
+}
+
+nav ul li a:hover, nav ul li a.active {
+    color: #5e4411;
+    font-weight: 700;
+}
+
+
+.hero {
+    display: flex;
+    padding: 2rem 5%;
+    min-height: 80vh;
+    align-items: center;
+}
+
+.hero-content {
+    flex: 1;
+    padding-right: 2rem;
+}
+
+.hero-content h2 {
+    font-size: 3rem;
+    color: #5e4411;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+    font-weight: 700;
+}
+
+.hero-content p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    font-weight: 400;
+}
+
+.cta-button {
+    display: inline-block;
+    background-color: #5e4411;
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 700;
+    transition: background-color 0.3s;
+}
+
+.cta-button:hover {
+    background-color: #7d5b17;
+}
+
+.hero-images {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.main-image {
+    height: 300px;
+    border-radius: 40px;
+    background-image: url('images/ice-skating.jpg');
+    background-size: cover;
+    background-position: center;
+    margin-bottom: 1rem;
+}
+
+.secondary-images {
+    display: flex;
+    gap: 1rem;
+    height: 200px;
+}
+
+.image-roller, .image-ice {
+    flex: 1;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+}
+
+.image-roller {
+    background-image: url('images/roller-skate.jpg');
+}
+
+.image-ice {
+    background-image: url('images/ice-skate-close.jpg');
+}
+
+footer {
+    text-align: center;
+    padding: 1rem;
+    background-color: #f4f4f4;
+    margin-top: 2rem;
+    font-weight: 400;
+}
+
+
+.locations-container {
+    display: flex;
+    padding: 2rem 5%;
+    gap: 2rem;
+}
+
+.filters-section {
+    flex: 1;
+    max-width: 350px;
+}
+
+.filters-section h2 {
+    color: #5e4411;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.filter-description {
+    margin: 1.5rem 0;
+    color: #555;
+    font-weight: 400;
+}
+
+.filter-group {
+    margin-bottom: 1.5rem;
+}
+
+.filter-group h3 {
+    color: #5e4411;
+    margin-bottom: 0.8rem;
+    font-weight: 700;
+}
+
+.filter-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.filter-btn {
+    background-color: white;
+    border: 1px solid #5e4411;
+    color: #5e4411;
+    padding: 0.5rem 1rem;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Inria Sans', sans-serif;
+    font-weight: 400;
+}
+
+.filter-btn.active {
+    background-color: #5e4411;
+    color: white;
+    font-weight: 700;
+}
+
+.filter-btn:hover {
+    background-color: #f0e8d8;
+}
+
+.search-button {
+    background-color: #5e4411;
+    color: white;
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 700;
+    margin-top: 1rem;
+    transition: background-color 0.3s;
+    font-family: 'Inria Sans', sans-serif;
+}
+
+.search-button:hover {
+    background-color: #7d5b17;
+}
+
+.results-section {
+    flex: 2;
+}
+
+
+.rink-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.rink-card-image {
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+}
+
+.rink-card-content {
+    padding: 1.5rem;
+}
+
+.rink-card h3 {
+    color: #5e4411;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+
+.rink-type {
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    background-color: #f0e8d8;
+    color: #5e4411;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    margin-bottom: 1rem;
+    font-weight: 400;
+}
+
+.rink-details {
+    margin-bottom: 1rem;
+}
+
+.rink-details p {
+    margin-bottom: 0.3rem;
+    font-weight: 400;
+}
+
+.status-indicator {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+.status-open {
+    background-color: green;
+}
+
+.status-closed {
+    background-color: red;
+}
+
+.status-maintenance {
+    background-color: orange;
+}
+
+.view-details-btn {
+    display: inline-block;
+    background-color: #5e4411;
+    color: white;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: 700;
+}
+
+/* Details Page Specific Styles */
+.details-container {
+    padding: 2rem 5%;
+}
+
+.breadcrumb {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    color: #5e4411;
+    font-weight: 400;
+}
+
+.breadcrumb a {
+    color: #5e4411;
+    text-decoration: none;
+    font-weight: 400;
+}
+
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+.separator {
+    border: none;
+    border-top: 1px solid #ddd;
+    margin: 1rem 0 2rem;
+}
+
+.rink-title {
+    color: #5e4411;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    font-weight: 700;
+}
+
+.rink-info-container {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.rink-image-container {
+    flex: 1;
+    max-width: 400px;
+}
+
+.rink-image-container img {
+    width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+.rink-info {
+    flex: 1;
+}
+
+.rink-info p {
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    font-weight: 400;
+}
+
+.rink-info strong {
+    color: #5e4411;
+    font-weight: 700;
+}
+
+.rink-description {
+    margin-bottom: 2rem;
+    line-height: 1.7;
+    font-size: 1.1rem;
+    font-weight: 400;
+}
+
+.pro-tips h2 {
+    color: #5e4411;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.pro-tips ul {
+    padding-left: 1.5rem;
+}
+
+.pro-tips li {
+    margin-bottom: 0.8rem;
+    line-height: 1.5;
+    font-weight: 400;
+}
+
+@media (max-width: 768px) {
+    .hero {
+        flex-direction: column;
+    }
+    
+    .hero-content {
+        padding-right: 0;
+        margin-bottom: 2rem;
+    }
+    
+    .hero-content h2 {
+        font-size: 2.2rem;
+    }
+    
+    .secondary-images {
+        height: 150px;
+    }
+
+    .locations-container {
+        flex-direction: column;
+    }
+    
+    .filters-section {
+        max-width: 100%;
+    }
+
+    .rink-info-container {
+        flex-direction: column;
+    }
+    
+    .rink-image-container {
+        max-width: 100%;
+    }
+    
+    .rink-title {
+        font-size: 2rem;
+    }
+    
+    .logo {
+        font-size: 1.5rem;
+    }
+}
