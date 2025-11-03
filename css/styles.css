@@ -1,0 +1,636 @@
+/* ==========================================================================
+   BASE STYLES
+   ========================================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Inria+Sans:wght@300;400;500;600;700&display=swap');
+
+body {
+    font-family: 'Inria Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    color: #333;
+    background: #ffffff;
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+/* ==========================================================================
+   HEADER & NAVIGATION
+   ========================================================================== */
+
+header {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 0.8rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.header-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.header-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #8B4513;
+    margin-bottom: 0.3rem;
+    letter-spacing: 1px;
+}
+
+.header-subtitle {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 1rem;
+    font-weight: 400;
+}
+
+.nav-menu {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: #8B4513;
+    font-weight: 500;
+    padding: 0.6rem 1.2rem;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    font-size: 0.95rem;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    background: #8B4513;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(139, 69, 19, 0.3);
+}
+
+/* ==========================================================================
+   HERO SECTION
+   ========================================================================== */
+
+.section-hero {
+    background: linear-gradient(135deg, #f8f6f0 0%, #ede8d8 100%);
+    padding: 2.5rem 1.5rem;
+    text-align: center;
+    margin: 1.5rem 0;
+    border-radius: 15px;
+}
+
+.hero-content h2 {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #8B4513;
+    margin-bottom: 1rem;
+}
+
+.hero-content p {
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 2rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ==========================================================================
+   BUTTONS
+   ========================================================================== */
+
+.button {
+    display: inline-block;
+    padding: 1rem 2rem;
+    text-decoration: none;
+    border-radius: 30px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.button-primary {
+    background: #8B4513;
+    color: white;
+}
+
+.button-primary:hover {
+    background: #A0522D;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(139, 69, 19, 0.4);
+}
+
+.button-secondary {
+    background: transparent;
+    color: #8B4513;
+    border: 2px solid #8B4513;
+}
+
+.button-secondary:hover {
+    background: #8B4513;
+    color: white;
+}
+
+/* ==========================================================================
+   SECTIONS
+   ========================================================================== */
+
+.section {
+    padding: 3rem 0;
+    margin: 2rem 0;
+}
+
+.section-content {
+    background: white;
+    border-radius: 15px;
+    padding: 2rem 1.5rem;
+    margin: 1.5rem 0;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+}
+
+.section h2 {
+    font-size: 2.5rem;
+    color: #8B4513;
+    text-align: center;
+    margin-bottom: 2rem;
+    font-weight: 600;
+}
+
+.section h3 {
+    font-size: 1.5rem;
+    color: #8B4513;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.section p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #555;
+    margin-bottom: 1.5rem;
+}
+
+/* ==========================================================================
+   ABOUT SECTION
+   ========================================================================== */
+
+.about-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.about-card {
+    background: #f8f6f0;
+    padding: 2rem;
+    border-radius: 15px;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.about-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.about-card h4 {
+    font-size: 1.5rem;
+    color: #8B4513;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.about-card p {
+    font-size: 1rem;
+    color: #666;
+}
+
+/* ==========================================================================
+   CONTACT SECTION
+   ========================================================================== */
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.contact-item {
+    background: #f8f6f0;
+    padding: 2rem;
+    border-radius: 15px;
+    text-align: center;
+}
+
+.contact-item h4 {
+    color: #8B4513;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.contact-item p {
+    color: #666;
+    font-size: 1rem;
+}
+
+/* ==========================================================================
+   FAQ SECTION
+   ========================================================================== */
+
+.faq-item {
+    background: white;
+    margin-bottom: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+
+.faq-question {
+    background: #f8f6f0;
+    border: none;
+    padding: 1.5rem;
+    width: 100%;
+    text-align: left;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #8B4513;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.faq-question:hover {
+    background: #ede8d8;
+}
+
+.faq-answer {
+    padding: 1.5rem;
+    display: none;
+    background: white;
+}
+
+.faq-item.active .faq-answer {
+    display: block;
+}
+
+.faq-answer p {
+    margin: 0;
+    color: #555;
+}
+
+/* ==========================================================================
+   LOCATIONS PAGE
+   ========================================================================== */
+
+.locations-container {
+    display: flex;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.filters-section {
+    flex: 0 0 300px;
+    background: white;
+    padding: 1.5rem;
+    border-radius: 15px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+    height: fit-content;
+    position: sticky;
+    top: 90px;
+}
+
+.filters-section h2 {
+    color: #8B4513;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+.filter-description {
+    color: #666;
+    margin-bottom: 2rem;
+    font-size: 0.9rem;
+}
+
+.filter-group {
+    margin-bottom: 1.5rem;
+}
+
+.filter-group h3 {
+    color: #8B4513;
+    font-size: 1.1rem;
+    margin-bottom: 0.8rem;
+    font-weight: 600;
+}
+
+.filter-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.filter-btn {
+    background: #f8f6f0;
+    border: 2px solid transparent;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: #8B4513;
+    transition: all 0.3s ease;
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+    background: #8B4513;
+    color: white;
+    border-color: #8B4513;
+}
+
+.results-section {
+    flex: 1;
+    background: white;
+    padding: 1.5rem;
+    border-radius: 15px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+}
+
+.rink-card {
+    background: #f8f6f0;
+    border-radius: 15px;
+    padding: 0;
+    margin-bottom: 1.5rem;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.rink-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.rink-card-image {
+    width: 100%;
+    height: 200px;
+    border-radius: 15px 15px 0 0;
+    overflow: hidden;
+}
+
+.rink-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 15px 15px 0 0;
+}
+
+.rink-card-content {
+    padding: 1.5rem;
+}
+
+.rink-card h3 {
+    color: #8B4513;
+    margin-bottom: 0.5rem;
+    font-size: 1.3rem;
+}
+
+.rink-type {
+    background: #8B4513;
+    color: white;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    display: inline-block;
+}
+
+.rink-details p {
+    color: #666;
+    font-size: 0.9rem;
+    margin: 0.3rem 0;
+}
+
+.status-indicator {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+.status-open {
+    background: #28a745;
+}
+
+.status-closed {
+    background: #dc3545;
+}
+
+.status-maintenance {
+    background: #ffc107;
+}
+
+.view-details-btn {
+    display: inline-block;
+    background: #8B4513;
+    color: white;
+    padding: 0.6rem 1.2rem;
+    text-decoration: none;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    margin-top: 1rem;
+    transition: background 0.3s ease;
+}
+
+.view-details-btn:hover {
+    background: #A0522D;
+}
+
+.no-results {
+    text-align: center;
+    padding: 3rem;
+    color: #666;
+}
+
+.no-results h3 {
+    color: #8B4513;
+    margin-bottom: 1rem;
+}
+
+/* ==========================================================================
+   DETAILS PAGE
+   ========================================================================== */
+
+.details-container {
+    max-width: 1000px;
+    margin: 2rem auto;
+    padding: 0 2rem;
+}
+
+.back-button-container {
+    margin-bottom: 2rem;
+}
+
+.rink-details {
+    background: white;
+    border-radius: 15px;
+    padding: 3rem;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+}
+
+.rink-title {
+    color: #8B4513;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.rink-info-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.rink-image-container img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.rink-info p {
+    margin: 0.8rem 0;
+    font-size: 1rem;
+}
+
+.rink-description {
+    margin: 2rem 0;
+}
+
+.pro-tips h2 {
+    color: #8B4513;
+    margin-bottom: 1rem;
+}
+
+.pro-tips ul {
+    list-style: none;
+    padding: 0;
+}
+
+.pro-tips li {
+    background: #f8f6f0;
+    padding: 0.8rem;
+    margin: 0.5rem 0;
+    border-radius: 8px;
+    border-left: 4px solid #8B4513;
+}
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+
+footer {
+    background: #f8f6f0;
+    text-align: center;
+    padding: 2rem;
+    margin-top: 3rem;
+    color: #666;
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN
+   ========================================================================== */
+
+@media (max-width: 768px) {
+    .container {
+        padding: 0 10px;
+    }
+    
+    .header-title {
+        font-size: 1.8rem;
+    }
+    
+    .nav-menu {
+        flex-direction: column;
+        gap: 0.4rem;
+    }
+    
+    .nav-link {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+    }
+    
+    .hero-content h2 {
+        font-size: 1.8rem;
+    }
+    
+    .section-hero {
+        padding: 1.5rem 1rem;
+    }
+    
+    .section-content {
+        padding: 1.5rem 1rem;
+    }
+    
+    .about-grid,
+    .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .locations-container {
+        flex-direction: column;
+    }
+    
+    .filters-section {
+        flex: none;
+        position: static;
+    }
+    
+    .rink-info-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .rink-details {
+        padding: 1.5rem 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .header-title {
+        font-size: 1.8rem;
+    }
+    
+    .hero-content h2 {
+        font-size: 1.8rem;
+    }
+    
+    .section h2 {
+        font-size: 2rem;
+    }
+}

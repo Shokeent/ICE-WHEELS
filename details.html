@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rink Details - Ice & Wheels</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inria+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <h1 class="header-title">Ice & Wheels</h1>
+                <p class="header-subtitle">Rink Details</p>
+                <nav class="nav-menu">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="locations.html" class="nav-link">Find Locations</a>
+                    <a href="about.html" class="nav-link">About</a>
+                    <a href="contact.html" class="nav-link">Contact</a>
+                    <a href="faq.html" class="nav-link">FAQ</a>
+                </nav>
+            </div>
+        </header>
+
+        <main>
+            <div class="details-container">
+                <div class="back-button-container">
+                    <a href="locations.html" class="button button-secondary">← Back to Locations</a>
+                </div>
+                
+                <div id="rink-details" class="rink-details">
+                    <h1 id="rink-name" class="rink-title"></h1>
+                    <div class="rink-info-container">
+                        <div class="rink-image-container">
+                            <img id="rink-image" src="" alt="Rink Image">
+                        </div>
+                        <div class="rink-info">
+                            <p><strong>Address:</strong> <span id="address"></span></p>
+                            <p><strong>Open:</strong> <span id="opening-hours"></span></p>
+                            <p><strong>Amenities:</strong> <span id="amenities"></span></p>
+                            <p><strong>Special Events:</strong> <span id="special-events"></span></p>
+                        </div>
+                    </div>
+                    <div class="rink-description">
+                        <p id="description"></p>
+                    </div>
+                    <div class="pro-tips">
+                        <h2>Pro Tips:</h2>
+                        <ul id="pro-tips-list"></ul>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2025 Ice & Wheels - Your Guide to Skating in GTA</p>
+        </footer>
+    </div>
+
+    <script src="script/data.js"></script>
+    <script src="script/details.js"></script>
+</body>
+</html>

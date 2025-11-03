@@ -1,4 +1,4 @@
-var activeFilters = {
+const activeFilters = {
     type: [],
     location: [],
     surface: [],
@@ -7,78 +7,73 @@ var activeFilters = {
 };
 
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('Locations page loaded');
-    
     // Initializing filter 
     initializeFilters();
-    document.getElementById('search-btn').addEventListener('click', function() {
-        applyFilters();
-    });
     
-    //initial results
-    displayResults(skatingLocations);
+    // Check if data exists and display
+    if (typeof skatingLocations !== 'undefined' && skatingLocations.length > 0) {
+        displayResults(skatingLocations);
+    } else {
+        const resultsContainer = document.getElementById('results-container');
+        if (resultsContainer) {
+            resultsContainer.innerHTML = '<div style="text-align: center; padding: 2rem; color: #666;"><h3>Loading locations...</h3><p>If this message persists, please refresh the page.</p></div>';
+        }
+    }
 });
 
 //filter buttons
 function initializeFilters() {
-    var filterButtons = document.querySelectorAll('.filter-btn');
-    
-    for (var i = 0; i < filterButtons.length; i++) {
-        var button = filterButtons[i];
-        
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    for (let i = 0; i < filterButtons.length; i++) {
+        const button = filterButtons[i];
         if (button.classList.contains('active')) {
-            var filterType = button.dataset.filter;
-            var filterValue = button.dataset.value;
+            const filterType = button.dataset.filter;
+            const filterValue = button.dataset.value;
             activeFilters[filterType].push(filterValue);
         }
-        
         button.addEventListener('click', function() {
-            var filterType = this.dataset.filter;
-            var filterValue = this.dataset.value;
-            
+            const filterType = this.dataset.filter;
+            const filterValue = this.dataset.value;
             //active class
             this.classList.toggle('active');
-            
             // active filters
             if (this.classList.contains('active')) {
                 if (activeFilters[filterType].indexOf(filterValue) === -1) {
                     activeFilters[filterType].push(filterValue);
                 }
             } else {
-                var index = activeFilters[filterType].indexOf(filterValue);
+                const index = activeFilters[filterType].indexOf(filterValue);
                 if (index > -1) {
                     activeFilters[filterType].splice(index, 1);
                 }
             }
+            // Instantly apply filters when a filter button is clicked
+            applyFilters();
         });
     }
 }
 
 // filters and updated results
 function applyFilters() {
-    var filteredLocations = skatingLocations.slice(); 
-    
+    let filteredLocations = skatingLocations.slice(); 
     // Filter by type
     if (activeFilters.type.length > 0) {
         filteredLocations = filteredLocations.filter(function(location) {
             return activeFilters.type.indexOf(location.type) > -1;
         });
     }
-    
     // Filter by location
     if (activeFilters.location.length > 0) {
         filteredLocations = filteredLocations.filter(function(location) {
             return activeFilters.location.indexOf(location.area) > -1;
         });
     }
-    
     // Filter by surface
     if (activeFilters.surface.length > 0) {
         filteredLocations = filteredLocations.filter(function(location) {
             return activeFilters.surface.indexOf(location.surface) > -1;
         });
     }
-    
     // Filter by amenities
     if (activeFilters.amenities.length > 0) {
         filteredLocations = filteredLocations.filter(function(location) {
@@ -87,24 +82,25 @@ function applyFilters() {
             });
         });
     }
-    
     // Filter by status
     if (activeFilters.status.length > 0) {
         filteredLocations = filteredLocations.filter(function(location) {
             return activeFilters.status.indexOf(location.status) > -1;
         });
     }
-    
     // filtered results
     displayResults(filteredLocations);
 }
 
 // displaying results based on filters
 function displayResults(locations) {
-    var resultsContainer = document.getElementById('results-container');
-    resultsContainer.innerHTML = '';
+    const resultsContainer = document.getElementById('results-container');
+    if (!resultsContainer) {
+        return;
+    }
     
-    if (locations.length === 0) {
+    resultsContainer.innerHTML = '';
+    if (!locations || locations.length === 0) {
         resultsContainer.innerHTML = `
             <div class="no-results">
                 <h3>No Results Found</h3>
@@ -113,15 +109,15 @@ function displayResults(locations) {
         `;
         return;
     }
-    
-    for (var i = 0; i < locations.length; i++) {
-        var location = locations[i];
-        var statusClass = 'status-' + location.status.toLowerCase();
-        
-        var locationCard = document.createElement('div');
+    for (let i = 0; i < locations.length; i++) {
+        const location = locations[i];
+        const statusClass = 'status-' + location.status.toLowerCase();
+        const locationCard = document.createElement('div');
         locationCard.className = 'rink-card';
         locationCard.innerHTML = `
-            <div class="rink-card-image" style="background-image: url('${location.imageUrl}')"></div>
+            <div class="rink-card-image">
+                <img src="${location.imageUrl}" alt="${location.name}" onerror="this.src='images/ice-skating.jpg'" />
+            </div>
             <div class="rink-card-content">
                 <h3>${location.name}</h3>
                 <span class="rink-type">${location.type === 'ice' ? 'Ice Skating' : 'Roller Skating'}</span>
@@ -136,16 +132,14 @@ function displayResults(locations) {
                 <a href="details.html?id=${location.id}" class="view-details-btn">View Details</a>
             </div>
         `;
-        
         resultsContainer.appendChild(locationCard);
     }
 }
 
 // getting today's hours
 function getTodayHours(openingHours) {
-    var daysOfWeek = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
-    var today = new Date().getDay();
-    var dayName = daysOfWeek[today];
-    
+    const daysOfWeek = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+    const today = new Date().getDay();
+    const dayName = daysOfWeek[today];
     return openingHours[dayName] || 'Closed';
 }

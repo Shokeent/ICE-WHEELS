@@ -1,5 +1,9 @@
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('Details page loaded');
+    // Check if data is loaded
+    if (typeof skatingLocations === 'undefined') {
+        displayError("Data not loaded. Please refresh the page.");
+        return;
+    }
     
     //rink ID from URL
     var urlParams = new URLSearchParams(window.location.search);
@@ -30,11 +34,20 @@ function loadRinkDetails(rinkId) {
 //rink data on the page
 function displayRinkData(rink) {
     // Set page title
-    document.title = rink.name + ' - Ice&Wheels';
+    document.title = rink.name + ' - Ice & Wheels';
     
-    // breadcrumb and title
-    document.getElementById('rink-name-breadcrumb').textContent = rink.name;
+    // Set rink name and image
     document.getElementById('rink-name').textContent = rink.name;
+    
+    // Set rink image
+    const rinkImage = document.getElementById('rink-image');
+    if (rinkImage) {
+        rinkImage.src = rink.imageUrl;
+        rinkImage.alt = rink.name;
+        rinkImage.onerror = function() {
+            this.src = 'images/ice-skating.jpg';
+        };
+    }
     
     // rink details
     document.getElementById('address').textContent = rink.address;
