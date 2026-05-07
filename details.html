@@ -13,9 +13,14 @@
     <div class="container">
         <header>
             <div class="header-content">
-                <h1 class="header-title">Ice & Wheels</h1>
+                <div class="header-top">
+                    <h1 class="header-title">Ice & Wheels</h1>
+                    <button class="hamburger-btn" id="hamburger-btn" aria-label="Toggle navigation">
+                        <span></span><span></span><span></span>
+                    </button>
+                </div>
                 <p class="header-subtitle">Rink Details</p>
-                <nav class="nav-menu">
+                <nav class="nav-menu" id="nav-menu">
                     <a href="index.html" class="nav-link">Home</a>
                     <a href="locations.html" class="nav-link">Find Locations</a>
                     <a href="about.html" class="nav-link">About</a>
@@ -39,6 +44,7 @@
                         </div>
                         <div class="rink-info">
                             <p><strong>Address:</strong> <span id="address"></span></p>
+                            <div id="directions-container"></div>
                             <p><strong>Open:</strong> <span id="opening-hours"></span></p>
                             <p><strong>Amenities:</strong> <span id="amenities"></span></p>
                             <p><strong>Special Events:</strong> <span id="special-events"></span></p>

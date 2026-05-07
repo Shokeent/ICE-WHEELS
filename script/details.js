@@ -51,7 +51,13 @@ function displayRinkData(rink) {
     
     // rink details
     document.getElementById('address').textContent = rink.address;
-    
+
+    // directions link
+    if (rink.coordinates) {
+        const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${rink.coordinates.lat},${rink.coordinates.lng}`;
+        document.getElementById('directions-container').innerHTML =
+            `<a href="${mapsUrl}" target="_blank" rel="noopener noreferrer" class="directions-btn">📍 Get Directions</a>`;
+    }
     //opening hours
     var formattedHours = formatOpeningHours(rink.openingHours);
     document.getElementById('opening-hours').textContent = formattedHours;

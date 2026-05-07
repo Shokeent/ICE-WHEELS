@@ -13,9 +13,14 @@
     <div class="container">
         <header>
             <div class="header-content">
-                <h1 class="header-title">Ice & Wheels</h1>
+                <div class="header-top">
+                    <h1 class="header-title">Ice & Wheels</h1>
+                    <button class="hamburger-btn" id="hamburger-btn" aria-label="Toggle navigation">
+                        <span></span><span></span><span></span>
+                    </button>
+                </div>
                 <p class="header-subtitle">Contact Us</p>
-                <nav class="nav-menu">
+                <nav class="nav-menu" id="nav-menu">
                     <a href="index.html" class="nav-link">Home</a>
                     <a href="locations.html" class="nav-link">Find Locations</a>
                     <a href="about.html" class="nav-link">About</a>
@@ -63,7 +68,37 @@
                 </div>
 
                 <h3>Send Us a Message</h3>
-                <p>Use the contact information above to get in touch, or find us on social media for the latest updates and skating community discussions.</p>
+                <form class="contact-form" id="contact-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" required placeholder="Your name">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required placeholder="your@email.com">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <select id="subject" name="subject">
+                            <option value="general">General Inquiry</option>
+                            <option value="location">Report / Suggest a Location</option>
+                            <option value="feedback">Feedback</option>
+                            <option value="partnership">Partnership Opportunity</option>
+                            <option value="technical">Technical Support</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" required rows="5" placeholder="Tell us how we can help..."></textarea>
+                    </div>
+                    <button type="submit" class="button button-primary">Send Message</button>
+                </form>
+                <div class="form-success" id="form-success">
+                    <h4>Message Sent!</h4>
+                    <p>Thanks for reaching out. We'll get back to you within 24 hours.</p>
+                </div>
 
                 <div style="background: #f8f6f0; padding: 2rem; border-radius: 15px; margin-top: 2rem;">
                     <h4 style="color: #8B4513; margin-bottom: 1rem;">📝 What can we help you with?</h4>

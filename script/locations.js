@@ -6,13 +6,16 @@ const activeFilters = {
     status: []
 };
 
+let searchQuery = '';
+
 document.addEventListener('DOMContentLoaded', function() {
-    // Initializing filter 
     initializeFilters();
-    
-    // Check if data exists and display
+    initializeSearch();
+    initializeClearFilters();
+
     if (typeof skatingLocations !== 'undefined' && skatingLocations.length > 0) {
         displayResults(skatingLocations);
+        updateResultsCount(skatingLocations.length);
     } else {
         const resultsContainer = document.getElementById('results-container');
         if (resultsContainer) {
@@ -21,7 +24,37 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-//filter buttons
+function initializeSearch() {
+    const searchInput = document.getElementById('search-input');
+    if (!searchInput) return;
+    searchInput.addEventListener('input', function() {
+        searchQuery = this.value.trim().toLowerCase();
+        applyFilters();
+    });
+}
+
+function initializeClearFilters() {
+    const clearBtn = document.getElementById('clear-filters-btn');
+    if (!clearBtn) return;
+    clearBtn.addEventListener('click', function() {
+        // Reset all filter arrays
+        Object.keys(activeFilters).forEach(function(key) {
+            activeFilters[key] = [];
+        });
+        // Deactivate all filter buttons
+        document.querySelectorAll('.filter-btn').forEach(function(btn) {
+            btn.classList.remove('active');
+        });
+        // Clear search
+        searchQuery = '';
+        const searchInput = document.getElementById('search-input');
+        if (searchInput) searchInput.value = '';
+
+        updateFilterUI();
+        applyFilters();
+    });
+}
+
 function initializeFilters() {
     const filterButtons = document.querySelectorAll('.filter-btn');
     for (let i = 0; i < filterButtons.length; i++) {
@@ -34,9 +67,7 @@ function initializeFilters() {
         button.addEventListener('click', function() {
             const filterType = this.dataset.filter;
             const filterValue = this.dataset.value;
-            //active class
             this.classList.toggle('active');
-            // active filters
             if (this.classList.contains('active')) {
                 if (activeFilters[filterType].indexOf(filterValue) === -1) {
                     activeFilters[filterType].push(filterValue);
@@ -47,64 +78,97 @@ function initializeFilters() {
                     activeFilters[filterType].splice(index, 1);
                 }
             }
-            // Instantly apply filters when a filter button is clicked
+            updateFilterUI();
             applyFilters();
         });
     }
 }
 
-// filters and updated results
+function updateFilterUI() {
+    const totalActive = Object.values(activeFilters).reduce(function(sum, arr) {
+        return sum + arr.length;
+    }, 0);
+
+    const badge = document.getElementById('filter-count-badge');
+    const clearBtn = document.getElementById('clear-filters-btn');
+
+    if (badge) {
+        if (totalActive > 0) {
+            badge.textContent = totalActive;
+            badge.classList.add('visible');
+        } else {
+            badge.classList.remove('visible');
+        }
+    }
+    if (clearBtn) {
+        if (totalActive > 0 || searchQuery.length > 0) {
+            clearBtn.classList.add('visible');
+        } else {
+            clearBtn.classList.remove('visible');
+        }
+    }
+}
+
 function applyFilters() {
-    let filteredLocations = skatingLocations.slice(); 
-    // Filter by type
+    let filtered = skatingLocations.slice();
+
     if (activeFilters.type.length > 0) {
-        filteredLocations = filteredLocations.filter(function(location) {
-            return activeFilters.type.indexOf(location.type) > -1;
+        filtered = filtered.filter(function(loc) {
+            return activeFilters.type.indexOf(loc.type) > -1;
         });
     }
-    // Filter by location
     if (activeFilters.location.length > 0) {
-        filteredLocations = filteredLocations.filter(function(location) {
-            return activeFilters.location.indexOf(location.area) > -1;
+        filtered = filtered.filter(function(loc) {
+            return activeFilters.location.indexOf(loc.area) > -1;
         });
     }
-    // Filter by surface
     if (activeFilters.surface.length > 0) {
-        filteredLocations = filteredLocations.filter(function(location) {
-            return activeFilters.surface.indexOf(location.surface) > -1;
+        filtered = filtered.filter(function(loc) {
+            return activeFilters.surface.indexOf(loc.surface) > -1;
         });
     }
-    // Filter by amenities
     if (activeFilters.amenities.length > 0) {
-        filteredLocations = filteredLocations.filter(function(location) {
+        filtered = filtered.filter(function(loc) {
             return activeFilters.amenities.every(function(amenity) {
-                return location.amenities && location.amenities.indexOf(amenity) > -1;
+                return loc.amenities && loc.amenities.indexOf(amenity) > -1;
             });
         });
     }
-    // Filter by status
     if (activeFilters.status.length > 0) {
-        filteredLocations = filteredLocations.filter(function(location) {
-            return activeFilters.status.indexOf(location.status) > -1;
+        filtered = filtered.filter(function(loc) {
+            return activeFilters.status.indexOf(loc.status) > -1;
         });
     }
-    // filtered results
-    displayResults(filteredLocations);
+    if (searchQuery.length > 0) {
+        filtered = filtered.filter(function(loc) {
+            return (
+                loc.name.toLowerCase().indexOf(searchQuery) > -1 ||
+                loc.address.toLowerCase().indexOf(searchQuery) > -1
+            );
+        });
+    }
+
+    displayResults(filtered);
+    updateResultsCount(filtered.length);
+    updateFilterUI();
 }
 
-// displaying results based on filters
+function updateResultsCount(count) {
+    const countEl = document.getElementById('results-count');
+    if (!countEl) return;
+    countEl.innerHTML = 'Showing <strong>' + count + '</strong> location' + (count !== 1 ? 's' : '');
+}
+
 function displayResults(locations) {
     const resultsContainer = document.getElementById('results-container');
-    if (!resultsContainer) {
-        return;
-    }
-    
+    if (!resultsContainer) return;
+
     resultsContainer.innerHTML = '';
     if (!locations || locations.length === 0) {
         resultsContainer.innerHTML = `
             <div class="no-results">
                 <h3>No Results Found</h3>
-                <p>Try adjusting your filters to see more skating locations.</p>
+                <p>Try adjusting your filters or search to see more skating locations.</p>
             </div>
         `;
         return;
@@ -136,7 +200,6 @@ function displayResults(locations) {
     }
 }
 
-// getting today's hours
 function getTodayHours(openingHours) {
     const daysOfWeek = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
     const today = new Date().getDay();

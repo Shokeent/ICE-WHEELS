@@ -13,9 +13,14 @@
     <div class="container">
         <header>
             <div class="header-content">
-                <h1 class="header-title">Ice & Wheels</h1>
+                <div class="header-top">
+                    <h1 class="header-title">Ice & Wheels</h1>
+                    <button class="hamburger-btn" id="hamburger-btn" aria-label="Toggle navigation">
+                        <span></span><span></span><span></span>
+                    </button>
+                </div>
                 <p class="header-subtitle">Find Ice Skating and Roller Skating Locations</p>
-                <nav class="nav-menu">
+                <nav class="nav-menu" id="nav-menu">
                     <a href="index.html" class="nav-link">Home</a>
                     <a href="locations.html" class="nav-link active">Find Locations</a>
                     <a href="about.html" class="nav-link">About</a>
@@ -27,7 +32,10 @@
     
         <main class="locations-container">
             <section class="filters-section">
-                <h2>Filters</h2>
+                <div class="filter-header">
+                    <h2>Filters</h2>
+                    <span class="filter-count-badge" id="filter-count-badge"></span>
+                </div>
                 <hr>
                 <p class="filter-description">Find family-friendly spots, advanced routes, and everything in between – tailored to your skating style.</p>
                 
@@ -77,9 +85,16 @@
                     </div>
                 </div>
                 
+                <button class="clear-filters-btn" id="clear-filters-btn">Clear All Filters</button>
             </section>
-            
+
             <section class="results-section">
+                <div class="search-bar-container">
+                    <input type="text" id="search-input" class="search-input" placeholder="Search by name or address...">
+                </div>
+                <div class="results-header">
+                    <span class="results-count" id="results-count"></span>
+                </div>
                 <div id="results-container"></div>
             </section>
         </main>
