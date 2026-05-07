@@ -1,29 +1,24 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Check if data is loaded
     if (typeof skatingLocations === 'undefined') {
         displayError("Data not loaded. Please refresh the page.");
         return;
     }
-    
-    //rink ID from URL
+
     var urlParams = new URLSearchParams(window.location.search);
     var rinkId = urlParams.get('id');
-    
+
     if (rinkId) {
-        // Finding rink data by ID
         loadRinkDetails(rinkId);
     } else {
         displayError("No rink ID provided");
     }
 });
 
-// rink details based on ID
 function loadRinkDetails(rinkId) {
-    // Finding rink in data
     var rink = skatingLocations.find(function(location) {
         return location.id === parseInt(rinkId);
     });
-    
+
     if (rink) {
         displayRinkData(rink);
     } else {
@@ -31,74 +26,91 @@ function loadRinkDetails(rinkId) {
     }
 }
 
-//rink data on the page
 function displayRinkData(rink) {
-    // Set page title
     document.title = rink.name + ' - Ice & Wheels';
-    
-    // Set rink name and image
     document.getElementById('rink-name').textContent = rink.name;
-    
-    // Set rink image
+
+    // Favourite button
+    const favBtnDetail = document.getElementById('fav-btn-detail');
+    if (favBtnDetail) {
+        const updateFavBtn = function() {
+            const favs = JSON.parse(localStorage.getItem('ice-wheels-favourites') || '[]');
+            const isFav = favs.indexOf(rink.id) > -1;
+            favBtnDetail.innerHTML = isFav ? '❤️' : '🤍';
+            favBtnDetail.title = isFav ? 'Remove from favourites' : 'Save to favourites';
+        };
+        updateFavBtn();
+        favBtnDetail.addEventListener('click', function() {
+            const favs = JSON.parse(localStorage.getItem('ice-wheels-favourites') || '[]');
+            const idx = favs.indexOf(rink.id);
+            if (idx > -1) {
+                favs.splice(idx, 1);
+            } else {
+                favs.push(rink.id);
+            }
+            localStorage.setItem('ice-wheels-favourites', JSON.stringify(favs));
+            updateFavBtn();
+        });
+    }
+
+    // Image
     const rinkImage = document.getElementById('rink-image');
     if (rinkImage) {
         rinkImage.src = rink.imageUrl;
         rinkImage.alt = rink.name;
-        rinkImage.onerror = function() {
-            this.src = 'images/ice-skating.jpg';
-        };
+        rinkImage.onerror = function() { this.src = 'images/ice-skating.jpg'; };
     }
-    
-    // rink details
-    document.getElementById('address').textContent = rink.address;
 
-    // directions link
+    // Address + directions
+    document.getElementById('address').textContent = rink.address;
     if (rink.coordinates) {
         const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${rink.coordinates.lat},${rink.coordinates.lng}`;
         document.getElementById('directions-container').innerHTML =
             `<a href="${mapsUrl}" target="_blank" rel="noopener noreferrer" class="directions-btn">📍 Get Directions</a>`;
     }
-    //opening hours
-    var formattedHours = formatOpeningHours(rink.openingHours);
-    document.getElementById('opening-hours').textContent = formattedHours;
 
-    
-    //amenities
-    var amenitiesText = rink.amenities ? 
-        rink.amenities.map(function(amenity) { 
-            return formatAmenity(amenity); 
-        }).join(', ') : 
-        "No amenities information available";
+    // Opening hours
+    document.getElementById('opening-hours').textContent = formatOpeningHours(rink.openingHours);
+
+    // Amenities
+    var amenitiesText = rink.amenities
+        ? rink.amenities.map(formatAmenity).join(', ')
+        : 'No amenities information available';
     document.getElementById('amenities').textContent = amenitiesText;
-    
-    //special events
-    document.getElementById('special-events').textContent = rink.specialEvents || "No special events scheduled";
-    
-    //  description
+
+    // Special events
+    document.getElementById('special-events').textContent = rink.specialEvents || 'No special events scheduled';
+
+    // Description
     document.getElementById('description').textContent = rink.description;
-    
-    // image
-    if (rink.imageUrl) {
-        document.getElementById('rink-image').src = rink.imageUrl;
-        document.getElementById('rink-image').alt = rink.name;
-    } 
-    // pro tips
+
+    // Pro tips
     if (rink.proTips && rink.proTips.length > 0) {
         var proTipsList = document.getElementById('pro-tips-list');
         proTipsList.innerHTML = '';
-        
         for (var i = 0; i < rink.proTips.length; i++) {
             var listItem = document.createElement('li');
             listItem.textContent = rink.proTips[i];
             proTipsList.appendChild(listItem);
         }
     }
+
+    // Map
+    if (rink.coordinates && typeof L !== 'undefined') {
+        const map = L.map('rink-map').setView([rink.coordinates.lat, rink.coordinates.lng], 15);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+        L.marker([rink.coordinates.lat, rink.coordinates.lng])
+            .addTo(map)
+            .bindPopup('<strong>' + rink.name + '</strong><br>' + rink.address)
+            .openPopup();
+    }
 }
 
 function formatOpeningHours(hours) {
-    if (!hours) return "Hours not available";
-    
-    return (hours.weekdays || "Varies") + " (Weekdays) / " + (hours.weekends || "Varies") + " (Weekends)";
+    if (!hours) return 'Hours not available';
+    return (hours.weekdays || 'Varies') + ' (Weekdays) / ' + (hours.weekends || 'Varies') + ' (Weekends)';
 }
 
 function formatAmenity(amenity) {
@@ -108,18 +120,18 @@ function formatAmenity(amenity) {
         'food': 'Food & drink vendors',
         'parking': 'Parking'
     };
-    
     return amenityMap[amenity] || amenity;
 }
 
-//error message
 function displayError(message) {
-    var container = document.querySelector('.rink-details-content');
-    container.innerHTML = `
-        <div class="error-message">
-            <h2>Oops! Something went wrong</h2>
-            <p>${message}</p>
-            <a href="locations.html" class="cta-button">Back to Locations</a>
-        </div>
-    `;
+    var container = document.getElementById('rink-details');
+    if (container) {
+        container.innerHTML = `
+            <div style="text-align:center;padding:3rem;">
+                <h2 style="color:#8B4513;">Oops! Something went wrong</h2>
+                <p style="color:#666;margin:1rem 0;">${message}</p>
+                <a href="locations.html" class="button button-secondary">Back to Locations</a>
+            </div>
+        `;
+    }
 }

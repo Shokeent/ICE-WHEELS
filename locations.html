@@ -40,6 +40,10 @@
                 <p class="filter-description">Find family-friendly spots, advanced routes, and everything in between – tailored to your skating style.</p>
                 
                 <div class="filter-group">
+                    <button class="filter-btn favourites-filter-btn" id="favourites-filter-btn" style="width:100%;justify-content:center;">❤️ My Favourites</button>
+                </div>
+
+                <div class="filter-group">
                     <h3>Type</h3>
                     <div class="filter-options">
                         <button class="filter-btn" data-filter="type" data-value="ice">Ice Skating</button>
@@ -94,6 +98,12 @@
                 </div>
                 <div class="results-header">
                     <span class="results-count" id="results-count"></span>
+                    <select id="sort-select" class="sort-select">
+                        <option value="default">Sort: Default</option>
+                        <option value="open-first">Open First</option>
+                        <option value="name-asc">Name A–Z</option>
+                        <option value="area">By Area</option>
+                    </select>
                 </div>
                 <div id="results-container"></div>
             </section>
