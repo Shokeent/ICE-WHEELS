@@ -43,13 +43,33 @@ function displayRinkData(rink) {
         favBtnDetail.addEventListener('click', function() {
             const favs = JSON.parse(localStorage.getItem('ice-wheels-favourites') || '[]');
             const idx = favs.indexOf(rink.id);
-            if (idx > -1) {
-                favs.splice(idx, 1);
-            } else {
-                favs.push(rink.id);
-            }
+            if (idx > -1) { favs.splice(idx, 1); } else { favs.push(rink.id); }
             localStorage.setItem('ice-wheels-favourites', JSON.stringify(favs));
             updateFavBtn();
+        });
+    }
+
+    // Share button
+    const shareBtn = document.getElementById('share-btn');
+    if (shareBtn) {
+        shareBtn.addEventListener('click', function() {
+            const shareData = {
+                title: rink.name + ' - Ice & Wheels',
+                text: 'Check out ' + rink.name + ' for skating in Toronto!',
+                url: window.location.href
+            };
+            if (navigator.share) {
+                navigator.share(shareData);
+            } else {
+                navigator.clipboard.writeText(window.location.href).then(function() {
+                    shareBtn.innerHTML = '✓';
+                    shareBtn.title = 'Link copied!';
+                    setTimeout(function() {
+                        shareBtn.innerHTML = '🔗';
+                        shareBtn.title = 'Share this location';
+                    }, 2000);
+                });
+            }
         });
     }
 
@@ -106,6 +126,32 @@ function displayRinkData(rink) {
             .bindPopup('<strong>' + rink.name + '</strong><br>' + rink.address)
             .openPopup();
     }
+
+    // Related locations
+    const related = skatingLocations
+        .filter(function(loc) { return loc.type === rink.type && loc.id !== rink.id; })
+        .slice(0, 3);
+
+    if (related.length > 0) {
+        const relatedSection = document.getElementById('related-section');
+        const relatedGrid = document.getElementById('related-grid');
+        if (relatedSection && relatedGrid) {
+            relatedSection.style.display = '';
+            related.forEach(function(loc) {
+                const statusClass = 'status-' + loc.status;
+                const card = document.createElement('a');
+                card.href = 'details.html?id=' + loc.id;
+                card.className = 'related-card';
+                card.innerHTML =
+                    '<img src="' + loc.imageUrl + '" alt="' + loc.name + '" onerror="this.src=\'images/ice-skating.jpg\'">' +
+                    '<div class="related-card-info">' +
+                        '<h4>' + loc.name + '</h4>' +
+                        '<p><span class="status-indicator ' + statusClass + '"></span>' + loc.area.replace('-', ' ') + '</p>' +
+                    '</div>';
+                relatedGrid.appendChild(card);
+            });
+        }
+    }
 }
 
 function formatOpeningHours(hours) {
@@ -126,12 +172,11 @@ function formatAmenity(amenity) {
 function displayError(message) {
     var container = document.getElementById('rink-details');
     if (container) {
-        container.innerHTML = `
-            <div style="text-align:center;padding:3rem;">
-                <h2 style="color:#8B4513;">Oops! Something went wrong</h2>
-                <p style="color:#666;margin:1rem 0;">${message}</p>
-                <a href="locations.html" class="button button-secondary">Back to Locations</a>
-            </div>
-        `;
+        container.innerHTML =
+            '<div style="text-align:center;padding:3rem;">' +
+                '<h2 style="color:#8B4513;">Oops! Something went wrong</h2>' +
+                '<p style="color:#666;margin:1rem 0;">' + message + '</p>' +
+                '<a href="locations.html" class="button button-secondary">Back to Locations</a>' +
+            '</div>';
     }
 }

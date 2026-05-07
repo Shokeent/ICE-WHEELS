@@ -39,9 +39,17 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeFavouritesFilter();
     initializeSort();
 
+    // Pre-fill search from URL param (e.g. from homepage search bar)
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlSearch = urlParams.get('search');
+    if (urlSearch) {
+        searchQuery = urlSearch.trim().toLowerCase();
+        const searchInput = document.getElementById('search-input');
+        if (searchInput) searchInput.value = urlSearch;
+    }
+
     if (typeof skatingLocations !== 'undefined' && skatingLocations.length > 0) {
-        displayResults(skatingLocations);
-        updateResultsCount(skatingLocations.length);
+        applyFilters();
     } else {
         const resultsContainer = document.getElementById('results-container');
         if (resultsContainer) {

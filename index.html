@@ -34,10 +34,27 @@
             <!-- Hero Section -->
             <section class="section-hero">
                 <div class="hero-content">
-                    <h2>Welcome to Ice & Wheels</h2>
-                    <p style="font-size: 1.3rem; margin-bottom: 2rem; color: #8B4513;">Your ultimate guide to ice skating and roller skating locations across Toronto</p>
-                    <a href="locations.html" class="button button-primary" style="font-size: 1.2rem; padding: 1rem 2rem; text-decoration: none; display: inline-block; margin-right: 1rem;">Explore Locations</a>
-                    <a href="about.html" class="button button-secondary" style="font-size: 1.2rem; padding: 1rem 2rem; text-decoration: none; display: inline-block;">Learn More</a>
+                    <h2>Find Your Skate Spot</h2>
+                    <p>Toronto's most complete directory of ice and roller skating locations</p>
+                    <div class="hero-stats">
+                        <div class="hero-stat">
+                            <span class="hero-stat-number" id="stat-total">14</span>
+                            <span class="hero-stat-label">Locations</span>
+                        </div>
+                        <div class="hero-stat">
+                            <span class="hero-stat-number" id="stat-open">—</span>
+                            <span class="hero-stat-label">Open Now</span>
+                        </div>
+                        <div class="hero-stat">
+                            <span class="hero-stat-number">5</span>
+                            <span class="hero-stat-label">Neighbourhoods</span>
+                        </div>
+                    </div>
+                    <form class="hero-search" action="locations.html" method="get">
+                        <input type="text" name="search" class="hero-search-input" placeholder="Search rinks, areas, amenities...">
+                        <button type="submit" class="hero-search-btn">Search</button>
+                    </form>
+                    <a href="locations.html" class="button button-secondary" style="margin-top:0.8rem;display:inline-block;">Browse All Locations</a>
                 </div>
             </section>
 
@@ -92,6 +109,14 @@
         </footer>
     </div>
 
+    <script src="script/data.js"></script>
+    <script>
+        if (typeof skatingLocations !== 'undefined') {
+            document.getElementById('stat-total').textContent = skatingLocations.length;
+            document.getElementById('stat-open').textContent =
+                skatingLocations.filter(function(l) { return l.status === 'open'; }).length;
+        }
+    </script>
     <script src="script/script.js"></script>
 </body>
 </html>
