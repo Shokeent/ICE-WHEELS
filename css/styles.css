@@ -15,7 +15,7 @@ body {
     font-size: 16px;
     line-height: 1.6;
     color: #333;
-    background: #ffffff;
+    background: #fdfaf7;
     overflow-x: hidden;
 }
 
@@ -30,61 +30,78 @@ body {
    ========================================================================== */
 
 header {
-    background: rgba(255, 255, 255, 0.95);
-    padding: 0.8rem 0;
+    background: #1a0d06;
     position: sticky;
     top: 0;
     z-index: 1000;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.4);
 }
 
-.header-content {
+.header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 65px;
+    position: relative;
+}
+
+.brand-link {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    text-decoration: none;
+    flex-shrink: 0;
+}
+
+.brand-icon {
+    color: #e07840;
+    font-size: 1.4rem;
+}
+
+.brand-text {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    text-align: center;
+    line-height: 1.1;
 }
 
-.header-title {
-    font-size: 2rem;
+.brand-name {
+    font-size: 1.2rem;
     font-weight: 700;
-    color: #8B4513;
-    margin-bottom: 0.3rem;
-    letter-spacing: 1px;
+    color: white;
+    letter-spacing: 0.3px;
 }
 
-.header-subtitle {
-    font-size: 1rem;
-    color: #666;
-    margin-bottom: 1rem;
-    font-weight: 400;
+.brand-tagline {
+    font-size: 0.6rem;
+    color: rgba(255, 255, 255, 0.4);
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
 }
 
 .nav-menu {
     display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-    justify-content: center;
+    align-items: center;
+    gap: 0.2rem;
 }
 
 .nav-link {
     text-decoration: none;
-    color: #8B4513;
+    color: rgba(255, 255, 255, 0.72);
     font-weight: 500;
-    padding: 0.6rem 1.2rem;
+    padding: 0.48rem 0.95rem;
     border-radius: 25px;
-    transition: all 0.3s ease;
-    border: 2px solid transparent;
-    font-size: 0.95rem;
+    transition: all 0.2s ease;
+    font-size: 0.88rem;
+    white-space: nowrap;
 }
 
 .nav-link:hover,
 .nav-link.active {
-    background: #8B4513;
+    background: #c4622d;
     color: white;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(139, 69, 19, 0.3);
 }
 
 /* ==========================================================================
@@ -92,7 +109,7 @@ header {
    ========================================================================== */
 
 .section-hero {
-    background: linear-gradient(135deg, #faf8f5 0%, #ede5d8 55%, #e4d6c0 100%);
+    background: linear-gradient(135deg, #2a1005 0%, #5a2510 45%, #8B4513 100%);
     padding: 3.5rem 1.5rem;
     text-align: center;
     margin: 1.5rem 0;
@@ -108,7 +125,7 @@ header {
     right: -70px;
     width: 250px;
     height: 250px;
-    background: radial-gradient(circle, rgba(139, 69, 19, 0.08) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(255, 160, 80, 0.12) 0%, transparent 70%);
     border-radius: 50%;
     pointer-events: none;
 }
@@ -116,14 +133,14 @@ header {
 .hero-content h2 {
     font-size: 3.6rem;
     font-weight: 700;
-    color: #8B4513;
+    color: white;
     margin-bottom: 0.7rem;
     letter-spacing: -0.5px;
 }
 
 .hero-content p {
     font-size: 1.15rem;
-    color: #7a6654;
+    color: rgba(255, 255, 255, 0.72);
     margin-bottom: 1.5rem;
     max-width: 520px;
     margin-left: auto;
@@ -335,7 +352,7 @@ header {
     box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
     height: fit-content;
     position: sticky;
-    top: 90px;
+    top: 75px;
 }
 
 .filters-section h2 {
@@ -406,7 +423,7 @@ header {
 }
 
 .rink-card {
-    background: #f8f6f0;
+    background: white;
     border-radius: 15px;
     padding: 0;
     margin-bottom: 1.5rem;
@@ -414,6 +431,7 @@ header {
     cursor: pointer;
     overflow: hidden;
     border: 1px solid #ede8d8;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
 }
 
 .rink-card:hover {
@@ -589,15 +607,73 @@ header {
    ========================================================================== */
 
 footer {
-    background: #f8f6f0;
-    text-align: center;
-    padding: 2rem;
-    margin-top: 3rem;
-    color: #666;
-    border-top: 2px solid #ede8d8;
+    background: #1a0d06;
+    margin-top: 4rem;
 }
 
-footer p {
+.footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 3.5rem 1.5rem 2.5rem;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 3rem;
+}
+
+.footer-brand-icon {
+    color: #e07840;
+    font-size: 1.6rem;
+    display: block;
+    margin-bottom: 0.6rem;
+}
+
+.footer-brand-name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 0.5rem;
+}
+
+.footer-brand p {
+    font-size: 0.86rem;
+    color: rgba(255, 255, 255, 0.45);
+    line-height: 1.65;
+    max-width: 240px;
+    margin: 0;
+}
+
+.footer-col h4 {
+    color: white;
+    font-size: 0.75rem;
+    letter-spacing: 1.3px;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.footer-col a {
+    display: block;
+    color: rgba(255, 255, 255, 0.5);
+    text-decoration: none;
+    font-size: 0.9rem;
+    margin-bottom: 0.55rem;
+    transition: color 0.2s ease;
+}
+
+.footer-col a:hover {
+    color: white;
+}
+
+.footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1.2rem 1.5rem;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.28);
+}
+
+.footer-bottom p {
     margin: 0;
 }
 
@@ -609,74 +685,77 @@ footer p {
     .container {
         padding: 0 10px;
     }
-    
-    .header-title {
-        font-size: 1.8rem;
+
+    .header-inner {
+        height: auto;
+        flex-wrap: wrap;
+        padding: 0.75rem 1rem;
     }
-    
-    .nav-menu {
-        display: none;
-        flex-direction: column;
-        gap: 0.4rem;
-        width: 100%;
+
+    .brand-link {
+        flex: 1;
     }
-    .nav-menu.nav-open {
-        display: flex;
-    }
+
     .hamburger-btn {
         display: flex;
     }
-    .header-top {
-        justify-content: space-between;
-        padding: 0 0.5rem;
+
+    .nav-menu {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        gap: 0.15rem;
+        padding: 0.6rem 0 0.2rem;
+        margin-top: 0.5rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
-    
+
+    .nav-menu.nav-open {
+        display: flex;
+    }
+
     .nav-link {
-        padding: 0.5rem 1rem;
+        padding: 0.6rem 0.8rem;
         font-size: 0.9rem;
     }
-    
+
     .hero-content h2 {
         font-size: 1.8rem;
     }
-    
+
     .section-hero {
         padding: 1.5rem 1rem;
     }
-    
+
     .section-content {
         padding: 1.5rem 1rem;
     }
-    
+
     .about-grid,
     .contact-grid {
         grid-template-columns: 1fr;
         gap: 1rem;
     }
-    
+
     .locations-container {
         flex-direction: column;
     }
-    
+
     .filters-section {
         flex: none;
         position: static;
     }
-    
+
     .rink-info-container {
         grid-template-columns: 1fr;
     }
-    
+
     .rink-details {
         padding: 1.5rem 1rem;
     }
 }
 
 @media (max-width: 480px) {
-    .header-title {
-        font-size: 1.8rem;
-    }
-
     .hero-content h2 {
         font-size: 1.8rem;
     }
@@ -690,37 +769,28 @@ footer p {
    HAMBURGER MENU
    ========================================================================== */
 
-.header-top {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    position: relative;
-}
-
 .hamburger-btn {
     display: none;
     background: none;
     border: none;
     cursor: pointer;
-    padding: 0.5rem;
+    padding: 0.45rem;
     flex-direction: column;
     gap: 5px;
-    position: absolute;
-    right: 0;
+    flex-shrink: 0;
 }
 
 .hamburger-btn span {
     display: block;
-    width: 25px;
-    height: 3px;
-    background: #8B4513;
+    width: 24px;
+    height: 2.5px;
+    background: rgba(255, 255, 255, 0.82);
     border-radius: 3px;
     transition: all 0.3s ease;
 }
 
 .hamburger-btn.active span:nth-child(1) {
-    transform: translateY(8px) rotate(45deg);
+    transform: translateY(7.5px) rotate(45deg);
 }
 
 .hamburger-btn.active span:nth-child(2) {
@@ -728,7 +798,7 @@ footer p {
 }
 
 .hamburger-btn.active span:nth-child(3) {
-    transform: translateY(-8px) rotate(-45deg);
+    transform: translateY(-7.5px) rotate(-45deg);
 }
 
 /* ==========================================================================
@@ -1073,14 +1143,14 @@ footer p {
     display: block;
     font-size: 2.2rem;
     font-weight: 700;
-    color: #8B4513;
+    color: white;
     line-height: 1;
 }
 
 .hero-stat-label {
     display: block;
     font-size: 0.8rem;
-    color: #999;
+    color: rgba(255, 255, 255, 0.52);
     text-transform: uppercase;
     letter-spacing: 0.8px;
     margin-top: 0.3rem;
@@ -1349,5 +1419,32 @@ footer p {
 @media (max-width: 480px) {
     .hero-content h2 {
         font-size: 2.4rem;
+    }
+}
+
+/* ==========================================================================
+   HERO DARK — BUTTON SECONDARY OVERRIDE
+   ========================================================================== */
+
+.section-hero .button-secondary {
+    color: rgba(255, 255, 255, 0.85);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.section-hero .button-secondary:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: white;
+    color: white;
+}
+
+/* ==========================================================================
+   FOOTER RESPONSIVE
+   ========================================================================== */
+
+@media (max-width: 768px) {
+    .footer-inner {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        padding: 2.5rem 1.5rem 1.5rem;
     }
 }

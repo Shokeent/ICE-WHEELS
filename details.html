@@ -12,25 +12,28 @@
     <link href="https://fonts.googleapis.com/css2?family=Inria+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <header>
+        <div class="header-inner">
+            <a href="index.html" class="brand-link">
+                <i class="fas fa-snowflake brand-icon"></i>
+                <span class="brand-text">
+                    <span class="brand-name">Ice & Wheels</span>
+                    <span class="brand-tagline">Toronto Skating Guide</span>
+                </span>
+            </a>
+            <button class="hamburger-btn" id="hamburger-btn" aria-label="Toggle navigation">
+                <span></span><span></span><span></span>
+            </button>
+            <nav class="nav-menu" id="nav-menu">
+                <a href="index.html" class="nav-link"><i class="fas fa-house"></i> Home</a>
+                <a href="locations.html" class="nav-link"><i class="fas fa-location-dot"></i> Find Locations</a>
+                <a href="about.html" class="nav-link"><i class="fas fa-circle-info"></i> About</a>
+                <a href="contact.html" class="nav-link"><i class="fas fa-envelope"></i> Contact</a>
+                <a href="faq.html" class="nav-link"><i class="fas fa-circle-question"></i> FAQ</a>
+            </nav>
+        </div>
+    </header>
     <div class="container">
-        <header>
-            <div class="header-content">
-                <div class="header-top">
-                    <h1 class="header-title">Ice & Wheels</h1>
-                    <button class="hamburger-btn" id="hamburger-btn" aria-label="Toggle navigation">
-                        <span></span><span></span><span></span>
-                    </button>
-                </div>
-                <p class="header-subtitle">Rink Details</p>
-                <nav class="nav-menu" id="nav-menu">
-                    <a href="index.html" class="nav-link"><i class="fas fa-house"></i> Home</a>
-                    <a href="locations.html" class="nav-link"><i class="fas fa-location-dot"></i> Find Locations</a>
-                    <a href="about.html" class="nav-link"><i class="fas fa-circle-info"></i> About</a>
-                    <a href="contact.html" class="nav-link"><i class="fas fa-envelope"></i> Contact</a>
-                    <a href="faq.html" class="nav-link"><i class="fas fa-circle-question"></i> FAQ</a>
-                </nav>
-            </div>
-        </header>
 
         <main>
             <div class="details-container">
@@ -75,10 +78,30 @@
             </div>
         </main>
 
-        <footer>
-            <p>&copy; 2025 Ice & Wheels - Your Guide to Skating in GTA</p>
-        </footer>
     </div>
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <i class="fas fa-snowflake footer-brand-icon"></i>
+                <div class="footer-brand-name">Ice & Wheels</div>
+                <p>Toronto's complete directory of ice and roller skating locations.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Explore</h4>
+                <a href="locations.html">Find Locations</a>
+                <a href="about.html">About Us</a>
+                <a href="faq.html">FAQ</a>
+            </div>
+            <div class="footer-col">
+                <h4>Help</h4>
+                <a href="contact.html">Contact Us</a>
+                <a href="faq.html">Support</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Ice & Wheels &mdash; Your Guide to Skating in GTA</p>
+        </div>
+    </footer>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="script/data.js"></script>
