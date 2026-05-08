@@ -59,4 +59,23 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('form-success').classList.add('visible');
         });
     }
+
+    // Weather widget (homepage only — wttr.in, no API key required)
+    const weatherWidget = document.getElementById('weather-widget');
+    if (weatherWidget) {
+        fetch('https://wttr.in/Toronto?format=j1')
+            .then(function(r) { return r.json(); })
+            .then(function(data) {
+                const temp = parseInt(data.current_condition[0].temp_C);
+                let icon, msg;
+                if (temp <= 0)       { icon = '❄️'; msg = 'Perfect conditions for ice skating!'; }
+                else if (temp <= 6)  { icon = '🌤️'; msg = 'Bundle up and hit the rink!'; }
+                else if (temp <= 16) { icon = '⛅'; msg = 'Great day for outdoor skating!'; }
+                else                 { icon = '☀️'; msg = 'Try indoor skating to cool off!'; }
+                document.getElementById('weather-text').innerHTML =
+                    '<strong>' + icon + ' ' + temp + '°C in Toronto</strong> &mdash; ' + msg;
+                weatherWidget.style.display = 'inline-flex';
+            })
+            .catch(function() { /* silently fail if API unreachable */ });
+    }
 });

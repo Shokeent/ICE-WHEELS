@@ -230,21 +230,21 @@ function displayResults(locations) {
             <div class="rink-card-image">
                 <img src="${location.imageUrl}" alt="${location.name}" onerror="this.src='images/ice-skating.jpg'" />
                 <button class="fav-btn${isFav ? ' active' : ''}" data-id="${location.id}" title="${isFav ? 'Remove from favourites' : 'Save to favourites'}">
-                    ${isFav ? '❤️' : '🤍'}
+                    ${isFav ? '<i class="fas fa-heart" style="color:#e74c3c"></i>' : '<i class="far fa-heart"></i>'}
                 </button>
             </div>
             <div class="rink-card-content">
                 <h3>${location.name}</h3>
-                <span class="rink-type">${location.type === 'ice' ? 'Ice Skating' : 'Roller Skating'}</span>
+                <span class="rink-type">${location.type === 'ice' ? '<i class="fas fa-snowflake"></i> Ice Skating' : '<i class="fas fa-person-skating"></i> Roller Skating'}</span>
+                <span class="status-badge status-${location.status}">
+                    <i class="fas fa-circle" style="font-size:0.45rem;vertical-align:middle"></i>
+                    ${location.status.charAt(0).toUpperCase() + location.status.slice(1)}
+                </span>
                 <div class="rink-details">
-                    <p><strong>Address:</strong> ${location.address}</p>
-                    <p>
-                        <span class="status-indicator ${statusClass}"></span>
-                        <strong>Status:</strong> ${location.status}
-                    </p>
-                    <p><strong>Today's Hours:</strong> ${getTodayHours(location.openingHours)}</p>
+                    <p><i class="fas fa-location-dot" style="color:#a0785a;margin-right:0.3rem"></i>${location.address}</p>
+                    <p><i class="fas fa-clock" style="color:#a0785a;margin-right:0.3rem"></i>${getTodayHours(location.openingHours)}</p>
                 </div>
-                <a href="details.html?id=${location.id}" class="view-details-btn">View Details</a>
+                <a href="details.html?id=${location.id}" class="view-details-btn">View Details <i class="fas fa-arrow-right" style="font-size:0.8rem;margin-left:0.3rem"></i></a>
             </div>
         `;
 
@@ -256,7 +256,7 @@ function displayResults(locations) {
             toggleFavourite(id);
             const nowFav = getFavourites().indexOf(id) > -1;
             this.classList.toggle('active', nowFav);
-            this.innerHTML = nowFav ? '❤️' : '🤍';
+            this.innerHTML = nowFav ? '<i class="fas fa-heart" style="color:#e74c3c"></i>' : '<i class="far fa-heart"></i>';
             this.title = nowFav ? 'Remove from favourites' : 'Save to favourites';
             if (showFavouritesOnly) applyFilters();
         });

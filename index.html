@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ice & Wheels - Find Your Perfect Skating Spot</title>
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inria+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
@@ -21,11 +22,11 @@
                 </div>
                 <p class="header-subtitle">Discover Toronto's Best Skating Locations</p>
                 <nav class="nav-menu" id="nav-menu">
-                    <a href="index.html" class="nav-link active">Home</a>
-                    <a href="locations.html" class="nav-link">Find Locations</a>
-                    <a href="about.html" class="nav-link">About</a>
-                    <a href="contact.html" class="nav-link">Contact</a>
-                    <a href="faq.html" class="nav-link">FAQ</a>
+                    <a href="index.html" class="nav-link active"><i class="fas fa-house"></i> Home</a>
+                    <a href="locations.html" class="nav-link"><i class="fas fa-location-dot"></i> Find Locations</a>
+                    <a href="about.html" class="nav-link"><i class="fas fa-circle-info"></i> About</a>
+                    <a href="contact.html" class="nav-link"><i class="fas fa-envelope"></i> Contact</a>
+                    <a href="faq.html" class="nav-link"><i class="fas fa-circle-question"></i> FAQ</a>
                 </nav>
             </div>
         </header>
@@ -36,6 +37,9 @@
                 <div class="hero-content">
                     <h2>Find Your Skate Spot</h2>
                     <p>Toronto's most complete directory of ice and roller skating locations</p>
+                    <div class="weather-widget" id="weather-widget" style="display:none">
+                        <span id="weather-text"></span>
+                    </div>
                     <div class="hero-stats">
                         <div class="hero-stat">
                             <span class="hero-stat-number" id="stat-total">14</span>
@@ -52,7 +56,7 @@
                     </div>
                     <form class="hero-search" action="locations.html" method="get">
                         <input type="text" name="search" class="hero-search-input" placeholder="Search rinks, areas, amenities...">
-                        <button type="submit" class="hero-search-btn">Search</button>
+                        <button type="submit" class="hero-search-btn"><i class="fas fa-magnifying-glass"></i> Search</button>
                     </form>
                     <a href="locations.html" class="button button-secondary" style="margin-top:0.8rem;display:inline-block;">Browse All Locations</a>
                 </div>

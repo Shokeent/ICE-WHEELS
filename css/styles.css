@@ -92,25 +92,40 @@ header {
    ========================================================================== */
 
 .section-hero {
-    background: linear-gradient(135deg, #f8f6f0 0%, #ede8d8 100%);
-    padding: 2.5rem 1.5rem;
+    background: linear-gradient(135deg, #faf8f5 0%, #ede5d8 55%, #e4d6c0 100%);
+    padding: 3.5rem 1.5rem;
     text-align: center;
     margin: 1.5rem 0;
-    border-radius: 15px;
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.section-hero::before {
+    content: '';
+    position: absolute;
+    top: -70px;
+    right: -70px;
+    width: 250px;
+    height: 250px;
+    background: radial-gradient(circle, rgba(139, 69, 19, 0.08) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
 }
 
 .hero-content h2 {
-    font-size: 3rem;
+    font-size: 3.6rem;
     font-weight: 700;
     color: #8B4513;
-    margin-bottom: 1rem;
+    margin-bottom: 0.7rem;
+    letter-spacing: -0.5px;
 }
 
 .hero-content p {
-    font-size: 1.2rem;
-    color: #666;
-    margin-bottom: 2rem;
-    max-width: 600px;
+    font-size: 1.15rem;
+    color: #7a6654;
+    margin-bottom: 1.5rem;
+    max-width: 520px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -336,7 +351,19 @@ header {
 }
 
 .filter-group {
-    margin-bottom: 1.5rem;
+    margin-bottom: 0;
+    padding-bottom: 1.2rem;
+    padding-top: 1.2rem;
+    border-bottom: 1px solid #f0ebe3;
+}
+
+.filter-group:first-of-type {
+    padding-top: 0;
+}
+
+.filter-group:last-of-type {
+    border-bottom: none;
+    padding-bottom: 0;
 }
 
 .filter-group h3 {
@@ -383,9 +410,10 @@ header {
     border-radius: 15px;
     padding: 0;
     margin-bottom: 1.5rem;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     cursor: pointer;
     overflow: hidden;
+    border: 1px solid #ede8d8;
 }
 
 .rink-card:hover {
@@ -406,6 +434,11 @@ header {
     height: 100%;
     object-fit: cover;
     border-radius: 15px 15px 0 0;
+    transition: transform 0.5s ease;
+}
+
+.rink-card:hover .rink-card-image img {
+    transform: scale(1.07);
 }
 
 .rink-card-content {
@@ -1194,5 +1227,127 @@ footer p {
 @media (max-width: 600px) {
     .related-grid {
         grid-template-columns: 1fr;
+    }
+}
+
+/* ==========================================================================
+   STATUS BADGE
+   ========================================================================== */
+
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.28rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    margin: 0.4rem 0 0.5rem;
+    letter-spacing: 0.3px;
+}
+
+.status-open   { background: #d1fae5; color: #065f46; }
+.status-closed { background: #fee2e2; color: #991b1b; }
+.status-maintenance { background: #fef3c7; color: #92400e; }
+
+/* ==========================================================================
+   RESULTS GRID (2-up on wider screens)
+   ========================================================================== */
+
+#results-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.2rem;
+}
+
+#results-container .rink-card {
+    margin-bottom: 0;
+}
+
+#results-container .no-results {
+    grid-column: 1 / -1;
+}
+
+/* ==========================================================================
+   WEATHER WIDGET
+   ========================================================================== */
+
+.weather-widget {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.78);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.95);
+    padding: 0.45rem 1.1rem;
+    border-radius: 25px;
+    font-size: 0.88rem;
+    color: #555;
+    margin-bottom: 1.3rem;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
+}
+
+/* ==========================================================================
+   FONT AWESOME NAV ICONS
+   ========================================================================== */
+
+.nav-link i {
+    font-size: 0.8rem;
+    margin-right: 0.2rem;
+    opacity: 0.85;
+}
+
+.filter-group h3 i {
+    font-size: 0.85rem;
+    margin-right: 0.35rem;
+    color: #a0785a;
+}
+
+/* ==========================================================================
+   BUTTON GRADIENT POLISH
+   ========================================================================== */
+
+.button-primary {
+    background: linear-gradient(135deg, #8B4513 0%, #A0522D 100%);
+    box-shadow: 0 2px 8px rgba(139, 69, 19, 0.25);
+}
+
+.button-primary:hover {
+    background: linear-gradient(135deg, #A0522D 0%, #b5622d 100%);
+    box-shadow: 0 5px 20px rgba(139, 69, 19, 0.4);
+}
+
+.view-details-btn {
+    background: linear-gradient(135deg, #8B4513 0%, #A0522D 100%);
+}
+
+.view-details-btn:hover {
+    background: linear-gradient(135deg, #A0522D 0%, #b5622d 100%);
+}
+
+/* ==========================================================================
+   SECTION CONTENT BORDER
+   ========================================================================== */
+
+.section-content {
+    border: 1px solid #ede8d8;
+}
+
+.about-card {
+    border: 1px solid #e8e0d0;
+}
+
+/* ==========================================================================
+   HERO SEARCH FA ICON ALIGNMENT
+   ========================================================================== */
+
+.hero-search-btn i {
+    margin-right: 0.3rem;
+}
+
+@media (max-width: 480px) {
+    .hero-content h2 {
+        font-size: 2.4rem;
     }
 }

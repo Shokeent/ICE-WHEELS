@@ -36,7 +36,9 @@ function displayRinkData(rink) {
         const updateFavBtn = function() {
             const favs = JSON.parse(localStorage.getItem('ice-wheels-favourites') || '[]');
             const isFav = favs.indexOf(rink.id) > -1;
-            favBtnDetail.innerHTML = isFav ? '❤️' : '🤍';
+            favBtnDetail.innerHTML = isFav
+                ? '<i class="fas fa-heart" style="color:#e74c3c"></i>'
+                : '<i class="far fa-heart"></i>';
             favBtnDetail.title = isFav ? 'Remove from favourites' : 'Save to favourites';
         };
         updateFavBtn();
@@ -62,10 +64,10 @@ function displayRinkData(rink) {
                 navigator.share(shareData);
             } else {
                 navigator.clipboard.writeText(window.location.href).then(function() {
-                    shareBtn.innerHTML = '✓';
+                    shareBtn.innerHTML = '<i class="fas fa-check"></i>';
                     shareBtn.title = 'Link copied!';
                     setTimeout(function() {
-                        shareBtn.innerHTML = '🔗';
+                        shareBtn.innerHTML = '<i class="fas fa-share-nodes"></i>';
                         shareBtn.title = 'Share this location';
                     }, 2000);
                 });
@@ -86,7 +88,7 @@ function displayRinkData(rink) {
     if (rink.coordinates) {
         const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${rink.coordinates.lat},${rink.coordinates.lng}`;
         document.getElementById('directions-container').innerHTML =
-            `<a href="${mapsUrl}" target="_blank" rel="noopener noreferrer" class="directions-btn">📍 Get Directions</a>`;
+            `<a href="${mapsUrl}" target="_blank" rel="noopener noreferrer" class="directions-btn"><i class="fas fa-route"></i> Get Directions</a>`;
     }
 
     // Opening hours
