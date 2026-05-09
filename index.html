@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ice & Wheels - Find Your Perfect Skating Spot</title>
+    <meta name="description" content="Toronto's most complete directory of ice and roller skating locations. Find rinks, hours, rentals, and more across the GTA.">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Ice & Wheels - Find Your Perfect Skating Spot">
+    <meta property="og:description" content="Toronto's most complete directory of ice and roller skating locations. Find rinks, hours, rentals, and more across the GTA.">
+    <meta property="og:image" content="images/harbourfront.jpg">
+    <meta name="theme-color" content="#1a0d06">
+    <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -26,6 +33,7 @@
             <nav class="nav-menu" id="nav-menu">
                 <a href="index.html" class="nav-link active"><i class="fas fa-house"></i> Home</a>
                 <a href="locations.html" class="nav-link"><i class="fas fa-location-dot"></i> Find Locations</a>
+                <a href="map.html" class="nav-link"><i class="fas fa-map"></i> Map</a>
                 <a href="about.html" class="nav-link"><i class="fas fa-circle-info"></i> About</a>
                 <a href="contact.html" class="nav-link"><i class="fas fa-envelope"></i> Contact</a>
                 <a href="faq.html" class="nav-link"><i class="fas fa-circle-question"></i> FAQ</a>
@@ -122,6 +130,7 @@
             <div class="footer-col">
                 <h4>Explore</h4>
                 <a href="locations.html">Find Locations</a>
+                <a href="map.html">Map View</a>
                 <a href="about.html">About Us</a>
                 <a href="faq.html">FAQ</a>
             </div>
@@ -140,8 +149,29 @@
     <script>
         if (typeof skatingLocations !== 'undefined') {
             document.getElementById('stat-total').textContent = skatingLocations.length;
+
+            function _parseMin(str) {
+                var m = str.trim().match(/^(\d{1,2}):(\d{2})\s*([AP]M)$/i);
+                if (!m) return null;
+                var h = parseInt(m[1]), min = parseInt(m[2]), ampm = m[3].toUpperCase();
+                if (ampm === 'PM' && h !== 12) h += 12;
+                if (ampm === 'AM' && h === 12) h = 0;
+                return h * 60 + min;
+            }
+            function _isOpenNow(oh) {
+                var days = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
+                var hrs = oh[days[new Date().getDay()]] || '';
+                var match = hrs.match(/(\d{1,2}:\d{2}\s*[AP]M)\s*-\s*(\d{1,2}:\d{2}\s*[AP]M)/i);
+                if (!match) return false;
+                var o = _parseMin(match[1]), c = _parseMin(match[2]);
+                if (o === null || c === null) return false;
+                var now = new Date(), cur = now.getHours() * 60 + now.getMinutes();
+                return cur >= o && cur < c;
+            }
             document.getElementById('stat-open').textContent =
-                skatingLocations.filter(function(l) { return l.status === 'open'; }).length;
+                skatingLocations.filter(function(l) {
+                    return l.status !== 'maintenance' && _isOpenNow(l.openingHours);
+                }).length;
         }
     </script>
     <script src="script/script.js"></script>

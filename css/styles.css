@@ -1448,3 +1448,99 @@ footer {
         padding: 2.5rem 1.5rem 1.5rem;
     }
 }
+
+/* ==========================================================================
+   MAP PAGE
+   ========================================================================== */
+
+#full-map {
+    height: 600px;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #e8e0d0;
+    margin-top: 1.25rem;
+}
+
+.map-page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.map-legend {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.82rem;
+    color: #555;
+}
+
+.legend-dot {
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    display: inline-block;
+    flex-shrink: 0;
+    border: 2px solid rgba(0,0,0,0.12);
+}
+
+.legend-open        { background: #28a745; }
+.legend-closed      { background: #dc3545; }
+.legend-maintenance { background: #f0a500; }
+.legend-ice         { background: #3b82f6; }
+.legend-roller      { background: #8b5cf6; }
+
+/* Leaflet popup custom styling */
+.map-popup { font-family: 'Inria Sans', sans-serif; min-width: 210px; }
+.map-popup-title  { font-size: 1rem; font-weight: 700; color: #1a0d06; margin-bottom: 0.25rem; }
+.map-popup-status { font-size: 0.82rem; font-weight: 600; margin-bottom: 0.3rem; }
+.map-popup-address,
+.map-popup-hours  { font-size: 0.82rem; color: #555; margin-bottom: 0.2rem; }
+.map-popup-address i,
+.map-popup-hours i { color: #a0785a; margin-right: 0.3rem; }
+.map-popup-link {
+    display: inline-block;
+    margin-top: 0.55rem;
+    background: #8B4513;
+    color: #fff;
+    padding: 0.3rem 0.85rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+.map-popup-link:hover { background: #6b3410; color: #fff; }
+
+@media (max-width: 640px) {
+    #full-map { height: 440px; }
+    .map-page-header { flex-direction: column; align-items: flex-start; }
+}
+
+/* ==========================================================================
+   DISTANCE BADGE (Near Me sort)
+   ========================================================================== */
+
+.distance-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    background: #eff6ff;
+    color: #1d4ed8;
+    border: 1px solid #bfdbfe;
+    border-radius: 20px;
+    padding: 0.18rem 0.65rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    margin-top: 0.45rem;
+    margin-bottom: 0.1rem;
+}

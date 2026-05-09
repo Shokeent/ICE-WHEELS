@@ -1,5 +1,28 @@
 // FAQ functionality and smooth scrolling
 document.addEventListener('DOMContentLoaded', function() {
+    // SW registration
+    if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(function() {});
+
+    // Dark mode init
+    (function() {
+        var saved = localStorage.getItem('ice-wheels-theme');
+        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var theme = saved || (prefersDark ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+        var icon = document.getElementById('theme-icon');
+        if (icon) icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+    })();
+    var themeBtn = document.getElementById('theme-toggle');
+    if (themeBtn) {
+        themeBtn.addEventListener('click', function() {
+            var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            var newTheme = isDark ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('ice-wheels-theme', newTheme);
+            var icon = document.getElementById('theme-icon');
+            if (icon) icon.className = newTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+        });
+    }
     // FAQ toggle functionality
     const faqQuestions = document.querySelectorAll('.faq-question');
 

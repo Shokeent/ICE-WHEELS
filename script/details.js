@@ -1,4 +1,27 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // SW registration
+    if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(function() {});
+
+    // Dark mode
+    (function() {
+        var saved = localStorage.getItem('ice-wheels-theme');
+        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var theme = saved || (prefersDark ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+        var icon = document.getElementById('theme-icon');
+        if (icon) icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+    })();
+    var themeBtn = document.getElementById('theme-toggle');
+    if (themeBtn) {
+        themeBtn.addEventListener('click', function() {
+            var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            var newTheme = isDark ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('ice-wheels-theme', newTheme);
+            var icon = document.getElementById('theme-icon');
+            if (icon) icon.className = newTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+        });
+    }
     if (typeof skatingLocations === 'undefined') {
         displayError("Data not loaded. Please refresh the page.");
         return;
@@ -29,6 +52,15 @@ function loadRinkDetails(rinkId) {
 function displayRinkData(rink) {
     document.title = rink.name + ' - Ice & Wheels';
     document.getElementById('rink-name').textContent = rink.name;
+
+    // Update OG meta tags for this specific location
+    function setMeta(prop, content) {
+        var el = document.querySelector('meta[property="' + prop + '"]');
+        if (el) el.setAttribute('content', content);
+    }
+    setMeta('og:title', rink.name + ' - Ice & Wheels');
+    setMeta('og:description', rink.description ? rink.description.substring(0, 155) + '…' : 'Toronto skating location details.');
+    setMeta('og:image', rink.imageUrl || 'images/harbourfront.jpg');
 
     // Favourite button
     const favBtnDetail = document.getElementById('fav-btn-detail');

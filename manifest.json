@@ -1,0 +1,17 @@
+{
+    "name": "Ice & Wheels",
+    "short_name": "Ice & Wheels",
+    "description": "Toronto's complete directory of ice and roller skating locations",
+    "start_url": "/index.html",
+    "display": "standalone",
+    "background_color": "#1a0d06",
+    "theme_color": "#1a0d06",
+    "icons": [
+        {
+            "src": "images/icon.svg",
+            "sizes": "any",
+            "type": "image/svg+xml",
+            "purpose": "any maskable"
+        }
+    ]
+}
