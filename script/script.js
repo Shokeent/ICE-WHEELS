@@ -1,9 +1,8 @@
-// FAQ functionality and smooth scrolling
 document.addEventListener('DOMContentLoaded', function() {
     // SW registration
     if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(function() {});
 
-    // Dark mode init
+    // ===== DARK MODE =====
     (function() {
         var saved = localStorage.getItem('ice-wheels-theme');
         var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -23,43 +22,45 @@ document.addEventListener('DOMContentLoaded', function() {
             if (icon) icon.className = newTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
         });
     }
-    // FAQ toggle functionality
-    const faqQuestions = document.querySelectorAll('.faq-question');
 
-    faqQuestions.forEach(question => {
-        question.addEventListener('click', function() {
-            const faqItem = this.parentElement;
-            const isActive = faqItem.classList.contains('active');
-
-            // Close all FAQ items
-            document.querySelectorAll('.faq-item').forEach(item => {
-                item.classList.remove('active');
+    // ===== FRENCH LANGUAGE TOGGLE =====
+    (function() {
+        var lang = localStorage.getItem('ice-wheels-lang') || 'en';
+        applyLanguage(lang);
+        var langBtn = document.getElementById('lang-toggle');
+        if (langBtn) {
+            langBtn.textContent = lang === 'fr' ? 'EN' : 'FR';
+            langBtn.addEventListener('click', function() {
+                var current = localStorage.getItem('ice-wheels-lang') || 'en';
+                var next = current === 'en' ? 'fr' : 'en';
+                localStorage.setItem('ice-wheels-lang', next);
+                applyLanguage(next);
+                this.textContent = next === 'fr' ? 'EN' : 'FR';
             });
+        }
+    })();
 
-            // Toggle current item
-            if (!isActive) {
-                faqItem.classList.add('active');
-            }
+    // ===== FAQ =====
+    document.querySelectorAll('.faq-question').forEach(function(question) {
+        question.addEventListener('click', function() {
+            var faqItem = this.parentElement;
+            var isActive = faqItem.classList.contains('active');
+            document.querySelectorAll('.faq-item').forEach(function(item) { item.classList.remove('active'); });
+            if (!isActive) faqItem.classList.add('active');
         });
     });
 
-    // Smooth scrolling for navigation links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
+    // ===== SMOOTH SCROLL =====
+    document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+        anchor.addEventListener('click', function(e) {
+            var target = document.querySelector(this.getAttribute('href'));
+            if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
         });
     });
 
-    // Hamburger menu toggle
-    const hamburgerBtn = document.getElementById('hamburger-btn');
-    const navMenu = document.getElementById('nav-menu');
+    // ===== HAMBURGER =====
+    var hamburgerBtn = document.getElementById('hamburger-btn');
+    var navMenu = document.getElementById('nav-menu');
     if (hamburgerBtn && navMenu) {
         hamburgerBtn.addEventListener('click', function() {
             navMenu.classList.toggle('nav-open');
@@ -73,8 +74,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Contact form handler
-    const contactForm = document.getElementById('contact-form');
+    // ===== CONTACT FORM =====
+    var contactForm = document.getElementById('contact-form');
     if (contactForm) {
         contactForm.addEventListener('submit', function(e) {
             e.preventDefault();
@@ -83,14 +84,14 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Weather widget (homepage only — wttr.in, no API key required)
-    const weatherWidget = document.getElementById('weather-widget');
+    // ===== WEATHER WIDGET =====
+    var weatherWidget = document.getElementById('weather-widget');
     if (weatherWidget) {
         fetch('https://wttr.in/Toronto?format=j1')
             .then(function(r) { return r.json(); })
             .then(function(data) {
-                const temp = parseInt(data.current_condition[0].temp_C);
-                let icon, msg;
+                var temp = parseInt(data.current_condition[0].temp_C);
+                var icon, msg;
                 if (temp <= 0)       { icon = '❄️'; msg = 'Perfect conditions for ice skating!'; }
                 else if (temp <= 6)  { icon = '🌤️'; msg = 'Bundle up and hit the rink!'; }
                 else if (temp <= 16) { icon = '⛅'; msg = 'Great day for outdoor skating!'; }
@@ -99,6 +100,142 @@ document.addEventListener('DOMContentLoaded', function() {
                     '<strong>' + icon + ' ' + temp + '°C in Toronto</strong> &mdash; ' + msg;
                 weatherWidget.style.display = 'inline-flex';
             })
-            .catch(function() { /* silently fail if API unreachable */ });
+            .catch(function() {});
+    }
+
+    // ===== SCROLL TO TOP =====
+    var scrollBtn = document.createElement('button');
+    scrollBtn.id = 'scroll-top-btn';
+    scrollBtn.className = 'scroll-top-btn';
+    scrollBtn.setAttribute('aria-label', 'Scroll to top');
+    scrollBtn.innerHTML = '<i class="fas fa-chevron-up"></i>';
+    document.body.appendChild(scrollBtn);
+    window.addEventListener('scroll', function() {
+        scrollBtn.classList.toggle('visible', window.scrollY > 300);
+    }, { passive: true });
+    scrollBtn.addEventListener('click', function() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // ===== KEYBOARD SHORTCUTS =====
+    document.addEventListener('keydown', function(e) {
+        if (e.target.matches('input, textarea, select')) return;
+        if (e.key === 'f' || e.key === 'F') {
+            var search = document.getElementById('search-input');
+            if (search) { e.preventDefault(); search.focus(); }
+            else window.location.href = 'locations.html';
+        } else if (e.key === 'm' || e.key === 'M') {
+            window.location.href = 'map.html';
+        } else if (e.key === 'Escape') {
+            var modal = document.getElementById('shared-modal');
+            if (modal) {
+                modal.classList.remove('visible');
+                setTimeout(function() { if (modal.parentNode) modal.remove(); }, 250);
+            }
+            var suggestions = document.getElementById('search-suggestions');
+            if (suggestions) suggestions.style.display = 'none';
+        }
+    });
+
+    // ===== KEYBOARD SHORTCUT HINT =====
+    var hintBtn = document.createElement('button');
+    hintBtn.className = 'shortcut-hint-btn';
+    hintBtn.setAttribute('aria-label', 'Keyboard shortcuts');
+    hintBtn.innerHTML = '<i class="fas fa-keyboard"></i>';
+    document.body.appendChild(hintBtn);
+    var hintTooltip = document.createElement('div');
+    hintTooltip.className = 'shortcut-tooltip';
+    hintTooltip.innerHTML =
+        '<strong>Keyboard Shortcuts</strong>' +
+        '<div><kbd>F</kbd> Focus search</div>' +
+        '<div><kbd>M</kbd> Open map</div>' +
+        '<div><kbd>Esc</kbd> Close modal</div>';
+    hintBtn.appendChild(hintTooltip);
+    hintBtn.addEventListener('click', function() { hintTooltip.classList.toggle('visible'); });
+    document.addEventListener('click', function(e) {
+        if (!hintBtn.contains(e.target)) hintTooltip.classList.remove('visible');
+    });
+
+    // ===== SURPRISE ME (homepage only) =====
+    var surpriseBtn = document.getElementById('surprise-me-btn');
+    if (surpriseBtn && typeof skatingLocations !== 'undefined') {
+        surpriseBtn.addEventListener('click', function() {
+            var open = skatingLocations.filter(function(l) { return l.status === 'open'; });
+            var pool = open.length ? open : skatingLocations;
+            var pick = pool[Math.floor(Math.random() * pool.length)];
+            window.location.href = 'details.html?id=' + pick.id;
+        });
+    }
+
+    // ===== RECENTLY VIEWED (homepage only) =====
+    renderRecentlyViewed();
+
+    // ===== HOMEPAGE STATS =====
+    if (typeof skatingLocations !== 'undefined') {
+        var statTotal = document.getElementById('stat-total');
+        var statOpen = document.getElementById('stat-open');
+        var statVisits = document.getElementById('stat-visits');
+        if (statTotal) statTotal.textContent = skatingLocations.length;
+        if (statOpen) {
+            statOpen.textContent = skatingLocations.filter(function(l) {
+                return l.status !== 'maintenance' && _isOpenNow(l.openingHours);
+            }).length;
+        }
+        if (statVisits) {
+            try {
+                var checkins = JSON.parse(localStorage.getItem('ice-wheels-checkins') || '{}');
+                var total = Object.values(checkins).reduce(function(sum, arr) { return sum + arr.length; }, 0);
+                statVisits.textContent = total;
+            } catch (e) { statVisits.textContent = '0'; }
+        }
     }
 });
+
+function applyLanguage(lang) {
+    document.querySelectorAll('[data-en]').forEach(function(el) {
+        el.textContent = lang === 'fr' ? (el.dataset.fr || el.textContent) : el.dataset.en;
+    });
+}
+
+function renderRecentlyViewed() {
+    var section = document.getElementById('recently-viewed-section');
+    if (!section || typeof skatingLocations === 'undefined') return;
+    try {
+        var ids = JSON.parse(localStorage.getItem('ice-wheels-recently-viewed') || '[]');
+        if (!ids.length) return;
+        var locs = ids.map(function(id) {
+            return skatingLocations.find(function(l) { return l.id === id; });
+        }).filter(Boolean);
+        if (!locs.length) return;
+        section.style.display = '';
+        var grid = document.getElementById('recently-viewed-grid');
+        if (!grid) return;
+        grid.innerHTML = locs.map(function(loc) {
+            return '<a href="details.html?id=' + loc.id + '" class="rv-card">' +
+                '<img src="' + loc.imageUrl + '" alt="' + loc.name + '" loading="lazy" onerror="this.src=\'images/ice-skating.jpg\'">' +
+                '<div class="rv-card-info">' +
+                    '<span class="rv-card-name">' + loc.name + '</span>' +
+                    '<span class="status-badge status-' + loc.status + '" style="font-size:0.7rem;padding:0.1rem 0.5rem">' + loc.status + '</span>' +
+                '</div></a>';
+        }).join('');
+    } catch (e) {}
+}
+
+function _parseMin(str) {
+    var m = str.trim().match(/^(\d{1,2}):(\d{2})\s*([AP]M)$/i);
+    if (!m) return null;
+    var h = parseInt(m[1]), min = parseInt(m[2]), ampm = m[3].toUpperCase();
+    if (ampm === 'PM' && h !== 12) h += 12;
+    if (ampm === 'AM' && h === 12) h = 0;
+    return h * 60 + min;
+}
+function _isOpenNow(oh) {
+    var days = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
+    var hrs = oh[days[new Date().getDay()]] || '';
+    var match = hrs.match(/(\d{1,2}:\d{2}\s*[AP]M)\s*-\s*(\d{1,2}:\d{2}\s*[AP]M)/i);
+    if (!match) return false;
+    var o = _parseMin(match[1]), c = _parseMin(match[2]);
+    if (o === null || c === null) return false;
+    var now = new Date(), cur = now.getHours() * 60 + now.getMinutes();
+    return cur >= o && cur < c;
+}

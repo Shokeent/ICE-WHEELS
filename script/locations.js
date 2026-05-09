@@ -171,6 +171,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (typeof skatingLocations !== 'undefined' && skatingLocations.length > 0) {
         applyFilters();
+        if (typeof updateTripUI !== 'undefined') updateTripUI();
+        if (typeof updateCompareUI !== 'undefined') updateCompareUI();
     } else {
         const resultsContainer = document.getElementById('results-container');
         if (resultsContainer) {
@@ -510,6 +512,10 @@ function displayResults(locations, sortBy) {
             distanceHtml = '<span class="distance-badge"><i class="fas fa-location-crosshairs"></i> ' + km.toFixed(1) + ' km away</span>';
         }
 
+        var cardStars = (typeof getCardStarHtml !== 'undefined') ? getCardStarHtml(location.id) : '';
+        var inTrip = (typeof isInTrip !== 'undefined') ? isInTrip(location.id) : false;
+        var inCompare = (typeof getCompareIds !== 'undefined') ? (getCompareIds().indexOf(location.id) > -1) : false;
+
         const card = document.createElement('div');
         card.className = 'rink-card';
         card.innerHTML =
@@ -521,6 +527,7 @@ function displayResults(locations, sortBy) {
             '</div>' +
             '<div class="rink-card-content">' +
                 '<h3>' + location.name + '</h3>' +
+                (cardStars ? '<div class="card-stars-row">' + cardStars + '</div>' : '') +
                 '<span class="rink-type">' + (location.type === 'ice' ? '<i class="fas fa-snowflake"></i> Ice Skating' : '<i class="fas fa-person-skating"></i> Roller Skating') + '</span>' +
                 '<span class="status-badge status-' + liveStatus + '">' +
                     '<i class="fas fa-circle" style="font-size:0.45rem;vertical-align:middle"></i> ' + liveLabel +
@@ -530,7 +537,15 @@ function displayResults(locations, sortBy) {
                     '<p><i class="fas fa-clock" style="color:#a0785a;margin-right:0.3rem"></i>' + getTodayHours(location.openingHours) + '</p>' +
                 '</div>' +
                 distanceHtml +
-                '<a href="details.html?id=' + location.id + '" class="view-details-btn">View Details <i class="fas fa-arrow-right" style="font-size:0.8rem;margin-left:0.3rem"></i></a>' +
+                '<div class="card-action-row">' +
+                    '<a href="details.html?id=' + location.id + '" class="view-details-btn">View Details <i class="fas fa-arrow-right" style="font-size:0.8rem;margin-left:0.3rem"></i></a>' +
+                    '<button class="card-trip-btn add-trip-btn' + (inTrip ? ' active' : '') + '" data-id="' + location.id + '" title="' + (inTrip ? 'Remove from trip' : 'Add to trip') + '">' +
+                        '<i class="fas fa-route"></i>' +
+                    '</button>' +
+                    '<button class="card-compare-btn compare-btn' + (inCompare ? ' active' : '') + '" data-id="' + location.id + '" title="Compare this location">' +
+                        '<i class="fas fa-' + (inCompare ? 'check' : 'sliders') + '"></i>' +
+                    '</button>' +
+                '</div>' +
             '</div>';
 
         const favBtn = card.querySelector('.fav-btn');
@@ -545,6 +560,26 @@ function displayResults(locations, sortBy) {
             this.title = nowFav ? 'Remove from favourites' : 'Save to favourites';
             if (showFavouritesOnly) applyFilters();
         });
+
+        var tripBtn = card.querySelector('.card-trip-btn');
+        if (tripBtn && typeof addToTrip !== 'undefined') {
+            tripBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                var id = parseInt(this.dataset.id);
+                if (isInTrip(id)) { removeFromTrip(id); } else { addToTrip(id); }
+                updateTripUI();
+            });
+        }
+
+        var compareBtn = card.querySelector('.card-compare-btn');
+        if (compareBtn && typeof toggleCompare !== 'undefined') {
+            compareBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                toggleCompare(parseInt(this.dataset.id));
+            });
+        }
 
         resultsContainer.appendChild(card);
     });

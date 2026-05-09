@@ -1,4 +1,4 @@
-// used ai to get data 
+// used ai to get data
 
 var skatingLocations = [
     // Ice Skating Locations
@@ -26,16 +26,16 @@ var skatingLocations = [
         rentals: {
             available: true,
             items: ["Ice Skates", "Helmets"],
-            prices: {
-                skates: "$12",
-                helmets: "$5"
-            }
+            prices: { skates: "$12", helmets: "$5" }
         },
         entryFee: "Free",
         imageUrl: "images/harbourfront.jpg",
+        gallery: ["images/harbourfront.jpg", "images/nathan-phillips.jpg"],
         description: "Scenic outdoor rink overlooking Lake Ontario with beautiful waterfront views. The Harbourfront Centre Rink offers family-friendly skating in the heart of downtown Toronto, perfect for romantic evenings and daytime skating adventures.",
         weather: "-2°C, light snow",
         specialEvents: "Friday Night Skate with DJ (8PM-11PM)",
+        openMonths: [11, 12, 1, 2, 3],
+        iceConditions: { quality: 5, lastResurfaced: "Jan 6, 2025", notes: "Premium ice with excellent edge hold — resurfaced twice daily" },
         proTips: [
             "Most scenic during sunset hours",
             "Hot chocolate from the Lake View Café is a must-try",
@@ -67,16 +67,16 @@ var skatingLocations = [
         rentals: {
             available: true,
             items: ["Ice Skates", "Helmets"],
-            prices: {
-                skates: "$10",
-                helmets: "$5"
-            }
+            prices: { skates: "$10", helmets: "$5" }
         },
         entryFee: "Free",
         imageUrl: "images/nathan-phillips.jpg",
+        gallery: ["images/nathan-phillips.jpg", "images/harbourfront.jpg"],
         description: "Iconic outdoor skating rink in front of Toronto City Hall. The rink features the famous TORONTO sign backdrop, offering a quintessential Toronto winter experience with a festive atmosphere.",
         weather: "-3°C, clear skies",
         specialEvents: "Holiday Light Show (Daily, 6PM-10PM)",
+        openMonths: [11, 12, 1, 2, 3],
+        iceConditions: { quality: 4, lastResurfaced: "Jan 5, 2025", notes: "Good surface — minor rough patches near boards, smooth in centre" },
         proTips: [
             "Take photos with the TORONTO sign in the background",
             "Underground parking available at City Hall",
@@ -108,17 +108,16 @@ var skatingLocations = [
         rentals: {
             available: true,
             items: ["Ice Skates", "Helmets", "Skating Aids"],
-            prices: {
-                skates: "$15",
-                helmets: "$5",
-                aids: "$8"
-            }
+            prices: { skates: "$15", helmets: "$5", aids: "$8" }
         },
         entryFee: "Free",
         imageUrl: "images/bentway.jpg",
+        gallery: ["images/bentway.jpg", "images/colonel-smith.jpg"],
         description: "Glide beneath Toronto's Gardiner Expressway at The Bentway Skate Trail, a unique 220-metre figure-eight ice path. Known for its urban vibe and lively atmosphere, this trail offers a one-of-a-kind winter skating experience.",
         weather: "-1°C, clear skies",
         specialEvents: "DJ skate nights on Fridays",
+        openMonths: [11, 12, 1, 2, 3],
+        iceConditions: { quality: 4, lastResurfaced: "Jan 7, 2025", notes: "Smooth and fast — trail format means less wear than a rink" },
         proTips: [
             "Weekends: Arrive early to avoid long rental lines",
             "Hot Beverages: Grab a hot chocolate from the on-site vendor",
@@ -147,14 +146,15 @@ var skatingLocations = [
             weekdays: "9:00 AM - 10:00 PM",
             weekends: "9:00 AM - 10:00 PM"
         },
-        rentals: {
-            available: false
-        },
+        rentals: { available: false },
         entryFee: "Free",
         imageUrl: "images/colonel-smith.jpg",
+        gallery: ["images/colonel-smith.jpg", "images/bentway.jpg"],
         description: "This figure-eight shaped skating trail offers a unique experience with its natural setting in Etobicoke. Perfect for recreational skaters looking for a longer path rather than a traditional rink.",
         weather: "-4°C, light snow",
         specialEvents: "Morning Skate Club (Saturdays, 8AM-9AM)",
+        openMonths: [12, 1, 2, 3],
+        iceConditions: { quality: 3, lastResurfaced: "Jan 4, 2025", notes: "Natural refrigeration — quality varies by temperature; best early morning" },
         proTips: [
             "Bring your own skates (no rentals available)",
             "Plenty of free parking available",
@@ -183,14 +183,15 @@ var skatingLocations = [
             weekdays: "Closed for season",
             weekends: "Closed for season"
         },
-        rentals: {
-            available: false
-        },
+        rentals: { available: false },
         entryFee: "Free",
         imageUrl: "images/north-york-civic.jpg",
+        gallery: ["images/north-york-civic.jpg"],
         description: "A community favorite in North York, this outdoor rink is currently closed for the season. Will reopen in winter 2025 with improved facilities.",
         weather: "N/A - Closed",
         specialEvents: "Grand Reopening Event (November 2025)",
+        openMonths: [11, 12, 1, 2, 3],
+        iceConditions: { quality: 0, lastResurfaced: "N/A — closed for season", notes: "Rink closed until November 2025" },
         proTips: [
             "Check website for reopening announcements",
             "Will feature new lighting system next season",
@@ -219,14 +220,15 @@ var skatingLocations = [
             weekdays: "Varies - See daily schedule",
             weekends: "9:00 AM - 10:00 PM"
         },
-        rentals: {
-            available: false
-        },
+        rentals: { available: false },
         entryFee: "Free",
         imageUrl: "images/greenwood.jpg",
+        gallery: ["images/greenwood.jpg"],
         description: "Toronto's first covered outdoor artificial ice rink. Currently undergoing maintenance until Thursday. Features both a hockey rink and a leisure skating trail.",
         weather: "N/A - Under maintenance",
         specialEvents: "Reopening celebration (Thursday, 12PM)",
+        openMonths: [11, 12, 1, 2, 3],
+        iceConditions: { quality: 0, lastResurfaced: "Pending — post-maintenance resurface scheduled", notes: "Under maintenance; will be freshly resurfaced on reopening" },
         proTips: [
             "Maintenance scheduled to end Wednesday evening",
             "Thursday afternoon will be freshly resurfaced ice",
@@ -258,17 +260,16 @@ var skatingLocations = [
         rentals: {
             available: true,
             items: ["Ice Skates", "Helmets", "Skating Aids"],
-            prices: {
-                skates: "$8",
-                helmets: "$4",
-                aids: "$5"
-            }
+            prices: { skates: "$8", helmets: "$4", aids: "$5" }
         },
         entryFee: "$5 (Free for children under 12)",
         imageUrl: "images/scarborough-civic.jpg",
+        gallery: ["images/scarborough-civic.jpg", "images/north-york-civic.jpg"],
         description: "Indoor skating facility with climate-controlled environment. Perfect for beginners with trained staff offering basic skating lessons on weekends.",
         weather: "Indoor facility - 15°C",
         specialEvents: "Learn to Skate Workshop (Saturdays, 11AM-12PM)",
+        openMonths: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+        iceConditions: { quality: 5, lastResurfaced: "Jan 8, 2025", notes: "Machine-maintained indoor ice — consistent and fast year-round" },
         proTips: [
             "Half-price Tuesdays for all ages",
             "Less crowded during weekday afternoons",
@@ -276,7 +277,7 @@ var skatingLocations = [
             "Skate sharpening services available ($10)"
         ]
     },
-    
+
     // Roller Skating Locations
     {
         id: 8,
@@ -302,17 +303,15 @@ var skatingLocations = [
         rentals: {
             available: true,
             items: ["Roller Skates", "Inline Skates", "Protective Gear"],
-            prices: {
-                rollerskates: "$15",
-                inlineskates: "$18",
-                protectivegear: "$8"
-            }
+            prices: { rollerskates: "$15", inlineskates: "$18", protectivegear: "$8" }
         },
         entryFee: "$12",
         imageUrl: "images/rollerskating.jpg",
+        gallery: ["images/rollerskating.jpg", "images/urban-roller.jpg"],
         description: "Classic roller rink with disco lights and weekend DJ. Features a smooth maple hardwood floor and state-of-the-art sound system for the ultimate roller disco experience.",
         weather: "Indoor facility - 22°C",
         specialEvents: "Disco Night (Fridays, 8PM-11PM)",
+        openMonths: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
         proTips: [
             "Adults-only night every second Thursday",
             "Special beginner's hour on Sundays 1PM-2PM",
@@ -344,16 +343,15 @@ var skatingLocations = [
         rentals: {
             available: true,
             items: ["Roller Skates", "Protective Gear"],
-            prices: {
-                rollerskates: "$12",
-                protectivegear: "$8"
-            }
+            prices: { rollerskates: "$12", protectivegear: "$8" }
         },
         entryFee: "$15",
         imageUrl: "images/rollerskating2.jpg",
+        gallery: ["images/rollerskating2.jpg"],
         description: "Currently closed for floor resurfacing. Reopening next month with a brand new polished concrete floor, perfect for smooth rolling and advanced maneuvers.",
         weather: "Indoor facility - Closed",
         specialEvents: "Grand Reopening Party (May 15, 2025)",
+        openMonths: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
         proTips: [
             "Follow social media for reopening updates",
             "Sign up for early-bird reopening discount",
@@ -385,17 +383,15 @@ var skatingLocations = [
         rentals: {
             available: true,
             items: ["Roller Skates", "Inline Skates", "Protective Gear"],
-            prices: {
-                rollerskates: "$14",
-                inlineskates: "$16",
-                protectivegear: "$10"
-            }
+            prices: { rollerskates: "$14", inlineskates: "$16", protectivegear: "$10" }
         },
         entryFee: "$13 (Students: $10)",
         imageUrl: "images/west-end-wheels.jpg",
+        gallery: ["images/west-end-wheels.jpg", "images/rollerskating.jpg"],
         description: "Family-friendly roller rink with separate areas for beginners and advanced skaters. Features bumper rails for beginners and ramps for advanced skaters.",
         weather: "Indoor facility - 21°C",
         specialEvents: "Student Night (Thursdays - $5 entry with valid ID)",
+        openMonths: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
         proTips: [
             "Tuesday afternoon has the smallest crowds",
             "Birthday package includes private instruction",
@@ -427,17 +423,15 @@ var skatingLocations = [
         rentals: {
             available: true,
             items: ["Premium Quad Skates", "Inline Skates", "Full Protection Set"],
-            prices: {
-                quadskates: "$20",
-                inlineskates: "$20",
-                protectionset: "$15"
-            }
+            prices: { quadskates: "$20", inlineskates: "$20", protectionset: "$15" }
         },
         entryFee: "$18",
         imageUrl: "images/urban-roller.jpg",
+        gallery: ["images/urban-roller.jpg", "images/west-end-wheels.jpg"],
         description: "Trendy downtown roller rink with artistic vibes. Features smooth polished concrete floors, art installations, and a cafe serving craft beverages. Popular with the young professional crowd.",
         weather: "Indoor facility - 20°C",
         specialEvents: "Roller Dance Night (Wednesdays, 8PM-10PM)",
+        openMonths: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
         proTips: [
             "Reserve skates online to skip the line",
             "Monday night beginners' workshops available",
@@ -469,17 +463,14 @@ var skatingLocations = [
         rentals: {
             available: true,
             items: ["Roller Skates", "Inline Skates", "Protective Gear", "Light-up Wheels"],
-            prices: {
-                rollerskates: "$12",
-                inlineskates: "$15",
-                protectivegear: "$8",
-                lightupwheels: "$5 additional"
-            }
+            prices: { rollerskates: "$12", inlineskates: "$15", protectivegear: "$8", lightupwheels: "$5 additional" }
         },
         entryFee: "$14 (Family package: $45 for 4)",
         imageUrl: "images/north-york-roll.jpg",
+        gallery: ["images/north-york-roll.jpg", "images/rollerskating2.jpg"],
         description: "Large, modern roller arena with specialized sport court flooring. Features separate areas for free skating and skill development. Popular for family outings with children's learn-to-skate programs.",
         specialEvents: "Family Skate Sunday Mornings (10AM-12PM)",
+        openMonths: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
         proTips: [
             "Kids under 8 skate free on Saturday mornings",
             "Parking validated with admission",
@@ -508,13 +499,13 @@ var skatingLocations = [
             weekdays: "Sunrise to Sunset",
             weekends: "Sunrise to Sunset"
         },
-        rentals: {
-            available: false
-        },
+        rentals: { available: false },
         entryFee: "Free",
         imageUrl: "images/riverdale-roller.jpg",
+        gallery: ["images/riverdale-roller.jpg", "images/waterfront-trail.jpg"],
         description: "Smooth paved path winding through Riverdale Park with beautiful city views. Perfect for roller skating and blading with gentle slopes and wide paths for skaters of all levels.",
         specialEvents: "Thursday Evening Roller Group (6PM-8PM)",
+        openMonths: [4, 5, 6, 7, 8, 9, 10],
         proTips: [
             "Best city skyline views at sunset",
             "Seasonal food vendors during summer months",
@@ -546,17 +537,15 @@ var skatingLocations = [
         rentals: {
             available: true,
             items: ["Roller Skates", "Inline Skates", "Protective Gear"],
-            prices: {
-                rollerskates: "$15/hour",
-                inlineskates: "$15/hour",
-                protectivegear: "$5/hour"
-            },
+            prices: { rollerskates: "$15/hour", inlineskates: "$15/hour", protectivegear: "$5/hour" },
             location: "Rental kiosk at HTO Park (weekends only, 10AM-6PM)"
         },
         entryFee: "Free",
         imageUrl: "images/waterfront-trail.jpg",
+        gallery: ["images/waterfront-trail.jpg", "images/riverdale-roller.jpg"],
         description: "Beautiful paved trail along Lake Ontario perfect for roller skating. The smooth, wide pathways offer stunning lake views and connect multiple waterfront attractions.",
         specialEvents: "Sunset Group Skate (Fridays from HTO Park, 7PM)",
+        openMonths: [4, 5, 6, 7, 8, 9, 10],
         proTips: [
             "Weekend rentals available near HTO Park",
             "Less crowded on weekday mornings",

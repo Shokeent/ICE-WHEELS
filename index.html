@@ -31,12 +31,16 @@
                 <span></span><span></span><span></span>
             </button>
             <nav class="nav-menu" id="nav-menu">
-                <a href="index.html" class="nav-link active"><i class="fas fa-house"></i> Home</a>
-                <a href="locations.html" class="nav-link"><i class="fas fa-location-dot"></i> Find Locations</a>
-                <a href="map.html" class="nav-link"><i class="fas fa-map"></i> Map</a>
-                <a href="about.html" class="nav-link"><i class="fas fa-circle-info"></i> About</a>
-                <a href="contact.html" class="nav-link"><i class="fas fa-envelope"></i> Contact</a>
-                <a href="faq.html" class="nav-link"><i class="fas fa-circle-question"></i> FAQ</a>
+                <a href="index.html" class="nav-link active" data-en="Home" data-fr="Accueil"><i class="fas fa-house"></i> Home</a>
+                <a href="locations.html" class="nav-link" data-en="Find Locations" data-fr="Trouver"><i class="fas fa-location-dot"></i> Find Locations</a>
+                <a href="map.html" class="nav-link" data-en="Map" data-fr="Carte"><i class="fas fa-map"></i> Map</a>
+                <a href="about.html" class="nav-link" data-en="About" data-fr="À propos"><i class="fas fa-circle-info"></i> About</a>
+                <a href="contact.html" class="nav-link" data-en="Contact" data-fr="Contact"><i class="fas fa-envelope"></i> Contact</a>
+                <a href="faq.html" class="nav-link" data-en="FAQ" data-fr="FAQ"><i class="fas fa-circle-question"></i> FAQ</a>
+                <button class="lang-toggle-btn" id="lang-toggle" aria-label="Toggle language">FR</button>
+                <button class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle dark mode">
+                    <i id="theme-icon" class="fas fa-moon"></i>
+                </button>
             </nav>
         </div>
     </header>
@@ -46,74 +50,83 @@
             <!-- Hero Section -->
             <section class="section-hero">
                 <div class="hero-content">
-                    <h2>Find Your Skate Spot</h2>
-                    <p>Toronto's most complete directory of ice and roller skating locations</p>
+                    <h2 data-en="Find Your Skate Spot" data-fr="Trouvez votre patinoire">Find Your Skate Spot</h2>
+                    <p data-en="Toronto's most complete directory of ice and roller skating locations" data-fr="Le répertoire le plus complet de patinoires à Toronto">Toronto's most complete directory of ice and roller skating locations</p>
                     <div class="weather-widget" id="weather-widget" style="display:none">
                         <span id="weather-text"></span>
                     </div>
                     <div class="hero-stats">
                         <div class="hero-stat">
                             <span class="hero-stat-number" id="stat-total">14</span>
-                            <span class="hero-stat-label">Locations</span>
+                            <span class="hero-stat-label" data-en="Locations" data-fr="Lieux">Locations</span>
                         </div>
                         <div class="hero-stat">
                             <span class="hero-stat-number" id="stat-open">—</span>
-                            <span class="hero-stat-label">Open Now</span>
+                            <span class="hero-stat-label" data-en="Open Now" data-fr="Ouverts">Open Now</span>
                         </div>
                         <div class="hero-stat">
-                            <span class="hero-stat-number">5</span>
-                            <span class="hero-stat-label">Neighbourhoods</span>
+                            <span class="hero-stat-number" id="stat-visits">0</span>
+                            <span class="hero-stat-label" data-en="Your Visits" data-fr="Visites">Your Visits</span>
                         </div>
                     </div>
                     <form class="hero-search" action="locations.html" method="get">
                         <input type="text" name="search" class="hero-search-input" placeholder="Search rinks, areas, amenities...">
                         <button type="submit" class="hero-search-btn"><i class="fas fa-magnifying-glass"></i> Search</button>
                     </form>
-                    <a href="locations.html" class="button button-secondary" style="margin-top:0.8rem;display:inline-block;">Browse All Locations</a>
+                    <div class="hero-btns">
+                        <a href="locations.html" class="button button-secondary" data-en="Browse All Locations" data-fr="Voir tout">Browse All Locations</a>
+                        <button class="button button-primary" id="surprise-me-btn" data-en="🎲 Surprise Me" data-fr="🎲 Surprenez-moi">🎲 Surprise Me</button>
+                    </div>
                 </div>
+            </section>
+
+            <!-- Recently Viewed -->
+            <section class="section section-content recently-viewed-section" id="recently-viewed-section" style="display:none">
+                <h2 data-en="Continue Exploring" data-fr="Continuer à explorer">Continue Exploring</h2>
+                <div class="rv-grid" id="recently-viewed-grid"></div>
             </section>
 
             <!-- Quick Links Section -->
             <section class="section section-content">
-                <h2>Quick Access</h2>
+                <h2 data-en="Quick Access" data-fr="Accès rapide">Quick Access</h2>
                 <div class="about-grid">
                     <div class="about-card">
                         <h4>🧊 Ice Skating</h4>
-                        <p>Discover outdoor rinks, indoor arenas, and seasonal skating opportunities across the city.</p>
-                        <a href="locations.html" class="button button-primary" style="margin-top: 1rem; font-size: 0.9rem; padding: 0.6rem 1.2rem;">Find Ice Rinks</a>
+                        <p data-en="Discover outdoor rinks, indoor arenas, and seasonal skating opportunities across the city." data-fr="Découvrez les patinoires extérieures, les arénas intérieurs et les occasions de patinage saisonnières.">Discover outdoor rinks, indoor arenas, and seasonal skating opportunities across the city.</p>
+                        <a href="locations.html" class="button button-primary" style="margin-top: 1rem; font-size: 0.9rem; padding: 0.6rem 1.2rem;" data-en="Find Ice Rinks" data-fr="Patinoires">Find Ice Rinks</a>
                     </div>
                     <div class="about-card">
-                        <h4>� Roller Skating</h4>
-                        <p>Find the best roller skating venues, trails, and indoor facilities for all skill levels.</p>
-                        <a href="locations.html" class="button button-primary" style="margin-top: 1rem; font-size: 0.9rem; padding: 0.6rem 1.2rem;">Find Roller Venues</a>
+                        <h4>🛼 Roller Skating</h4>
+                        <p data-en="Find the best roller skating venues, trails, and indoor facilities for all skill levels." data-fr="Trouvez les meilleurs patinoires à roues, pistes et installations intérieures pour tous les niveaux.">Find the best roller skating venues, trails, and indoor facilities for all skill levels.</p>
+                        <a href="locations.html" class="button button-primary" style="margin-top: 1rem; font-size: 0.9rem; padding: 0.6rem 1.2rem;" data-en="Find Roller Venues" data-fr="Patinoires à roues">Find Roller Venues</a>
                     </div>
                     <div class="about-card">
                         <h4>❓ Need Help?</h4>
-                        <p>Check our FAQ for common questions or contact us for personalized assistance.</p>
-                        <a href="faq.html" class="button button-primary" style="margin-top: 1rem; font-size: 0.9rem; padding: 0.6rem 1.2rem;">View FAQ</a>
+                        <p data-en="Check our FAQ for common questions or contact us for personalized assistance." data-fr="Consultez notre FAQ ou contactez-nous pour une aide personnalisée.">Check our FAQ for common questions or contact us for personalized assistance.</p>
+                        <a href="faq.html" class="button button-primary" style="margin-top: 1rem; font-size: 0.9rem; padding: 0.6rem 1.2rem;" data-en="View FAQ" data-fr="FAQ">View FAQ</a>
                     </div>
                 </div>
             </section>
 
             <!-- Features Section -->
             <section class="section section-content">
-                <h2>Why Choose Ice & Wheels?</h2>
+                <h2 data-en="Why Choose Ice & Wheels?" data-fr="Pourquoi Ice & Wheels?">Why Choose Ice & Wheels?</h2>
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
                     <div style="text-align: center; padding: 1.5rem;">
                         <h4 style="color: #8B4513; margin-bottom: 1rem;">📍 Comprehensive Database</h4>
-                        <p>The most complete directory of skating locations in the GTA</p>
+                        <p data-en="The most complete directory of skating locations in the GTA" data-fr="Le répertoire le plus complet de lieux de patinage dans le Grand Toronto">The most complete directory of skating locations in the GTA</p>
                     </div>
                     <div style="text-align: center; padding: 1.5rem;">
                         <h4 style="color: #8B4513; margin-bottom: 1rem;">🔄 Real-time Updates</h4>
-                        <p>Current information on hours, status, and seasonal availability</p>
+                        <p data-en="Current information on hours, status, and seasonal availability" data-fr="Informations actuelles sur les heures, le statut et la disponibilité saisonnière">Current information on hours, status, and seasonal availability</p>
                     </div>
                     <div style="text-align: center; padding: 1.5rem;">
                         <h4 style="color: #8B4513; margin-bottom: 1rem;">🎯 Smart Filtering</h4>
-                        <p>Find exactly what you're looking for with our advanced filters</p>
+                        <p data-en="Find exactly what you're looking for with our advanced filters" data-fr="Trouvez exactement ce que vous cherchez avec nos filtres avancés">Find exactly what you're looking for with our advanced filters</p>
                     </div>
                     <div style="text-align: center; padding: 1.5rem;">
                         <h4 style="color: #8B4513; margin-bottom: 1rem;">📱 Mobile Friendly</h4>
-                        <p>Access location information anywhere, anytime on your device</p>
+                        <p data-en="Access location information anywhere, anytime on your device" data-fr="Accédez aux informations de localisation n'importe où, n'importe quand">Access location information anywhere, anytime on your device</p>
                     </div>
                 </div>
             </section>
@@ -146,34 +159,8 @@
     </footer>
 
     <script src="script/data.js"></script>
-    <script>
-        if (typeof skatingLocations !== 'undefined') {
-            document.getElementById('stat-total').textContent = skatingLocations.length;
-
-            function _parseMin(str) {
-                var m = str.trim().match(/^(\d{1,2}):(\d{2})\s*([AP]M)$/i);
-                if (!m) return null;
-                var h = parseInt(m[1]), min = parseInt(m[2]), ampm = m[3].toUpperCase();
-                if (ampm === 'PM' && h !== 12) h += 12;
-                if (ampm === 'AM' && h === 12) h = 0;
-                return h * 60 + min;
-            }
-            function _isOpenNow(oh) {
-                var days = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
-                var hrs = oh[days[new Date().getDay()]] || '';
-                var match = hrs.match(/(\d{1,2}:\d{2}\s*[AP]M)\s*-\s*(\d{1,2}:\d{2}\s*[AP]M)/i);
-                if (!match) return false;
-                var o = _parseMin(match[1]), c = _parseMin(match[2]);
-                if (o === null || c === null) return false;
-                var now = new Date(), cur = now.getHours() * 60 + now.getMinutes();
-                return cur >= o && cur < c;
-            }
-            document.getElementById('stat-open').textContent =
-                skatingLocations.filter(function(l) {
-                    return l.status !== 'maintenance' && _isOpenNow(l.openingHours);
-                }).length;
-        }
-    </script>
+    <script src="script/reviews.js"></script>
+    <script src="script/trips.js"></script>
     <script src="script/script.js"></script>
 </body>
 </html>

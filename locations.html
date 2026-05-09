@@ -39,12 +39,13 @@
                 <span></span><span></span><span></span>
             </button>
             <nav class="nav-menu" id="nav-menu">
-                <a href="index.html" class="nav-link"><i class="fas fa-house"></i> Home</a>
-                <a href="locations.html" class="nav-link active"><i class="fas fa-location-dot"></i> Find Locations</a>
-                <a href="map.html" class="nav-link"><i class="fas fa-map"></i> Map</a>
-                <a href="about.html" class="nav-link"><i class="fas fa-circle-info"></i> About</a>
-                <a href="contact.html" class="nav-link"><i class="fas fa-envelope"></i> Contact</a>
-                <a href="faq.html" class="nav-link"><i class="fas fa-circle-question"></i> FAQ</a>
+                <a href="index.html" class="nav-link" data-en="Home" data-fr="Accueil"><i class="fas fa-house"></i> Home</a>
+                <a href="locations.html" class="nav-link active" data-en="Find Locations" data-fr="Trouver"><i class="fas fa-location-dot"></i> Find Locations</a>
+                <a href="map.html" class="nav-link" data-en="Map" data-fr="Carte"><i class="fas fa-map"></i> Map</a>
+                <a href="about.html" class="nav-link" data-en="About" data-fr="À propos"><i class="fas fa-circle-info"></i> About</a>
+                <a href="contact.html" class="nav-link" data-en="Contact" data-fr="Contact"><i class="fas fa-envelope"></i> Contact</a>
+                <a href="faq.html" class="nav-link" data-en="FAQ" data-fr="FAQ"><i class="fas fa-circle-question"></i> FAQ</a>
+                <button class="lang-toggle-btn" id="lang-toggle" aria-label="Toggle language">FR</button>
                 <button class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle dark mode">
                     <i id="theme-icon" class="fas fa-moon"></i>
                 </button>
@@ -123,6 +124,7 @@
                 <div class="results-header">
                     <span class="results-count" id="results-count"></span>
                     <div class="results-controls">
+                        <button class="surprise-btn" id="surprise-me-btn" title="Go to a random location"><i class="fas fa-dice"></i> Surprise Me</button>
                         <div class="view-toggle">
                             <button class="view-btn active" id="view-list-btn" title="List view"><i class="fas fa-list"></i> List</button>
                             <button class="view-btn" id="view-map-btn" title="Map view"><i class="fas fa-map"></i> Map</button>
@@ -149,6 +151,33 @@
         </main>
 
     </div>
+
+    <!-- Trip Planner Tray -->
+    <div class="trip-tray" id="trip-tray">
+        <div class="trip-tray-inner">
+            <div class="trip-tray-left">
+                <i class="fas fa-route"></i>
+                <span>Trip (<span id="trip-count">0</span>)</span>
+                <div class="trip-chips" id="trip-chips"></div>
+            </div>
+            <div class="trip-tray-actions">
+                <a href="#" id="trip-maps-btn" class="trip-action-btn" target="_blank" rel="noopener noreferrer"><i class="fas fa-map-location-dot"></i> Plan Route</a>
+                <button class="trip-action-btn" id="trip-share-btn"><i class="fas fa-share-nodes"></i> Share</button>
+                <button class="trip-action-btn trip-clear-btn" id="trip-clear-btn"><i class="fas fa-trash"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Compare Bar -->
+    <div class="compare-bar" id="compare-bar">
+        <div class="compare-bar-inner">
+            <span class="compare-bar-label"><i class="fas fa-sliders"></i> Compare:</span>
+            <div class="compare-names" id="compare-names"></div>
+            <button class="compare-now-btn" id="compare-now-btn" disabled>Compare Now</button>
+            <button class="compare-clear-btn" id="compare-clear-btn"><i class="fas fa-xmark"></i></button>
+        </div>
+    </div>
+
     <footer>
         <div class="footer-inner">
             <div class="footer-brand">
@@ -176,6 +205,42 @@
 
     <script src="script/data.js"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="script/reviews.js"></script>
+    <script src="script/trips.js"></script>
     <script src="script/locations.js"></script>
+    <script src="script/script.js"></script>
+    <script>
+        // Wire up trip tray buttons
+        document.addEventListener('DOMContentLoaded', function() {
+            var mapsBtn = document.getElementById('trip-maps-btn');
+            var shareBtn = document.getElementById('trip-share-btn');
+            var clearBtn = document.getElementById('trip-clear-btn');
+            var compareNowBtn = document.getElementById('compare-now-btn');
+            var compareClearBtn = document.getElementById('compare-clear-btn');
+            var surpriseBtn = document.getElementById('surprise-me-btn');
+
+            if (mapsBtn) mapsBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                var url = buildMapsURL(getTripIds());
+                if (url !== '#') window.open(url, '_blank');
+            });
+            if (shareBtn) shareBtn.addEventListener('click', function() {
+                var text = buildShareText(getTripIds());
+                if (navigator.share) { navigator.share({ title: 'My Skating Trip', text: text }); }
+                else if (navigator.clipboard) { navigator.clipboard.writeText(text).then(function() { shareBtn.innerHTML = '<i class="fas fa-check"></i> Copied!'; setTimeout(function() { shareBtn.innerHTML = '<i class="fas fa-share-nodes"></i> Share'; }, 2000); }); }
+            });
+            if (clearBtn) clearBtn.addEventListener('click', clearTrip);
+            if (compareNowBtn) compareNowBtn.addEventListener('click', openCompareModal);
+            if (compareClearBtn) compareClearBtn.addEventListener('click', function() { saveCompareIds([]); updateCompareUI(); });
+            if (surpriseBtn && typeof skatingLocations !== 'undefined') {
+                surpriseBtn.addEventListener('click', function() {
+                    var open = skatingLocations.filter(function(l) { return l.status === 'open'; });
+                    var pool = open.length ? open : skatingLocations;
+                    var pick = pool[Math.floor(Math.random() * pool.length)];
+                    window.location.href = 'details.html?id=' + pick.id;
+                });
+            }
+        });
+    </script>
 </body>
 </html>
