@@ -4,11 +4,11 @@
 // Live status:   https://www.toronto.ca/data/parks/live/skate_allupdates.json
 
 (function () {
-    var OUTDOOR_URL = 'https://ckan0.cf.opendata.inter.prod-toronto.ca/dataset/e51b5d31-a53c-4fc5-a204-36c43243dd3b/resource/2ae3625b-30f1-4470-bf80-ecc56ab2d674/download/outdoor-ice-rinks-4326.geojson';
-    var INDOOR_URL  = 'https://ckan0.cf.opendata.inter.prod-toronto.ca/dataset/96e9989d-eca5-4e0b-824b-9789a39aea58/resource/3732a863-a629-4d71-8629-f331a83fd61f/download/indoor-ice-rinks-4326.geojson';
-    var STATUS_URL  = 'https://www.toronto.ca/data/parks/live/skate_allupdates.json';
+    var OUTDOOR_URL = '/api/outdoor-rinks';
+    var INDOOR_URL  = '/api/indoor-rinks';
+    var STATUS_URL  = '/api/status';
 
-    var CACHE_KEY = 'ice-wheels-api-cache';
+    var CACHE_KEY = 'ice-wheels-api-cache-v2';
     var CACHE_TTL = 60 * 60 * 1000; // 1 hour
 
     function loadFromCache() {
