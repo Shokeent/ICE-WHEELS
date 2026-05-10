@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://shokeent.github.io/ICE-WHEELS/sitemap.xml

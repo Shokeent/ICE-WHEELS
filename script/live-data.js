@@ -27,13 +27,15 @@
         } catch (e) {}
     }
 
-    function areaFromCouncil(council) {
+    function areaFromCouncil(council, lat) {
         if (!council) return 'downtown';
         var c = council.toLowerCase();
         if (c.includes('north york')) return 'north-york';
         if (c.includes('etobicoke')) return 'etobicoke';
         if (c.includes('scarborough')) return 'scarborough';
-        return 'downtown'; // Toronto and East York covers the inner city
+        // Toronto and East York: split by latitude — above Bloor (~43.67°N) = midtown
+        if (lat && lat > 43.67) return 'midtown';
+        return 'downtown';
     }
 
     function coordsFromGeometry(geometry) {
@@ -153,10 +155,9 @@
             var assetId = parseInt(p['Asset ID']) || null;
             var live = assetId ? statusMap[assetId] : null;
             var name = p['Public Name'] || p['Asset Name'] || 'Unnamed Rink';
-            var area = areaFromCouncil(p['Community Council Area']);
+            var area = areaFromCouncil(p['Community Council Area'], coords.lat);
             var img = imageForLocation(name, 'ice', 'outdoor');
             results.push({
-                id: assetId || (10000 + results.length),
                 name: name,
                 type: 'ice',
                 area: area,
@@ -204,7 +205,7 @@
             var assetId = parseInt(p['Asset ID']) || null;
             var live = assetId ? statusMap[assetId] : null;
             var name = p['Public Name'] || parentName;
-            var area = areaFromCouncil(p['Community Council Area']);
+            var area = areaFromCouncil(p['Community Council Area'], coords.lat);
             var img = imageForLocation(name, 'ice', 'indoor');
             results.push({
                 id: assetId || (20000 + results.length),

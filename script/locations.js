@@ -451,10 +451,11 @@ function applyFilters() {
         filtered = filtered.filter(function(loc) { return activeFilters.status.indexOf(loc.status) > -1; });
     }
     if (searchQuery.length > 0) {
-        filtered = filtered.filter(function(loc) {
-            return loc.name.toLowerCase().includes(searchQuery) ||
-                   loc.address.toLowerCase().includes(searchQuery);
-        });
+        var scored = filtered.map(function(loc) {
+            return { loc: loc, score: fuzzyScore(loc, searchQuery) };
+        }).filter(function(x) { return x.score > 0; });
+        scored.sort(function(a, b) { return b.score - a.score; });
+        filtered = scored.map(function(x) { return x.loc; });
     }
 
     const sortSelect = document.getElementById('sort-select');
@@ -646,4 +647,30 @@ function displayMap(locations) {
             locMap.fitBounds(L.featureGroup(layers).getBounds().pad(0.1));
         }
     }
+}
+
+function fuzzyScore(loc, q) {
+    var n    = (loc.name    || '').toLowerCase();
+    var addr = (loc.address || '').toLowerCase();
+    var area = (loc.area    || '').replace(/-/g, ' ');
+    var desc = (loc.description || '').toLowerCase().substring(0, 300);
+
+    if (n === q)          return 100;
+    if (n.startsWith(q))  return 85;
+    if (n.includes(q))    return 65;
+    if (area.includes(q)) return 45;
+    if (addr.includes(q)) return 40;
+    if (desc.includes(q)) return 20;
+
+    // Multi-word: score by fraction of words matched
+    var words = q.split(/\s+/).filter(Boolean);
+    if (words.length > 1) {
+        var hits = words.filter(function(w) {
+            return n.includes(w) || addr.includes(w) || area.includes(w);
+        }).length;
+        if (hits === words.length) return 55;
+        if (hits > 0) return 15 * hits;
+    }
+
+    return 0;
 }

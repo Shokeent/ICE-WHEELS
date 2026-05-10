@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ice-wheels-v1';
+const CACHE_NAME = 'ice-wheels-v2';
 const SHELL = [
     '/index.html',
     '/locations.html',
@@ -9,11 +9,31 @@ const SHELL = [
     '/details.html',
     '/manifest.json',
     '/css/styles.css',
-    '/script/data.js',
+    '/script/live-data.js',
     '/script/script.js',
     '/script/locations.js',
     '/script/map.js',
     '/script/details.js',
+    '/script/reviews.js',
+    '/script/trips.js',
+    '/images/ice-skating.jpg',
+    '/images/ice-skating.jpeg',
+    '/images/harbourfront.jpg',
+    '/images/nathan-phillips.jpg',
+    '/images/bentway.jpg',
+    '/images/greenwood.jpg',
+    '/images/rollerskating.jpg',
+    '/images/rollerskating2.jpg',
+    '/images/waterfront-trail.jpg',
+    '/images/north-york-civic.jpg',
+    '/images/scarborough-civic.jpg',
+    '/images/north-york-roll.jpg',
+    '/images/riverdale-roller.jpg',
+    '/images/urban-roller.jpg',
+    '/images/roller-skate.jpg',
+    '/images/ice-skate-close.jpg',
+    '/images/colonel-smith.jpg',
+    '/images/west-end-wheels.jpg',
 ];
 
 self.addEventListener('install', function(e) {
@@ -36,14 +56,32 @@ self.addEventListener('activate', function(e) {
 });
 
 self.addEventListener('fetch', function(e) {
-    if (new URL(e.request.url).origin !== self.location.origin) return;
+    var url = new URL(e.request.url);
+    // Pass through cross-origin requests (CDN fonts, leaflet, etc.)
+    if (url.origin !== self.location.origin) return;
+    // Network-first for HTML so content stays fresh
+    if (e.request.destination === 'document') {
+        e.respondWith(
+            fetch(e.request).then(function(response) {
+                if (response && response.ok) {
+                    var clone = response.clone();
+                    caches.open(CACHE_NAME).then(function(c) { c.put(e.request, clone); });
+                }
+                return response;
+            }).catch(function() {
+                return caches.match(e.request);
+            })
+        );
+        return;
+    }
+    // Cache-first for everything else (CSS, JS, images)
     e.respondWith(
         caches.match(e.request).then(function(cached) {
             if (cached) return cached;
             return fetch(e.request).then(function(response) {
                 if (response && response.ok) {
                     var clone = response.clone();
-                    caches.open(CACHE_NAME).then(function(cache) { cache.put(e.request, clone); });
+                    caches.open(CACHE_NAME).then(function(c) { c.put(e.request, clone); });
                 }
                 return response;
             });

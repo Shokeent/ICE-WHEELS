@@ -1,4 +1,32 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // ===== CACHE AGE BANNER =====
+    (function() {
+        try {
+            var raw = localStorage.getItem('ice-wheels-api-cache');
+            if (!raw) return;
+            var cached = JSON.parse(raw);
+            var ageMs = Date.now() - (cached.ts || 0);
+            var ageH = Math.floor(ageMs / 3600000);
+            if (ageH < 1) return; // fresh enough — no banner
+            var banner = document.createElement('div');
+            banner.className = 'cache-banner';
+            banner.innerHTML =
+                '<i class="fas fa-circle-info"></i>' +
+                '<span>Location data is ' + ageH + ' hour' + (ageH !== 1 ? 's' : '') + ' old. ' +
+                '<a id="cache-refresh-link">Refresh now</a></span>' +
+                '<a id="cache-banner-dismiss" style="margin-left:auto;opacity:0.6;cursor:pointer" title="Dismiss">✕</a>';
+            document.body.insertAdjacentElement('afterbegin', banner);
+            document.getElementById('cache-refresh-link').addEventListener('click', function(e) {
+                e.preventDefault();
+                localStorage.removeItem('ice-wheels-api-cache');
+                location.reload();
+            });
+            document.getElementById('cache-banner-dismiss').addEventListener('click', function() {
+                banner.remove();
+            });
+        } catch (e) {}
+    })();
+
     // SW registration
     if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(function() {});
 

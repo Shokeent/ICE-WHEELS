@@ -185,6 +185,34 @@ header {
     color: white;
 }
 
+.button-outline {
+    background: rgba(255,255,255,0.15);
+    color: white;
+    border: 2px solid rgba(255,255,255,0.6);
+}
+.button-outline:hover {
+    background: rgba(255,255,255,0.3);
+    transform: translateY(-2px);
+}
+
+/* Data freshness banner */
+.cache-banner {
+    background: #fff8e1;
+    border-left: 4px solid #f0a500;
+    padding: 0.6rem 1.2rem;
+    font-size: 0.85rem;
+    color: #7a5a00;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+}
+.cache-banner a { color: #8B4513; font-weight: 600; cursor: pointer; }
+[data-theme="dark"] .cache-banner { background: #2e1e00; color: #f0c040; border-color: #f0a500; }
+[data-theme="dark"] .cache-banner a { color: #f0a500; }
+
 /* ==========================================================================
    SECTIONS
    ========================================================================== */

@@ -75,7 +75,8 @@
                     </form>
                     <div class="hero-btns">
                         <a href="locations.html" class="button button-secondary" data-en="Browse All Locations" data-fr="Voir tout">Browse All Locations</a>
-                        <button class="button button-primary" id="surprise-me-btn" data-en="🎲 Surprise Me" data-fr="🎲 Surprenez-moi">🎲 Surprise Me</button>
+                        <a href="locations.html?status=open" class="button button-primary open-now-btn" data-en="✅ Open Now" data-fr="✅ Ouvert">✅ Open Now</a>
+                        <button class="button button-outline" id="surprise-me-btn" data-en="🎲 Surprise Me" data-fr="🎲 Surprenez-moi">🎲 Surprise Me</button>
                     </div>
                 </div>
             </section>
@@ -162,5 +163,19 @@
     <script src="script/reviews.js"></script>
     <script src="script/trips.js"></script>
     <script src="script/script.js"></script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Ice & Wheels",
+        "url": "https://shokeent.github.io/ICE-WHEELS/",
+        "description": "Toronto's most complete directory of ice and roller skating locations. Find rinks, hours, rentals, and more across the GTA.",
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://shokeent.github.io/ICE-WHEELS/locations.html?search={search_term_string}",
+            "query-input": "required name=search_term_string"
+        }
+    }
+    </script>
 </body>
 </html>

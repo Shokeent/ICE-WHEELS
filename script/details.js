@@ -81,6 +81,36 @@ function displayRinkData(rink) {
     document.title = rink.name + ' - Ice & Wheels';
     document.getElementById('rink-name').textContent = rink.name;
 
+    // JSON-LD structured data for SEO
+    (function() {
+        var schema = {
+            '@context': 'https://schema.org',
+            '@type': 'SportsActivityLocation',
+            'name': rink.name,
+            'description': rink.description || '',
+            'address': {
+                '@type': 'PostalAddress',
+                'streetAddress': rink.address,
+                'addressLocality': 'Toronto',
+                'addressRegion': 'ON',
+                'addressCountry': 'CA'
+            },
+            'geo': rink.coordinates ? {
+                '@type': 'GeoCoordinates',
+                'latitude': rink.coordinates.lat,
+                'longitude': rink.coordinates.lng
+            } : undefined,
+            'image': rink.imageUrl ? ('https://shokeent.github.io/ICE-WHEELS/' + rink.imageUrl) : undefined,
+            'url': window.location.href,
+            'isAccessibleForFree': rink.entryFee === 'Free',
+            'sportsActivityLocation': rink.type === 'ice' ? 'IceRink' : 'RollerSkating'
+        };
+        var el = document.createElement('script');
+        el.type = 'application/ld+json';
+        el.textContent = JSON.stringify(schema);
+        document.head.appendChild(el);
+    })();
+
     function setMeta(prop, content) {
         var el = document.querySelector('meta[property="' + prop + '"]');
         if (el) el.setAttribute('content', content);
