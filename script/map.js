@@ -34,6 +34,11 @@ document.addEventListener('DOMContentLoaded', function() {
     function initMap() {
         if (!window.skatingLocations) return;
 
+        var countEl = document.getElementById('map-location-count');
+        if (countEl) {
+            countEl.textContent = skatingLocations.length + ' locations across Toronto — click a marker for details';
+        }
+
         const map = L.map('full-map').setView([43.706, -79.38], 11);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
