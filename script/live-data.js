@@ -50,9 +50,23 @@
 
     function buildStatusMap(statusData) {
         var map = {};
-        statusData.forEach(function (s) {
-            if (s.AssetID) map[s.AssetID] = s;
-        });
+        // Actual API shape: {locations: {id_123: [{Status:1,...}], ...}}
+        if (statusData && statusData.locations && typeof statusData.locations === 'object') {
+            Object.keys(statusData.locations).forEach(function(key) {
+                var assetId = parseInt(key.replace('id_', ''), 10);
+                var entries = statusData.locations[key];
+                if (Array.isArray(entries) && entries.length > 0) {
+                    map[assetId] = entries[0];
+                }
+            });
+            return map;
+        }
+        // Fallback: legacy array shape [{AssetID:123, Status:1}, ...]
+        if (Array.isArray(statusData)) {
+            statusData.forEach(function(s) {
+                if (s.AssetID) map[s.AssetID] = s;
+            });
+        }
         return map;
     }
 
