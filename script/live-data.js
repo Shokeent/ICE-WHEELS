@@ -190,6 +190,134 @@
         return results;
     }
 
+    // Curated roller skating venues — no public Toronto Open Data API exists for these
+    var ROLLER_VENUES = [
+        {
+            id: 90001,
+            name: 'Wheel Excitement — Harbourfront',
+            type: 'roller',
+            area: 'downtown',
+            surface: 'outdoor',
+            address: '39 Queens Quay W, Toronto, ON M5J 2H2',
+            coordinates: { lat: 43.6397, lng: -79.3812 },
+            status: 'open',
+            amenities: ['rentals', 'washrooms'],
+            openingHours: {
+                monday: 'Closed', tuesday: 'Closed',
+                wednesday: '12:00 PM - 8:00 PM', thursday: '12:00 PM - 8:00 PM',
+                friday: '12:00 PM - 9:00 PM', saturday: '10:00 AM - 9:00 PM',
+                sunday: '10:00 AM - 7:00 PM'
+            },
+            rentals: { available: true, items: ['Inline skates', 'Quad skates', 'Helmets', 'Pads'], prices: { skates: '$15/hr' } },
+            entryFee: 'Free (rentals extra)',
+            imageUrl: 'images/ice-skating.jpg',
+            gallery: ['images/ice-skating.jpg'],
+            description: 'Wheel Excitement at Harbourfront Centre is Toronto\'s premier waterfront roller skating destination. Skate along the scenic Lake Ontario shoreline with rental equipment available on-site.',
+            specialEvents: 'Themed skate nights, lessons available',
+            openMonths: [5, 6, 7, 8, 9, 10],
+            iceConditions: null,
+            proTips: [
+                'Great waterfront views — best at sunset',
+                'Book lessons in advance during peak summer months',
+                'Paved trail extends east along the waterfront'
+            ],
+            sourceUrl: 'https://www.harbourfrontcentre.com'
+        },
+        {
+            id: 90002,
+            name: 'Dufferin Grove Roller Rink',
+            type: 'roller',
+            area: 'downtown',
+            surface: 'outdoor',
+            address: '875 Dufferin St, Toronto, ON M6H 3L6',
+            coordinates: { lat: 43.6533, lng: -79.4338 },
+            status: 'open',
+            amenities: ['washrooms', 'food'],
+            openingHours: {
+                monday: '10:00 AM - 8:00 PM', tuesday: '10:00 AM - 8:00 PM',
+                wednesday: '10:00 AM - 8:00 PM', thursday: '10:00 AM - 8:00 PM',
+                friday: '10:00 AM - 9:00 PM', saturday: '9:00 AM - 9:00 PM',
+                sunday: '9:00 AM - 8:00 PM'
+            },
+            rentals: { available: false },
+            entryFee: 'Free',
+            imageUrl: 'images/ice-skating.jpg',
+            gallery: ['images/ice-skating.jpg'],
+            description: 'The Dufferin Grove roller rink is a beloved community outdoor skating surface in one of Toronto\'s most vibrant parks. The park also features a cob oven and weekly farmers market.',
+            specialEvents: 'Friday Night Skate, community events',
+            openMonths: [4, 5, 6, 7, 8, 9, 10],
+            iceConditions: null,
+            proTips: [
+                'Bring your own skates — no rentals on-site',
+                'Visit on Friday evenings for the popular community skate',
+                'The park bakery oven is often running on weekends'
+            ],
+            sourceUrl: 'https://www.toronto.ca/explore-enjoy/parks-gardens-beaches/parks/dufferin-grove-park/'
+        },
+        {
+            id: 90003,
+            name: 'Scooter\'s Roller Palace',
+            type: 'roller',
+            area: 'scarborough',
+            surface: 'indoor',
+            address: '2665 Lawrence Ave E, Scarborough, ON M1P 2S2',
+            coordinates: { lat: 43.7595, lng: -79.2685 },
+            status: 'open',
+            amenities: ['rentals', 'washrooms', 'food', 'parking'],
+            openingHours: {
+                monday: 'Closed', tuesday: 'Closed',
+                wednesday: '7:00 PM - 10:00 PM', thursday: '7:00 PM - 10:00 PM',
+                friday: '7:00 PM - 11:00 PM', saturday: '1:00 PM - 5:00 PM',
+                sunday: '1:00 PM - 5:00 PM'
+            },
+            rentals: { available: true, items: ['Quad skates', 'Inline skates'], prices: { skates: '$5' } },
+            entryFee: '$8–$10',
+            imageUrl: 'images/ice-skating.jpg',
+            gallery: ['images/ice-skating.jpg'],
+            description: 'Scooter\'s Roller Palace is Toronto\'s classic indoor roller rink, a nostalgic favourite offering quad and inline skating with a full snack bar and DJ nights.',
+            specialEvents: 'DJ nights, birthday party packages, disco sessions',
+            openMonths: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+            iceConditions: null,
+            proTips: [
+                'Friday night DJ sessions are very popular — arrive early',
+                'Great for birthday parties — book the party room in advance',
+                'Quad rental skates available for all ages'
+            ],
+            sourceUrl: 'https://scootersrollerpalace.com'
+        },
+        {
+            id: 90004,
+            name: 'Paradise Rinks Inline Hockey & Skating',
+            type: 'roller',
+            area: 'north-york',
+            surface: 'indoor',
+            address: '2000 Lawrence Ave W, North York, ON M9N 1H4',
+            coordinates: { lat: 43.7134, lng: -79.5035 },
+            status: 'open',
+            amenities: ['rentals', 'washrooms', 'parking'],
+            openingHours: {
+                monday: '6:00 AM - 10:00 PM', tuesday: '6:00 AM - 10:00 PM',
+                wednesday: '6:00 AM - 10:00 PM', thursday: '6:00 AM - 10:00 PM',
+                friday: '6:00 AM - 10:00 PM', saturday: '8:00 AM - 8:00 PM',
+                sunday: '8:00 AM - 8:00 PM'
+            },
+            rentals: { available: true, items: ['Inline skates', 'Helmets', 'Pads'], prices: { skates: '$10' } },
+            entryFee: '$10 adults / $7 youth',
+            imageUrl: 'images/ice-skating.jpg',
+            gallery: ['images/ice-skating.jpg'],
+            description: 'Paradise Rinks offers year-round inline skating and roller hockey in a dedicated indoor facility in North York. Leagues, drop-in sessions, and lessons for all ages.',
+            specialEvents: 'Adult & youth inline hockey leagues, learn-to-skate programs',
+            openMonths: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+            iceConditions: null,
+            proTips: [
+                'Drop-in sessions available most evenings',
+                'Inline hockey leagues run year-round — register online',
+                'Helmet and full gear required for hockey sessions'
+            ],
+            sourceUrl: 'https://www.toronto.ca'
+        }
+    ];
+
     function dispatch(locations) {
         window.skatingLocations = locations;
         window.dispatchEvent(new CustomEvent('skatingDataReady'));
@@ -203,10 +331,9 @@
         var statusMap = buildStatusMap(all[2]);
         var outdoor = transformOutdoor((all[0].features || []), statusMap);
         var indoor  = transformIndoor((all[1].features || []), statusMap);
-        dispatch(outdoor.concat(indoor));
+        dispatch(outdoor.concat(indoor).concat(ROLLER_VENUES));
     }).catch(function (err) {
         console.error('[ICE-WHEELS] Failed to load City of Toronto data:', err);
-        // Dispatch with empty array so the UI shows a proper empty state
-        dispatch([]);
+        dispatch(ROLLER_VENUES);
     });
 })();
