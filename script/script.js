@@ -27,8 +27,28 @@ document.addEventListener('DOMContentLoaded', function() {
         } catch (e) {}
     })();
 
-    // SW registration
-    if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(function() {});
+    // ===== SERVICE WORKER =====
+    // Force-clear any old SW caches, then register fresh
+    if ('caches' in window) {
+        caches.keys().then(function(names) {
+            names.forEach(function(name) {
+                if (name !== 'ice-wheels-v3') caches.delete(name);
+            });
+        });
+    }
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js').then(function(reg) {
+            // When a new SW is found, activate it immediately and reload once
+            reg.addEventListener('updatefound', function() {
+                var newWorker = reg.installing;
+                newWorker.addEventListener('statechange', function() {
+                    if (newWorker.state === 'activated') {
+                        window.location.reload();
+                    }
+                });
+            });
+        }).catch(function() {});
+    }
 
     // ===== DARK MODE =====
     (function() {

@@ -1,4 +1,6 @@
-const CACHE_NAME = 'ice-wheels-v2';
+const CACHE_NAME = 'ice-wheels-v3';
+
+// Only pre-cache HTML + CSS — JS is always fetched fresh so updates propagate instantly
 const SHELL = [
     '/index.html',
     '/locations.html',
@@ -9,13 +11,6 @@ const SHELL = [
     '/details.html',
     '/manifest.json',
     '/css/styles.css',
-    '/script/live-data.js',
-    '/script/script.js',
-    '/script/locations.js',
-    '/script/map.js',
-    '/script/details.js',
-    '/script/reviews.js',
-    '/script/trips.js',
     '/images/ice-skating.jpg',
     '/images/ice-skating.jpeg',
     '/images/harbourfront.jpg',
@@ -57,9 +52,17 @@ self.addEventListener('activate', function(e) {
 
 self.addEventListener('fetch', function(e) {
     var url = new URL(e.request.url);
-    // Pass through cross-origin requests (CDN fonts, leaflet, etc.)
+
+    // Pass through cross-origin (CDN fonts, leaflet, etc.)
     if (url.origin !== self.location.origin) return;
-    // Network-first for HTML so content stays fresh
+
+    // Never cache API routes — always go to network
+    if (url.pathname.startsWith('/api/')) return;
+
+    // Never cache JS files — always go to network so updates are instant
+    if (url.pathname.endsWith('.js')) return;
+
+    // Network-first for HTML
     if (e.request.destination === 'document') {
         e.respondWith(
             fetch(e.request).then(function(response) {
@@ -74,7 +77,8 @@ self.addEventListener('fetch', function(e) {
         );
         return;
     }
-    // Cache-first for everything else (CSS, JS, images)
+
+    // Cache-first for CSS and images
     e.respondWith(
         caches.match(e.request).then(function(cached) {
             if (cached) return cached;
