@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://shokeent.github.io/ICE-WHEELS/sitemap.xml
+Sitemap: https://ice-wheels.vercel.app/sitemap.xml

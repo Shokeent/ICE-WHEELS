@@ -100,7 +100,7 @@ function displayRinkData(rink) {
                 'latitude': rink.coordinates.lat,
                 'longitude': rink.coordinates.lng
             } : undefined,
-            'image': rink.imageUrl ? ('https://shokeent.github.io/ICE-WHEELS/' + rink.imageUrl) : undefined,
+            'image': rink.imageUrl ? ('https://ice-wheels.vercel.app/' + rink.imageUrl) : undefined,
             'url': window.location.href,
             'isAccessibleForFree': rink.entryFee === 'Free',
             'sportsActivityLocation': rink.type === 'ice' ? 'IceRink' : 'RollerSkating'
