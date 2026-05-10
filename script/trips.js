@@ -33,7 +33,7 @@ function isInTrip(id) {
 }
 
 function buildMapsURL(ids) {
-    if (!ids.length || typeof skatingLocations === 'undefined') return '#';
+    if (!ids.length || !window.skatingLocations) return '#';
     var locs = ids.map(function(id) {
         return skatingLocations.find(function(l) { return l.id === id; });
     }).filter(Boolean);
@@ -50,7 +50,7 @@ function buildMapsURL(ids) {
 }
 
 function buildShareText(ids) {
-    if (!ids.length || typeof skatingLocations === 'undefined') return '';
+    if (!ids.length || !window.skatingLocations) return '';
     var locs = ids.map(function(id) {
         return skatingLocations.find(function(l) { return l.id === id; });
     }).filter(Boolean);
@@ -88,7 +88,7 @@ function updateTripUI() {
     var countEl = document.getElementById('trip-count');
     if (countEl) countEl.textContent = ids.length;
 
-    if (chipsEl && typeof skatingLocations !== 'undefined') {
+    if (chipsEl && !!window.skatingLocations) {
         chipsEl.innerHTML = ids.map(function(id) {
             var loc = skatingLocations.find(function(l) { return l.id === id; });
             if (!loc) return '';
@@ -150,7 +150,7 @@ function updateCompareUI() {
     var namesEl = document.getElementById('compare-names');
     var compareBtn = document.getElementById('compare-now-btn');
 
-    if (namesEl && typeof skatingLocations !== 'undefined') {
+    if (namesEl && !!window.skatingLocations) {
         namesEl.innerHTML = ids.map(function(id) {
             var loc = skatingLocations.find(function(l) { return l.id === id; });
             return loc ? ('<span class="compare-name-chip">' + loc.name + '</span>') : '';
@@ -161,7 +161,7 @@ function updateCompareUI() {
 
 function openCompareModal() {
     var ids = getCompareIds();
-    if (ids.length < 2 || typeof skatingLocations === 'undefined') return;
+    if (ids.length < 2 || !window.skatingLocations) return;
 
     var locs = ids.map(function(id) {
         return skatingLocations.find(function(l) { return l.id === id; });

@@ -158,27 +158,29 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // ===== SURPRISE ME (homepage only) =====
     var surpriseBtn = document.getElementById('surprise-me-btn');
-    if (surpriseBtn && typeof skatingLocations !== 'undefined') {
+    if (surpriseBtn) {
         surpriseBtn.addEventListener('click', function() {
-            var open = skatingLocations.filter(function(l) { return l.status === 'open'; });
-            var pool = open.length ? open : skatingLocations;
+            var locs = window.skatingLocations || [];
+            var open = locs.filter(function(l) { return l.status === 'open'; });
+            var pool = open.length ? open : locs;
+            if (!pool.length) return;
             var pick = pool[Math.floor(Math.random() * pool.length)];
             window.location.href = 'details.html?id=' + pick.id;
         });
     }
 
-    // ===== RECENTLY VIEWED (homepage only) =====
-    renderRecentlyViewed();
-
-    // ===== HOMEPAGE STATS =====
-    if (typeof skatingLocations !== 'undefined') {
-        var statTotal = document.getElementById('stat-total');
-        var statOpen = document.getElementById('stat-open');
+    // ===== RECENTLY VIEWED + HOMEPAGE STATS =====
+    // Run immediately if data is already loaded, otherwise wait for the event
+    function initHomepageData() {
+        renderRecentlyViewed();
+        var statTotal  = document.getElementById('stat-total');
+        var statOpen   = document.getElementById('stat-open');
         var statVisits = document.getElementById('stat-visits');
-        if (statTotal) statTotal.textContent = skatingLocations.length;
+        var locs = window.skatingLocations || [];
+        if (statTotal) statTotal.textContent = locs.length || '—';
         if (statOpen) {
-            statOpen.textContent = skatingLocations.filter(function(l) {
-                return l.status !== 'maintenance' && _isOpenNow(l.openingHours);
+            statOpen.textContent = locs.filter(function(l) {
+                return l.status === 'open';
             }).length;
         }
         if (statVisits) {
@@ -188,6 +190,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 statVisits.textContent = total;
             } catch (e) { statVisits.textContent = '0'; }
         }
+    }
+
+    if (window.skatingLocations) {
+        initHomepageData();
+    } else {
+        window.addEventListener('skatingDataReady', initHomepageData, { once: true });
     }
 });
 
@@ -199,12 +207,12 @@ function applyLanguage(lang) {
 
 function renderRecentlyViewed() {
     var section = document.getElementById('recently-viewed-section');
-    if (!section || typeof skatingLocations === 'undefined') return;
+    if (!section || !window.skatingLocations) return;
     try {
         var ids = JSON.parse(localStorage.getItem('ice-wheels-recently-viewed') || '[]');
         if (!ids.length) return;
         var locs = ids.map(function(id) {
-            return skatingLocations.find(function(l) { return l.id === id; });
+            return window.skatingLocations.find(function(l) { return l.id === id; });
         }).filter(Boolean);
         if (!locs.length) return;
         section.style.display = '';

@@ -31,9 +31,10 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    if (typeof skatingLocations === 'undefined') return;
+    function initMap() {
+        if (!window.skatingLocations) return;
 
-    const map = L.map('full-map').setView([43.706, -79.38], 11);
+        const map = L.map('full-map').setView([43.706, -79.38], 11);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
@@ -120,4 +121,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
         marker.addTo(map);
     });
+}
+
+    if (window.skatingLocations) {
+        initMap();
+    } else {
+        window.addEventListener('skatingDataReady', initMap, { once: true });
+    }
 });

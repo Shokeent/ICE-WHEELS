@@ -39,18 +39,21 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     })();
 
-    if (typeof skatingLocations === 'undefined') {
-        displayError('Data not loaded. Please refresh the page.');
-        return;
+    function onDataReady() {
+        var urlParams = new URLSearchParams(window.location.search);
+        var rinkId = urlParams.get('id');
+        if (rinkId) {
+            trackRecentlyViewed(parseInt(rinkId));
+            loadRinkDetails(rinkId);
+        } else {
+            displayError('No rink ID provided');
+        }
     }
 
-    var urlParams = new URLSearchParams(window.location.search);
-    var rinkId = urlParams.get('id');
-    if (rinkId) {
-        trackRecentlyViewed(parseInt(rinkId));
-        loadRinkDetails(rinkId);
+    if (window.skatingLocations) {
+        onDataReady();
     } else {
-        displayError('No rink ID provided');
+        window.addEventListener('skatingDataReady', onDataReady, { once: true });
     }
 });
 
@@ -70,7 +73,7 @@ function trackRecentlyViewed(id) {
 }
 
 function loadRinkDetails(rinkId) {
-    var rink = skatingLocations.find(function(l) { return l.id === parseInt(rinkId); });
+    var rink = window.skatingLocations.find(function(l) { return l.id === parseInt(rinkId); });
     if (rink) { displayRinkData(rink); } else { displayError('Rink not found'); }
 }
 
@@ -179,7 +182,7 @@ function displayRinkData(rink) {
     }
 
     // Related locations
-    var related = skatingLocations.filter(function(loc) { return loc.type === rink.type && loc.id !== rink.id; }).slice(0, 3);
+    var related = window.skatingLocations.filter(function(loc) { return loc.type === rink.type && loc.id !== rink.id; }).slice(0, 3);
     if (related.length > 0) {
         var relatedSection = document.getElementById('related-section');
         var relatedGrid = document.getElementById('related-grid');

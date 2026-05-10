@@ -169,15 +169,21 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeViewToggle();
     initializeAutocomplete();
 
-    if (typeof skatingLocations !== 'undefined' && skatingLocations.length > 0) {
-        applyFilters();
-        if (typeof updateTripUI !== 'undefined') updateTripUI();
-        if (typeof updateCompareUI !== 'undefined') updateCompareUI();
-    } else {
-        const resultsContainer = document.getElementById('results-container');
-        if (resultsContainer) {
-            resultsContainer.innerHTML = '<div style="text-align:center;padding:2rem;color:#666;"><h3>Loading locations...</h3><p>If this persists, please refresh.</p></div>';
+    function onDataReady() {
+        if (window.skatingLocations && window.skatingLocations.length > 0) {
+            applyFilters();
+            if (typeof updateTripUI !== 'undefined') updateTripUI();
+            if (typeof updateCompareUI !== 'undefined') updateCompareUI();
+        } else if (window.skatingLocations && window.skatingLocations.length === 0) {
+            const rc = document.getElementById('results-container');
+            if (rc) rc.innerHTML = '<div class="no-results"><h3>Could not load location data</h3><p>Check your connection or <a href="">refresh</a>.</p></div>';
         }
+    }
+
+    if (window.skatingLocations) {
+        onDataReady();
+    } else {
+        window.addEventListener('skatingDataReady', onDataReady, { once: true });
     }
 });
 
