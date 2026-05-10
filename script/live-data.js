@@ -8,6 +8,25 @@
     var INDOOR_URL  = 'https://ckan0.cf.opendata.inter.prod-toronto.ca/dataset/96e9989d-eca5-4e0b-824b-9789a39aea58/resource/3732a863-a629-4d71-8629-f331a83fd61f/download/indoor-ice-rinks-4326.geojson';
     var STATUS_URL  = 'https://www.toronto.ca/data/parks/live/skate_allupdates.json';
 
+    var CACHE_KEY = 'ice-wheels-api-cache';
+    var CACHE_TTL = 60 * 60 * 1000; // 1 hour
+
+    function loadFromCache() {
+        try {
+            var raw = localStorage.getItem(CACHE_KEY);
+            if (!raw) return null;
+            var cached = JSON.parse(raw);
+            if (Date.now() - cached.ts > CACHE_TTL) return null;
+            return cached.data;
+        } catch (e) { return null; }
+    }
+
+    function saveToCache(data) {
+        try {
+            localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), data: data }));
+        } catch (e) {}
+    }
+
     function areaFromCouncil(council) {
         if (!council) return 'downtown';
         var c = council.toLowerCase();
@@ -30,7 +49,6 @@
     function buildStatusMap(statusData) {
         var map = {};
         statusData.forEach(function (s) {
-            // key by AssetID; also keep by AssetName for fuzzy fallback
             if (s.AssetID) map[s.AssetID] = s;
         });
         return map;
@@ -41,6 +59,39 @@
         if (liveEntry.Status === 1) return 'open';
         if (liveEntry.Status === 2) return 'maintenance';
         return 'closed';
+    }
+
+    function imageForLocation(name, type, surface) {
+        var n = (name || '').toLowerCase();
+        // Named landmark matches
+        if (n.includes('nathan phillips'))                           return 'images/nathan-phillips.jpg';
+        if (n.includes('harbourfront') || n.includes('harbour front')) return 'images/harbourfront.jpg';
+        if (n.includes('bentway'))                                   return 'images/bentway.jpg';
+        if (n.includes('colonel samuel smith') || n.includes('colonel smith')) return 'images/colonel-smith.jpg';
+        if (n.includes('greenwood'))                                 return 'images/greenwood.jpg';
+        if (n.includes('north york civic'))                          return 'images/north-york-civic.jpg';
+        if (n.includes('scarborough civic') || n.includes('scarborough centre')) return 'images/scarborough-civic.jpg';
+        if (n.includes('wheel excitement') || n.includes('harbourfront centre')) return 'images/waterfront-trail.jpg';
+        if (n.includes('dufferin grove'))                            return 'images/riverdale-roller.jpg';
+        if (n.includes('scooter'))                                   return 'images/rollerskating2.jpg';
+        if (n.includes('paradise'))                                  return 'images/north-york-roll.jpg';
+        if (n.includes('west end') || n.includes('west-end'))        return 'images/west-end-wheels.jpg';
+        if (n.includes('riverdale') || n.includes('broadview'))      return 'images/greenwood.jpg';
+        if (n.includes('waterfront') || n.includes('quay') || n.includes('martin goodman')) return 'images/waterfront-trail.jpg';
+        // Fallback by type/surface
+        if (type === 'roller')    return 'images/rollerskating.jpg';
+        if (surface === 'outdoor') return 'images/ice-skating.jpg';
+        return 'images/ice-skating.jpeg';
+    }
+
+    function galleryForLocation(name, type, surface) {
+        var primary = imageForLocation(name, type, surface);
+        var extras = type === 'roller'
+            ? ['images/rollerskating2.jpg', 'images/urban-roller.jpg', 'images/roller-skate.jpg']
+            : ['images/ice-skate-close.jpg', 'images/ice-skating.jpg'];
+        var gallery = [primary];
+        extras.forEach(function (img) { if (img !== primary) gallery.push(img); });
+        return gallery.slice(0, 3);
     }
 
     function outdoorHours() {
@@ -98,15 +149,17 @@
         features.forEach(function (f) {
             var p = f.properties;
             var coords = coordsFromGeometry(f.geometry);
-            if (!coords) return; // skip if no geometry
+            if (!coords) return;
             var assetId = parseInt(p['Asset ID']) || null;
             var live = assetId ? statusMap[assetId] : null;
             var name = p['Public Name'] || p['Asset Name'] || 'Unnamed Rink';
+            var area = areaFromCouncil(p['Community Council Area']);
+            var img = imageForLocation(name, 'ice', 'outdoor');
             results.push({
                 id: assetId || (10000 + results.length),
                 name: name,
                 type: 'ice',
-                area: areaFromCouncil(p['Community Council Area']),
+                area: area,
                 surface: 'outdoor',
                 address: (p['Address'] || '') + ', Toronto, ON ' + (p['Postal Code'] || ''),
                 coordinates: coords,
@@ -117,8 +170,8 @@
                 openingHours: outdoorHours(),
                 rentals: { available: false },
                 entryFee: 'Free',
-                imageUrl: 'images/ice-skating.jpg',
-                gallery: ['images/ice-skating.jpg'],
+                imageUrl: img,
+                gallery: galleryForLocation(name, 'ice', 'outdoor'),
                 description: name + ' is a City of Toronto outdoor artificial ice rink' +
                     padDesc(p) +
                     (p['Rink is Lit'] === 'Yes' ? ', lit for evening skating' : '') +
@@ -139,7 +192,6 @@
     }
 
     function transformIndoor(features, statusMap) {
-        // Deduplicate by Parent Asset Name — one card per arena, not per pad
         var seen = {};
         var results = [];
         features.forEach(function (f) {
@@ -152,11 +204,13 @@
             var assetId = parseInt(p['Asset ID']) || null;
             var live = assetId ? statusMap[assetId] : null;
             var name = p['Public Name'] || parentName;
+            var area = areaFromCouncil(p['Community Council Area']);
+            var img = imageForLocation(name, 'ice', 'indoor');
             results.push({
                 id: assetId || (20000 + results.length),
                 name: name,
                 type: 'ice',
-                area: areaFromCouncil(p['Community Council Area']),
+                area: area,
                 surface: 'indoor',
                 address: (p['Address'] || '') + ', Toronto, ON ' + (p['Postal Code'] || ''),
                 coordinates: coords,
@@ -171,8 +225,8 @@
                     prices: { skates: '$8', helmets: '$4' }
                 },
                 entryFee: '$5 adults / $3 youth (approx.)',
-                imageUrl: 'images/ice-skating.jpg',
-                gallery: ['images/ice-skating.jpg'],
+                imageUrl: img,
+                gallery: galleryForLocation(name, 'ice', 'indoor'),
                 description: parentName + ' is a City of Toronto indoor ice arena offering year-round public skating sessions' +
                     padDesc(p) +
                     '. Located in ' + (p['Community Council Area'] || 'Toronto') + '.',
@@ -210,8 +264,8 @@
             },
             rentals: { available: true, items: ['Inline skates', 'Quad skates', 'Helmets', 'Pads'], prices: { skates: '$15/hr' } },
             entryFee: 'Free (rentals extra)',
-            imageUrl: 'images/ice-skating.jpg',
-            gallery: ['images/ice-skating.jpg'],
+            imageUrl: 'images/waterfront-trail.jpg',
+            gallery: ['images/waterfront-trail.jpg', 'images/rollerskating.jpg', 'images/roller-skate.jpg'],
             description: 'Wheel Excitement at Harbourfront Centre is Toronto\'s premier waterfront roller skating destination. Skate along the scenic Lake Ontario shoreline with rental equipment available on-site.',
             specialEvents: 'Themed skate nights, lessons available',
             openMonths: [5, 6, 7, 8, 9, 10],
@@ -241,8 +295,8 @@
             },
             rentals: { available: false },
             entryFee: 'Free',
-            imageUrl: 'images/ice-skating.jpg',
-            gallery: ['images/ice-skating.jpg'],
+            imageUrl: 'images/riverdale-roller.jpg',
+            gallery: ['images/riverdale-roller.jpg', 'images/rollerskating.jpg', 'images/urban-roller.jpg'],
             description: 'The Dufferin Grove roller rink is a beloved community outdoor skating surface in one of Toronto\'s most vibrant parks. The park also features a cob oven and weekly farmers market.',
             specialEvents: 'Friday Night Skate, community events',
             openMonths: [4, 5, 6, 7, 8, 9, 10],
@@ -272,8 +326,8 @@
             },
             rentals: { available: true, items: ['Quad skates', 'Inline skates'], prices: { skates: '$5' } },
             entryFee: '$8–$10',
-            imageUrl: 'images/ice-skating.jpg',
-            gallery: ['images/ice-skating.jpg'],
+            imageUrl: 'images/rollerskating2.jpg',
+            gallery: ['images/rollerskating2.jpg', 'images/urban-roller.jpg', 'images/roller-skate.jpg'],
             description: 'Scooter\'s Roller Palace is Toronto\'s classic indoor roller rink, a nostalgic favourite offering quad and inline skating with a full snack bar and DJ nights.',
             specialEvents: 'DJ nights, birthday party packages, disco sessions',
             openMonths: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
@@ -303,8 +357,8 @@
             },
             rentals: { available: true, items: ['Inline skates', 'Helmets', 'Pads'], prices: { skates: '$10' } },
             entryFee: '$10 adults / $7 youth',
-            imageUrl: 'images/ice-skating.jpg',
-            gallery: ['images/ice-skating.jpg'],
+            imageUrl: 'images/north-york-roll.jpg',
+            gallery: ['images/north-york-roll.jpg', 'images/rollerskating.jpg', 'images/urban-roller.jpg'],
             description: 'Paradise Rinks offers year-round inline skating and roller hockey in a dedicated indoor facility in North York. Leagues, drop-in sessions, and lessons for all ages.',
             specialEvents: 'Adult & youth inline hockey leagues, learn-to-skate programs',
             openMonths: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
@@ -323,17 +377,24 @@
         window.dispatchEvent(new CustomEvent('skatingDataReady'));
     }
 
-    Promise.all([
-        fetch(OUTDOOR_URL).then(function (r) { return r.json(); }),
-        fetch(INDOOR_URL).then(function (r) { return r.json(); }),
-        fetch(STATUS_URL).then(function (r) { return r.json(); })
-    ]).then(function (all) {
-        var statusMap = buildStatusMap(all[2]);
-        var outdoor = transformOutdoor((all[0].features || []), statusMap);
-        var indoor  = transformIndoor((all[1].features || []), statusMap);
-        dispatch(outdoor.concat(indoor).concat(ROLLER_VENUES));
-    }).catch(function (err) {
-        console.error('[ICE-WHEELS] Failed to load City of Toronto data:', err);
-        dispatch(ROLLER_VENUES);
-    });
+    var cached = loadFromCache();
+    if (cached) {
+        dispatch(cached);
+    } else {
+        Promise.all([
+            fetch(OUTDOOR_URL).then(function (r) { return r.json(); }),
+            fetch(INDOOR_URL).then(function (r) { return r.json(); }),
+            fetch(STATUS_URL).then(function (r) { return r.json(); })
+        ]).then(function (all) {
+            var statusMap = buildStatusMap(all[2]);
+            var outdoor = transformOutdoor((all[0].features || []), statusMap);
+            var indoor  = transformIndoor((all[1].features || []), statusMap);
+            var locations = outdoor.concat(indoor).concat(ROLLER_VENUES);
+            saveToCache(locations);
+            dispatch(locations);
+        }).catch(function (err) {
+            console.error('[ICE-WHEELS] Failed to load City of Toronto data:', err);
+            dispatch(ROLLER_VENUES);
+        });
+    }
 })();

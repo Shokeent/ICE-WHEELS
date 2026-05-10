@@ -11,6 +11,13 @@
     <meta property="og:image" content="images/harbourfront.jpg">
     <meta name="theme-color" content="#1a0d06">
     <link rel="manifest" href="manifest.json">
+    <script>
+        (function() {
+            var t = localStorage.getItem('ice-wheels-theme') ||
+                    (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            document.documentElement.setAttribute('data-theme', t);
+        })();
+    </script>
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
