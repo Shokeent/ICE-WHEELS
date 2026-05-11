@@ -185,6 +185,10 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
         window.addEventListener('skatingDataReady', onDataReady, { once: true });
     }
+
+    window.addEventListener('languageChanged', function() {
+        if (window._iceWheelsLastCount !== undefined) updateResultsCount(window._iceWheelsLastCount);
+    });
 });
 
 function initializeFavouritesFilter() {
@@ -483,9 +487,15 @@ function applyFilters() {
 }
 
 function updateResultsCount(count) {
+    window._iceWheelsLastCount = count;
     const countEl = document.getElementById('results-count');
     if (!countEl) return;
-    countEl.innerHTML = 'Showing <strong>' + count + '</strong> location' + (count !== 1 ? 's' : '');
+    const lang = localStorage.getItem('ice-wheels-lang') || 'en';
+    if (lang === 'fr') {
+        countEl.innerHTML = '<strong>' + count + '</strong> lieu' + (count !== 1 ? 'x' : '') + ' affiché' + (count !== 1 ? 's' : '');
+    } else {
+        countEl.innerHTML = 'Showing <strong>' + count + '</strong> location' + (count !== 1 ? 's' : '');
+    }
 }
 
 // ===== LIST VIEW =====

@@ -84,6 +84,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 localStorage.setItem('ice-wheels-lang', next);
                 applyLanguage(next);
                 this.textContent = next === 'fr' ? 'EN' : 'FR';
+                window.dispatchEvent(new CustomEvent('languageChanged', { detail: { lang: next } }));
             });
         }
     })();
@@ -250,6 +251,9 @@ document.addEventListener('DOMContentLoaded', function() {
 function applyLanguage(lang) {
     document.querySelectorAll('[data-en]').forEach(function(el) {
         el.textContent = lang === 'fr' ? (el.dataset.fr || el.textContent) : el.dataset.en;
+    });
+    document.querySelectorAll('[data-placeholder-en]').forEach(function(el) {
+        el.placeholder = lang === 'fr' ? (el.dataset.placeholderFr || el.placeholder) : el.dataset.placeholderEn;
     });
 }
 

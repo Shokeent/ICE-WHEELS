@@ -55,28 +55,28 @@
     <main class="locations-container">
             <section class="filters-section">
                 <div class="filter-header">
-                    <h2>Filters</h2>
+                    <h2 data-en="Filters" data-fr="Filtres">Filters</h2>
                     <span class="filter-count-badge" id="filter-count-badge"></span>
                 </div>
                 <hr>
-                <p class="filter-description">Find family-friendly spots, advanced routes, and everything in between – tailored to your skating style.</p>
+                <p class="filter-description" data-en="Find family-friendly spots, advanced routes, and everything in between – tailored to your skating style." data-fr="Trouvez des endroits familiaux, des parcours avancés et plus encore – selon votre style.">Find family-friendly spots, advanced routes, and everything in between – tailored to your skating style.</p>
 
                 <div class="filter-group">
-                    <button class="filter-btn favourites-filter-btn" id="favourites-filter-btn" style="width:100%;justify-content:center;">❤️ My Favourites</button>
+                    <button class="filter-btn favourites-filter-btn" id="favourites-filter-btn" style="width:100%;justify-content:center;" data-en="❤️ My Favourites" data-fr="❤️ Mes favoris">❤️ My Favourites</button>
                 </div>
 
                 <div class="filter-group">
-                    <h3><i class="fas fa-layer-group"></i> Type</h3>
+                    <h3><i class="fas fa-layer-group"></i> <span data-en="Type" data-fr="Type">Type</span></h3>
                     <div class="filter-options">
-                        <button class="filter-btn" data-filter="type" data-value="ice">Ice Skating</button>
-                        <button class="filter-btn" data-filter="type" data-value="roller">Roller Skating</button>
+                        <button class="filter-btn" data-filter="type" data-value="ice" data-en="Ice Skating" data-fr="Patinage sur glace">Ice Skating</button>
+                        <button class="filter-btn" data-filter="type" data-value="roller" data-en="Roller Skating" data-fr="Patinage à roulettes">Roller Skating</button>
                     </div>
                 </div>
 
                 <div class="filter-group">
-                    <h3><i class="fas fa-map"></i> Location</h3>
+                    <h3><i class="fas fa-map"></i> <span data-en="Location" data-fr="Quartier">Location</span></h3>
                     <div class="filter-options">
-                        <button class="filter-btn" data-filter="location" data-value="downtown">Downtown</button>
+                        <button class="filter-btn" data-filter="location" data-value="downtown" data-en="Downtown" data-fr="Centre-ville">Downtown</button>
                         <button class="filter-btn" data-filter="location" data-value="midtown">Midtown</button>
                         <button class="filter-btn" data-filter="location" data-value="north-york">North York</button>
                         <button class="filter-btn" data-filter="location" data-value="etobicoke">Etobicoke</button>
@@ -85,54 +85,54 @@
                 </div>
 
                 <div class="filter-group">
-                    <h3><i class="fas fa-building"></i> Surface</h3>
+                    <h3><i class="fas fa-building"></i> <span data-en="Surface" data-fr="Surface">Surface</span></h3>
                     <div class="filter-options">
-                        <button class="filter-btn" data-filter="surface" data-value="indoor">Indoor</button>
-                        <button class="filter-btn" data-filter="surface" data-value="outdoor">Outdoor</button>
+                        <button class="filter-btn" data-filter="surface" data-value="indoor" data-en="Indoor" data-fr="Intérieur">Indoor</button>
+                        <button class="filter-btn" data-filter="surface" data-value="outdoor" data-en="Outdoor" data-fr="Extérieur">Outdoor</button>
                     </div>
                 </div>
 
                 <div class="filter-group">
-                    <h3><i class="fas fa-star"></i> Amenities</h3>
+                    <h3><i class="fas fa-star"></i> <span data-en="Amenities" data-fr="Commodités">Amenities</span></h3>
                     <div class="filter-options">
-                        <button class="filter-btn" data-filter="amenities" data-value="rentals">Skate Rentals</button>
-                        <button class="filter-btn" data-filter="amenities" data-value="washrooms">Washrooms</button>
-                        <button class="filter-btn" data-filter="amenities" data-value="food">Food Stalls</button>
-                        <button class="filter-btn" data-filter="amenities" data-value="parking">Parking</button>
+                        <button class="filter-btn" data-filter="amenities" data-value="rentals" data-en="Skate Rentals" data-fr="Location de patins">Skate Rentals</button>
+                        <button class="filter-btn" data-filter="amenities" data-value="washrooms" data-en="Washrooms" data-fr="Toilettes">Washrooms</button>
+                        <button class="filter-btn" data-filter="amenities" data-value="food" data-en="Food Stalls" data-fr="Restauration">Food Stalls</button>
+                        <button class="filter-btn" data-filter="amenities" data-value="parking" data-en="Parking" data-fr="Stationnement">Parking</button>
                     </div>
                 </div>
 
                 <div class="filter-group">
-                    <h3><i class="fas fa-circle-dot"></i> Status</h3>
+                    <h3><i class="fas fa-circle-dot"></i> <span data-en="Status" data-fr="Statut">Status</span></h3>
                     <div class="filter-options">
-                        <button class="filter-btn" data-filter="status" data-value="open">Open</button>
-                        <button class="filter-btn" data-filter="status" data-value="closed">Closed</button>
-                        <button class="filter-btn" data-filter="status" data-value="maintenance">Maintenance</button>
+                        <button class="filter-btn" data-filter="status" data-value="open" data-en="Open" data-fr="Ouvert">Open</button>
+                        <button class="filter-btn" data-filter="status" data-value="closed" data-en="Closed" data-fr="Fermé">Closed</button>
+                        <button class="filter-btn" data-filter="status" data-value="maintenance" data-en="Maintenance" data-fr="Maintenance">Maintenance</button>
                     </div>
                 </div>
 
-                <button class="clear-filters-btn" id="clear-filters-btn">Clear All Filters</button>
+                <button class="clear-filters-btn" id="clear-filters-btn" data-en="Clear All Filters" data-fr="Effacer les filtres">Clear All Filters</button>
             </section>
 
             <section class="results-section">
                 <div class="search-bar-container">
-                    <input type="text" id="search-input" class="search-input" placeholder="Search by name or address..." autocomplete="off">
+                    <input type="text" id="search-input" class="search-input" placeholder="Search by name or address..." data-placeholder-en="Search by name or address..." data-placeholder-fr="Rechercher par nom ou adresse..." autocomplete="off">
                     <div id="search-suggestions" class="search-suggestions" hidden></div>
                 </div>
                 <div class="results-header">
                     <span class="results-count" id="results-count"></span>
                     <div class="results-controls">
-                        <button class="surprise-btn" id="surprise-me-btn" title="Go to a random location"><i class="fas fa-dice"></i> Surprise Me</button>
+                        <button class="surprise-btn" id="surprise-me-btn" title="Go to a random location"><i class="fas fa-dice"></i> <span data-en="Surprise Me" data-fr="Au hasard">Surprise Me</span></button>
                         <div class="view-toggle">
-                            <button class="view-btn active" id="view-list-btn" title="List view"><i class="fas fa-list"></i> List</button>
-                            <button class="view-btn" id="view-map-btn" title="Map view"><i class="fas fa-map"></i> Map</button>
+                            <button class="view-btn active" id="view-list-btn" title="List view"><i class="fas fa-list"></i> <span data-en="List" data-fr="Liste">List</span></button>
+                            <button class="view-btn" id="view-map-btn" title="Map view"><i class="fas fa-map"></i> <span data-en="Map" data-fr="Carte">Map</span></button>
                         </div>
                         <select id="sort-select" class="sort-select">
-                            <option value="default">Sort: Default</option>
-                            <option value="near-me">Near Me</option>
-                            <option value="open-first">Open First</option>
-                            <option value="name-asc">Name A–Z</option>
-                            <option value="area">By Area</option>
+                            <option value="default" data-en="Sort: Default" data-fr="Trier : Défaut">Sort: Default</option>
+                            <option value="near-me" data-en="Near Me" data-fr="Près de moi">Near Me</option>
+                            <option value="open-first" data-en="Open First" data-fr="Ouverts d'abord">Open First</option>
+                            <option value="name-asc" data-en="Name A–Z" data-fr="Nom A–Z">Name A–Z</option>
+                            <option value="area" data-en="By Area" data-fr="Par quartier">By Area</option>
                         </select>
                     </div>
                 </div>
@@ -157,8 +157,8 @@
                 <div class="trip-chips" id="trip-chips"></div>
             </div>
             <div class="trip-tray-actions">
-                <a href="#" id="trip-maps-btn" class="trip-action-btn" target="_blank" rel="noopener noreferrer"><i class="fas fa-map-location-dot"></i> Plan Route</a>
-                <button class="trip-action-btn" id="trip-share-btn"><i class="fas fa-share-nodes"></i> Share</button>
+                <a href="#" id="trip-maps-btn" class="trip-action-btn" target="_blank" rel="noopener noreferrer"><i class="fas fa-map-location-dot"></i> <span data-en="Plan Route" data-fr="Planifier">Plan Route</span></a>
+                <button class="trip-action-btn" id="trip-share-btn"><i class="fas fa-share-nodes"></i> <span data-en="Share" data-fr="Partager">Share</span></button>
                 <button class="trip-action-btn trip-clear-btn" id="trip-clear-btn"><i class="fas fa-trash"></i></button>
             </div>
         </div>
@@ -167,9 +167,9 @@
     <!-- Compare Bar -->
     <div class="compare-bar" id="compare-bar">
         <div class="compare-bar-inner">
-            <span class="compare-bar-label"><i class="fas fa-sliders"></i> Compare:</span>
+            <span class="compare-bar-label"><i class="fas fa-sliders"></i> <span data-en="Compare:" data-fr="Comparer :">Compare:</span></span>
             <div class="compare-names" id="compare-names"></div>
-            <button class="compare-now-btn" id="compare-now-btn" disabled>Compare Now</button>
+            <button class="compare-now-btn" id="compare-now-btn" disabled data-en="Compare Now" data-fr="Comparer">Compare Now</button>
             <button class="compare-clear-btn" id="compare-clear-btn"><i class="fas fa-xmark"></i></button>
         </div>
     </div>
@@ -179,19 +179,19 @@
             <div class="footer-brand">
                 <i class="fas fa-snowflake footer-brand-icon"></i>
                 <div class="footer-brand-name">Ice & Wheels</div>
-                <p>Toronto's complete directory of ice and roller skating locations.</p>
+                <p data-en="Toronto's complete directory of ice and roller skating locations." data-fr="Le répertoire complet de patinoires à Toronto.">Toronto's complete directory of ice and roller skating locations.</p>
             </div>
             <div class="footer-col">
-                <h4>Explore</h4>
-                <a href="locations.html">Find Locations</a>
-                <a href="map.html">Map View</a>
-                <a href="about.html">About Us</a>
-                <a href="faq.html">FAQ</a>
+                <h4 data-en="Explore" data-fr="Explorer">Explore</h4>
+                <a href="locations.html" data-en="Find Locations" data-fr="Trouver des sites">Find Locations</a>
+                <a href="map.html" data-en="Map View" data-fr="Vue carte">Map View</a>
+                <a href="about.html" data-en="About Us" data-fr="À propos">About Us</a>
+                <a href="faq.html" data-en="FAQ" data-fr="FAQ">FAQ</a>
             </div>
             <div class="footer-col">
-                <h4>Help</h4>
-                <a href="contact.html">Contact Us</a>
-                <a href="faq.html">Support</a>
+                <h4 data-en="Help" data-fr="Aide">Help</h4>
+                <a href="contact.html" data-en="Contact Us" data-fr="Nous contacter">Contact Us</a>
+                <a href="faq.html" data-en="Support" data-fr="Assistance">Support</a>
             </div>
         </div>
         <div class="footer-bottom">
