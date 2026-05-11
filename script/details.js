@@ -169,6 +169,8 @@ function displayRinkData(rink) {
     }
 
     document.getElementById('opening-hours').textContent = formatOpeningHours(rink.openingHours);
+    var entryFeeEl = document.getElementById('entry-fee');
+    if (entryFeeEl) entryFeeEl.textContent = rink.entryFee || 'See venue for details';
     var amenitiesText = rink.amenities ? rink.amenities.map(formatAmenity).join(', ') : 'No amenities information available';
     document.getElementById('amenities').textContent = amenitiesText;
     document.getElementById('special-events').textContent = rink.specialEvents || 'No special events scheduled';
@@ -463,7 +465,7 @@ function formatOpeningHours(hours) {
 }
 
 function formatAmenity(amenity) {
-    var map = { rentals: 'Skate rentals', washrooms: 'Washrooms', food: 'Food & drink vendors', parking: 'Parking' };
+    var map = { rentals: 'Skate rentals', washrooms: 'Washrooms', food: 'Food & drink', parking: 'Parking', 'hockey-boards': 'Hockey boards', lighting: 'Evening lighting' };
     return map[amenity] || amenity;
 }
 
