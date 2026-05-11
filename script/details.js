@@ -29,6 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
         var langBtn = document.getElementById('lang-toggle');
         if (langBtn) {
             langBtn.textContent = lang === 'fr' ? 'EN' : 'FR';
+            langBtn.dataset.langInit = '1';
             langBtn.addEventListener('click', function() {
                 var cur = localStorage.getItem('ice-wheels-lang') || 'en';
                 var next = cur === 'en' ? 'fr' : 'en';
