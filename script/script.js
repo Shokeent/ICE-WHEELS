@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if ('caches' in window) {
         caches.keys().then(function(names) {
             names.forEach(function(name) {
-                if (name !== 'ice-wheels-v3') caches.delete(name);
+                if (name !== 'ice-wheels-v4') caches.delete(name);
             });
         });
     }
@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (icon) icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
     })();
     var themeBtn = document.getElementById('theme-toggle');
-    if (themeBtn) {
+    if (themeBtn && !themeBtn.dataset.themeInit) {
         themeBtn.addEventListener('click', function() {
             var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
             var newTheme = isDark ? 'light' : 'dark';

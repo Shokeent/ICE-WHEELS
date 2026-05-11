@@ -31,6 +31,7 @@ function initTheme() {
 
     const btn = document.getElementById('theme-toggle');
     if (btn) {
+        btn.dataset.themeInit = '1';
         btn.addEventListener('click', function() {
             const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
             const newTheme = isDark ? 'light' : 'dark';

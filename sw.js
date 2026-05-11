@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ice-wheels-v3';
+const CACHE_NAME = 'ice-wheels-v4';
 
 // Only pre-cache HTML + CSS — JS is always fetched fresh so updates propagate instantly
 const SHELL = [
