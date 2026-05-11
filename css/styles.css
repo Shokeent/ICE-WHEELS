@@ -370,6 +370,7 @@ header {
     display: flex;
     gap: 2rem;
     margin-top: 2rem;
+    padding: 0 1.5rem 2rem;
 }
 
 .filters-section {
@@ -473,6 +474,7 @@ header {
     border-radius: 15px 15px 0 0;
     overflow: hidden;
     position: relative;
+    background-color: #e8e0d4;
 }
 
 .rink-card-image img {
@@ -1354,7 +1356,7 @@ footer {
 
 #results-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 1.2rem;
 }
 
