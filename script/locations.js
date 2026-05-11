@@ -90,8 +90,7 @@ function isOpenNow(openingHours) {
 }
 
 function getLiveStatus(location) {
-    if (location.status === 'maintenance') return 'maintenance';
-    return isOpenNow(location.openingHours) ? 'open' : 'closed';
+    return location.status || 'closed';
 }
 
 function haversineKm(lat1, lng1, lat2, lng2) {
@@ -266,9 +265,6 @@ function initializeFilters() {
     const filterButtons = document.querySelectorAll('.filter-btn:not(#favourites-filter-btn)');
     for (let i = 0; i < filterButtons.length; i++) {
         const button = filterButtons[i];
-        if (button.classList.contains('active')) {
-            activeFilters[button.dataset.filter].push(button.dataset.value);
-        }
         button.addEventListener('click', function() {
             const filterType = this.dataset.filter;
             const filterValue = this.dataset.value;
