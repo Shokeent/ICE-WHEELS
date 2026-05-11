@@ -74,8 +74,8 @@ function updateTripUI() {
         btn.classList.toggle('active', inTrip);
         btn.title = inTrip ? 'Remove from trip' : 'Add to trip';
         btn.innerHTML = inTrip
-            ? '<i class="fas fa-route"></i> In Trip'
-            : '<i class="fas fa-route"></i> Add to Trip';
+            ? '<i class="fas fa-check"></i>'
+            : '<i class="fas fa-route"></i>';
     });
 
     if (!ids.length) {
@@ -140,7 +140,7 @@ function updateCompareUI() {
         var inCompare = ids.indexOf(id) > -1;
         btn.classList.toggle('active', inCompare);
         btn.title = inCompare ? 'Remove from comparison' : 'Compare this location';
-        btn.innerHTML = '<i class="fas fa-' + (inCompare ? 'check' : 'sliders') + '"></i> Compare';
+        btn.innerHTML = '<i class="fas fa-' + (inCompare ? 'check' : 'sliders') + '"></i>';
     });
 
     if (!bar) return;
