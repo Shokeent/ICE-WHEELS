@@ -523,7 +523,7 @@ function displayResults(locations, sortBy) {
         card.className = 'rink-card';
         card.innerHTML =
             '<div class="rink-card-image">' +
-                '<img loading="lazy" src="' + location.imageUrl + '" alt="' + location.name + '" onerror="this.src=\'images/ice-skating.jpg\'" />' +
+                '<img src="' + location.imageUrl + '" alt="' + location.name + '" onerror="this.src=\'images/ice-skating.jpg\'" />' +
                 '<button class="fav-btn' + (isFav ? ' active' : '') + '" data-id="' + location.id + '" title="' + (isFav ? 'Remove from favourites' : 'Save to favourites') + '">' +
                     (isFav ? '<i class="fas fa-heart" style="color:#e74c3c"></i>' : '<i class="far fa-heart"></i>') +
                 '</button>' +

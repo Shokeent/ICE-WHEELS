@@ -8,7 +8,7 @@
     var INDOOR_URL  = '/api/indoor-rinks';
     var STATUS_URL  = '/api/status';
 
-    var CACHE_KEY = 'ice-wheels-api-cache-v3';
+    var CACHE_KEY = 'ice-wheels-api-cache-v4';
     var CACHE_TTL = 60 * 60 * 1000; // 1 hour
 
     function loadFromCache() {
@@ -77,7 +77,14 @@
         return 'closed';
     }
 
-    function imageForLocation(name, type, surface) {
+    function aerialUrl(coords) {
+        var d = 0.003;
+        return 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/export' +
+            '?bbox=' + (coords.lng - d) + ',' + (coords.lat - d) + ',' + (coords.lng + d) + ',' + (coords.lat + d) +
+            '&bboxSR=4326&size=600,300&format=png&f=image';
+    }
+
+    function imageForLocation(name, type, surface, coords) {
         var n = (name || '').toLowerCase();
         // Named landmark — verified Wikimedia Commons photos (CC-licensed, real photos of these venues)
         if (n.includes('nathan phillips'))
@@ -94,17 +101,18 @@
             return 'https://upload.wikimedia.org/wikipedia/commons/e/e5/Scarborough_Civic_Centre.jpg';
         if (n.includes('dufferin grove'))
             return 'https://upload.wikimedia.org/wikipedia/commons/b/ba/Dufferin_Grove_Park_2022.jpg';
-        // Fallback by type/surface — honest generic photo, not a fake specific venue shot
-        if (type === 'roller')    return 'images/rollerskating.jpg';
-        if (surface === 'indoor') return 'images/ice-skating.jpeg';
+        // Unnamed ice rinks — aerial satellite photo of the actual location
+        if (coords && type !== 'roller') return aerialUrl(coords);
+        // Roller venues (curated, no coords-based aerial needed)
+        if (type === 'roller') return 'images/rollerskating.jpg';
         return 'images/ice-skating.jpg';
     }
 
-    function galleryForLocation(name, type, surface) {
-        var primary = imageForLocation(name, type, surface);
-        var isReal = primary.startsWith('https://');
-        if (!isReal) return [primary]; // generic fallback — no fake variety
-        // Named venue with a real photo — add one contextual second image
+    function galleryForLocation(name, type, surface, coords) {
+        var primary = imageForLocation(name, type, surface, coords);
+        var isExternal = primary.startsWith('https://');
+        if (!isExternal) return [primary];
+        // External image (Wikimedia or aerial) — add one contextual second image
         var extra = type === 'roller' ? 'images/rollerskating2.jpg' : 'images/ice-skate-close.jpg';
         return [primary, extra];
     }
@@ -172,7 +180,7 @@
             var live = assetId ? statusMap[assetId] : null;
             var name = p['Public Name'] || p['Asset Name'] || 'Unnamed Rink';
             var area = areaFromCouncil(p['Community Council Area'], coords.lat);
-            var img = imageForLocation(name, 'ice', 'outdoor');
+            var img = imageForLocation(name, 'ice', 'outdoor', coords);
             var amenities = ['washrooms'];
             if (p['Boards (Ice Rink)'] === 'Yes') amenities.push('hockey-boards');
             if (p['Rink is Lit'] === 'Yes') amenities.push('lighting');
@@ -192,7 +200,7 @@
                 rentals: { available: false },
                 entryFee: 'Free',
                 imageUrl: img,
-                gallery: galleryForLocation(name, 'ice', 'outdoor'),
+                gallery: galleryForLocation(name, 'ice', 'outdoor', coords),
                 description: name + ' is a City of Toronto outdoor artificial ice rink' +
                     padDesc(p) +
                     (p['Rink is Lit'] === 'Yes' ? ', lit for evening skating' : '') +
@@ -227,7 +235,7 @@
             var live = assetId ? statusMap[assetId] : null;
             var name = p['Public Name'] || parentName;
             var area = areaFromCouncil(p['Community Council Area'], coords.lat);
-            var img = imageForLocation(name, 'ice', 'indoor');
+            var img = imageForLocation(name, 'ice', 'indoor', coords);
             results.push({
                 id: assetId || (20000 + results.length),
                 name: name,
@@ -248,7 +256,7 @@
                 },
                 entryFee: 'Approx. $5–$8 adults, $3–$5 youth (check toronto.ca for current rates)',
                 imageUrl: img,
-                gallery: galleryForLocation(name, 'ice', 'indoor'),
+                gallery: galleryForLocation(name, 'ice', 'indoor', coords),
                 description: parentName + ' is a City of Toronto indoor ice arena offering year-round public skating sessions' +
                     padDesc(p) +
                     '. Located in ' + (p['Community Council Area'] || 'Toronto') + '.',
