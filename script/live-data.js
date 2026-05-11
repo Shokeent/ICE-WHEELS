@@ -8,7 +8,7 @@
     var INDOOR_URL  = '/api/indoor-rinks';
     var STATUS_URL  = '/api/status';
 
-    var CACHE_KEY = 'ice-wheels-api-cache-v2';
+    var CACHE_KEY = 'ice-wheels-api-cache-v3';
     var CACHE_TTL = 60 * 60 * 1000; // 1 hour
 
     function loadFromCache() {
@@ -172,6 +172,7 @@
             var area = areaFromCouncil(p['Community Council Area'], coords.lat);
             var img = imageForLocation(name, 'ice', 'outdoor');
             results.push({
+                id: assetId || (10000 + results.length),
                 name: name,
                 type: 'ice',
                 area: area,

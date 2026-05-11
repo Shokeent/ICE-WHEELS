@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // ===== CACHE AGE BANNER =====
     (function() {
         try {
-            var raw = localStorage.getItem('ice-wheels-api-cache-v2');
+            var raw = localStorage.getItem('ice-wheels-api-cache-v3');
             if (!raw) return;
             var cached = JSON.parse(raw);
             var ageMs = Date.now() - (cached.ts || 0);
@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
             document.body.insertAdjacentElement('afterbegin', banner);
             document.getElementById('cache-refresh-link').addEventListener('click', function(e) {
                 e.preventDefault();
-                localStorage.removeItem('ice-wheels-api-cache-v2');
+                localStorage.removeItem('ice-wheels-api-cache-v3');
                 location.reload();
             });
             document.getElementById('cache-banner-dismiss').addEventListener('click', function() {
