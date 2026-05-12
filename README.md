@@ -1,28 +1,34 @@
-# ICE-WHEELS
+# Ice & Wheels
 
-**ICE-WHEELS** is a dynamic and interactive web application built with **HTML, CSS, and JavaScript**. It demonstrates frontend development skills including responsive design, DOM manipulation, and user interface interactivity.
+A guide to skating in Toronto — ice rinks and roller spots, all in one place. Bilingual (EN/FR), works offline, installable as a PWA.
 
-## Features
+**[Live site →](https://shokeent.github.io/ICE-WHEELS/)**
 
-- Multi-page website: Home, About, Contact, FAQ, Locations  
-- Fully responsive design for desktop and mobile  
-- Interactive elements powered by JavaScript  
-- Clean navigation and structured layout  
+## What's in it
 
-## Technologies
+- **Locations directory** — browse and filter skating spots across the city
+- **Interactive map** — all locations plotted with Leaflet
+- **Favourites** — save spots locally, no account needed
+- **Check-ins / Visit log** — track rinks you've been to
+- **Live rink status** — open/closed info pulled from live data
+- **Contact form** — powered by Formspree
+- **Bilingual** — full English and French support
+- **Dark mode** — respects system preference, togglable
+- **Offline support** — service worker caches the shell, falls back gracefully
 
-- **HTML5**  
-- **CSS3**  
-- **JavaScript**  
+## Stack
 
-## Skills Demonstrated
+Plain HTML, CSS, and JavaScript — no framework. Deployed on Vercel.
 
-- Frontend development fundamentals  
-- Responsive web design  
-- DOM manipulation & event handling  
-- UI/UX design principles  
+- [Leaflet](https://leafletjs.com/) for maps
+- [Font Awesome](https://fontawesome.com/) for icons
+- [Formspree](https://formspree.io/) for the contact form
+- Service worker for PWA / offline support
 
+## Local dev
 
-## Live Demo
+No build step needed. Just open `index.html` in a browser, or serve it locally:
 
-Check out the live website [here](https://shokeent.github.io/ICE-WHEELS/). 
+```bash
+npx serve .
+```
