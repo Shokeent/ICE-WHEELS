@@ -36,6 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 localStorage.setItem('ice-wheels-lang', next);
                 applyLang(next);
                 this.textContent = next === 'fr' ? 'EN' : 'FR';
+                window.dispatchEvent(new CustomEvent('languageChanged', { detail: { lang: next } }));
             });
         }
     })();
@@ -56,11 +57,23 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
         window.addEventListener('skatingDataReady', onDataReady, { once: true });
     }
+
+    window.addEventListener('languageChanged', function() {
+        var lang = localStorage.getItem('ice-wheels-lang') || 'en';
+        applyLang(lang);
+        var checkinBtn = document.getElementById('checkin-btn');
+        var tripBtn = document.getElementById('trip-btn-detail');
+        if (checkinBtn && window._detailsRinkId !== undefined) updateCheckinBtn(window._detailsRinkId, checkinBtn);
+        if (tripBtn && window._detailsRinkId !== undefined) updateTripDetailBtn(window._detailsRinkId, tripBtn);
+    });
 });
 
 function applyLang(lang) {
     document.querySelectorAll('[data-en]').forEach(function(el) {
         el.textContent = lang === 'fr' ? (el.dataset.fr || el.textContent) : el.dataset.en;
+    });
+    document.querySelectorAll('[data-placeholder-en]').forEach(function(el) {
+        el.placeholder = lang === 'fr' ? (el.dataset.placeholderFr || el.placeholder) : el.dataset.placeholderEn;
     });
 }
 
@@ -74,6 +87,7 @@ function trackRecentlyViewed(id) {
 }
 
 function loadRinkDetails(rinkId) {
+    window._detailsRinkId = parseInt(rinkId);
     var rink = window.skatingLocations.find(function(l) { return l.id === parseInt(rinkId); });
     if (rink) { displayRinkData(rink); } else { displayError('Rink not found'); }
 }
@@ -347,11 +361,14 @@ function updateCheckinBtn(id, btn) {
     try {
         var checkins = JSON.parse(localStorage.getItem('ice-wheels-checkins') || '{}');
         var count = (checkins[String(id)] || []).length;
+        var lang = localStorage.getItem('ice-wheels-lang') || 'en';
         if (count > 0) {
-            btn.innerHTML = '<i class="fas fa-check-circle"></i> Visited ' + count + 'x';
+            var label = lang === 'fr' ? ('Visité ' + count + 'x') : ('Visited ' + count + 'x');
+            btn.innerHTML = '<i class="fas fa-check-circle"></i> ' + label;
             btn.classList.add('checked-in');
         } else {
-            btn.innerHTML = '<i class="fas fa-flag-checkered"></i> Check In';
+            var label2 = lang === 'fr' ? "S'enregistrer" : 'Check In';
+            btn.innerHTML = '<i class="fas fa-flag-checkered"></i> ' + label2;
             btn.classList.remove('checked-in');
         }
     } catch (e) {}
@@ -373,9 +390,14 @@ function doCheckin(id, btn) {
 function updateTripDetailBtn(id, btn) {
     if (typeof isInTrip === 'undefined') return;
     var inTrip = isInTrip(id);
+    var lang = localStorage.getItem('ice-wheels-lang') || 'en';
     btn.classList.toggle('active', inTrip);
-    btn.innerHTML = inTrip ? '<i class="fas fa-route"></i> In Trip' : '<i class="fas fa-route"></i> Add to Trip';
-    btn.title = inTrip ? 'Remove from trip' : 'Add to trip planner';
+    if (lang === 'fr') {
+        btn.innerHTML = inTrip ? '<i class="fas fa-route"></i> Dans le voyage' : '<i class="fas fa-route"></i> Ajouter';
+    } else {
+        btn.innerHTML = inTrip ? '<i class="fas fa-route"></i> In Trip' : '<i class="fas fa-route"></i> Add to Trip';
+    }
+    btn.title = inTrip ? (lang === 'fr' ? 'Retirer du voyage' : 'Remove from trip') : (lang === 'fr' ? 'Ajouter au voyage' : 'Add to trip planner');
 }
 
 // ===== BUDDY MODAL =====

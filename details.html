@@ -51,7 +51,7 @@
         <main>
             <div class="details-container">
                 <div class="back-button-container">
-                    <a href="locations.html" class="button button-secondary">← Back to Locations</a>
+                    <a href="locations.html" class="button button-secondary" data-en="← Back to Locations" data-fr="← Retour">← Back to Locations</a>
                 </div>
 
                 <div id="rink-details" class="rink-details">
@@ -63,10 +63,10 @@
 
                     <!-- Action buttons -->
                     <div class="action-buttons-row" id="action-buttons-container">
-                        <button class="action-btn checkin-btn" id="checkin-btn"><i class="fas fa-flag-checkered"></i> Check In</button>
-                        <button class="action-btn add-trip-btn trip-btn-detail" id="trip-btn-detail" title="Add to trip planner"><i class="fas fa-route"></i> Add to Trip</button>
-                        <button class="action-btn buddy-btn" id="buddy-btn" title="Invite a skating buddy"><i class="fas fa-user-group"></i> Invite Buddy</button>
-                        <button class="action-btn qr-btn" id="qr-btn" title="Show QR code"><i class="fas fa-qrcode"></i> QR Code</button>
+                        <button class="action-btn checkin-btn" id="checkin-btn"><i class="fas fa-flag-checkered"></i> <span data-en="Check In" data-fr="S'enregistrer">Check In</span></button>
+                        <button class="action-btn add-trip-btn trip-btn-detail" id="trip-btn-detail" title="Add to trip planner"><i class="fas fa-route"></i> <span data-en="Add to Trip" data-fr="Ajouter">Add to Trip</span></button>
+                        <button class="action-btn buddy-btn" id="buddy-btn" title="Invite a skating buddy"><i class="fas fa-user-group"></i> <span data-en="Invite Buddy" data-fr="Inviter">Invite Buddy</span></button>
+                        <button class="action-btn qr-btn" id="qr-btn" title="Show QR code"><i class="fas fa-qrcode"></i> <span data-en="QR Code" data-fr="Code QR">QR Code</span></button>
                     </div>
 
                     <div class="rink-info-container">
@@ -74,24 +74,24 @@
                             <div id="gallery-container"></div>
                         </div>
                         <div class="rink-info">
-                            <p><strong>Address:</strong> <span id="address"></span></p>
+                            <p><strong data-en="Address:" data-fr="Adresse :">Address:</strong> <span id="address"></span></p>
                             <div id="directions-container"></div>
-                            <p><strong>Entry:</strong> <span id="entry-fee"></span></p>
-                            <p><strong>Hours:</strong> <span id="opening-hours"></span></p>
-                            <p><strong>Amenities:</strong> <span id="amenities"></span></p>
-                            <p><strong>Events:</strong> <span id="special-events"></span></p>
+                            <p><strong data-en="Entry:" data-fr="Entrée :">Entry:</strong> <span id="entry-fee"></span></p>
+                            <p><strong data-en="Hours:" data-fr="Horaires :">Hours:</strong> <span id="opening-hours"></span></p>
+                            <p><strong data-en="Amenities:" data-fr="Commodités :">Amenities:</strong> <span id="amenities"></span></p>
+                            <p><strong data-en="Events:" data-fr="Événements :">Events:</strong> <span id="special-events"></span></p>
                         </div>
                     </div>
 
                     <!-- Seasonal availability -->
                     <div class="season-section" id="season-section">
-                        <h2>Seasonal Availability</h2>
+                        <h2 data-en="Seasonal Availability" data-fr="Disponibilité saisonnière">Seasonal Availability</h2>
                         <div id="season-container"></div>
                     </div>
 
                     <!-- Ice conditions -->
                     <div class="conditions-section" id="conditions-section" style="display:none">
-                        <h2><i class="fas fa-temperature-low"></i> Ice Conditions</h2>
+                        <h2><i class="fas fa-temperature-low"></i> <span data-en="Ice Conditions" data-fr="État de la glace">Ice Conditions</span></h2>
                         <div class="conditions-body">
                             <div class="conditions-stars" id="conditions-stars"></div>
                             <p id="conditions-resurfaced"></p>
@@ -103,22 +103,22 @@
                         <p id="description"></p>
                     </div>
                     <div class="pro-tips">
-                        <h2>Pro Tips:</h2>
+                        <h2 data-en="Pro Tips:" data-fr="Conseils pratiques :">Pro Tips:</h2>
                         <ul id="pro-tips-list"></ul>
                     </div>
 
                     <!-- Reviews -->
                     <div class="reviews-section">
-                        <h2>Reviews</h2>
+                        <h2 data-en="Reviews" data-fr="Avis">Reviews</h2>
                         <div id="reviews-container"></div>
                     </div>
 
                     <div class="rink-map-section">
-                        <h2>Location Map</h2>
+                        <h2 data-en="Location Map" data-fr="Carte">Location Map</h2>
                         <div id="rink-map" class="rink-map"></div>
                     </div>
                     <div class="related-section" id="related-section" style="display:none">
-                        <h2>You Might Also Like</h2>
+                        <h2 data-en="You Might Also Like" data-fr="Vous pourriez aussi aimer">You Might Also Like</h2>
                         <div class="related-grid" id="related-grid"></div>
                     </div>
                 </div>
@@ -131,19 +131,19 @@
             <div class="footer-brand">
                 <i class="fas fa-snowflake footer-brand-icon"></i>
                 <div class="footer-brand-name">Ice & Wheels</div>
-                <p>Toronto's complete directory of ice and roller skating locations.</p>
+                <p data-en="Toronto's complete directory of ice and roller skating locations." data-fr="Le répertoire complet de patinoires à Toronto.">Toronto's complete directory of ice and roller skating locations.</p>
             </div>
             <div class="footer-col">
-                <h4>Explore</h4>
-                <a href="locations.html">Find Locations</a>
-                <a href="map.html">Map View</a>
-                <a href="about.html">About Us</a>
-                <a href="faq.html">FAQ</a>
+                <h4 data-en="Explore" data-fr="Explorer">Explore</h4>
+                <a href="locations.html" data-en="Find Locations" data-fr="Trouver des sites">Find Locations</a>
+                <a href="map.html" data-en="Map View" data-fr="Vue carte">Map View</a>
+                <a href="about.html" data-en="About Us" data-fr="À propos">About Us</a>
+                <a href="faq.html" data-en="FAQ" data-fr="FAQ">FAQ</a>
             </div>
             <div class="footer-col">
-                <h4>Help</h4>
-                <a href="contact.html">Contact Us</a>
-                <a href="faq.html">Support</a>
+                <h4 data-en="Help" data-fr="Aide">Help</h4>
+                <a href="contact.html" data-en="Contact Us" data-fr="Nous contacter">Contact Us</a>
+                <a href="faq.html" data-en="Support" data-fr="Assistance">Support</a>
             </div>
         </div>
         <div class="footer-bottom">
