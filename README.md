@@ -2,7 +2,7 @@
 
 A guide to skating in Toronto — ice rinks and roller spots, all in one place. Bilingual (EN/FR), works offline, installable as a PWA.
 
-**[Live site →](https://shokeent.github.io/ICE-WHEELS/)**
+**[Live site →](https://ice-wheels.vercel.app/)**
 
 ## What's in it
 
