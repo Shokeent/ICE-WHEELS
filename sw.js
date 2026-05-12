@@ -9,6 +9,8 @@ const SHELL = [
     '/contact.html',
     '/faq.html',
     '/details.html',
+    '/favourites.html',
+    '/checkins.html',
     '/manifest.json',
     '/css/styles.css',
     '/images/ice-skating.jpg',

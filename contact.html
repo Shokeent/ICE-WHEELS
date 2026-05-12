@@ -44,6 +44,7 @@
                 <a href="about.html" class="nav-link" data-en="About" data-fr="À propos"><i class="fas fa-circle-info"></i> About</a>
                 <a href="contact.html" class="nav-link active" data-en="Contact" data-fr="Contact"><i class="fas fa-envelope"></i> Contact</a>
                 <a href="faq.html" class="nav-link" data-en="FAQ" data-fr="FAQ"><i class="fas fa-circle-question"></i> FAQ</a>
+                <a href="favourites.html" class="fav-nav-icon" aria-label="My Favourites" title="My Favourites"><i class="fas fa-heart"></i></a>
                 <button class="lang-toggle-btn" id="lang-toggle" aria-label="Toggle language">FR</button>
                 <button class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle dark mode">
                     <i id="theme-icon" class="fas fa-moon"></i>
@@ -57,96 +58,96 @@
             <!-- Hero Section -->
             <section class="section-hero">
                 <div class="hero-content">
-                    <h2>Get In Touch</h2>
-                    <p>Have questions or suggestions? We'd love to hear from you!</p>
+                    <h2 data-en="Get In Touch" data-fr="Contactez-nous">Get In Touch</h2>
+                    <p data-en="Have questions or suggestions? We'd love to hear from you!" data-fr="Des questions ou suggestions ? Nous serions ravis de vous entendre !">Have questions or suggestions? We'd love to hear from you!</p>
                 </div>
             </section>
 
             <!-- Contact Information -->
             <section class="section section-content">
-                <h2>Contact Information</h2>
-                <p>Reach out to us through any of the following methods. We aim to respond to all inquiries within 24 hours.</p>
-                
+                <h2 data-en="Contact Information" data-fr="Coordonnées">Contact Information</h2>
+                <p data-en="Reach out to us through any of the following methods. We aim to respond to all inquiries within 24 hours." data-fr="Contactez-nous par l'un des moyens suivants. Nous répondons à toutes les demandes sous 24 heures.">Reach out to us through any of the following methods. We aim to respond to all inquiries within 24 hours.</p>
+
                 <div class="contact-grid">
                     <div class="contact-item">
                         <h4>📧 Email</h4>
                         <p>info@iceandwheels.com</p>
-                        <p style="font-size: 0.9rem; color: #888;">For general inquiries and support</p>
+                        <p style="font-size: 0.9rem; color: #888;" data-en="For general inquiries and support" data-fr="Pour les demandes générales et le support">For general inquiries and support</p>
                     </div>
                     <div class="contact-item">
                         <h4>📱 Phone</h4>
                         <p>(416) 123-SKATE</p>
-                        <p style="font-size: 0.9rem; color: #888;">Monday to Friday, 9AM - 6PM</p>
+                        <p style="font-size: 0.9rem; color: #888;" data-en="Monday to Friday, 9AM - 6PM" data-fr="Lundi au vendredi, 9h - 18h">Monday to Friday, 9AM - 6PM</p>
                     </div>
                     <div class="contact-item">
                         <h4>📍 Location</h4>
                         <p>Toronto, Ontario</p>
-                        <p style="font-size: 0.9rem; color: #888;">Serving the Greater Toronto Area</p>
+                        <p style="font-size: 0.9rem; color: #888;" data-en="Serving the Greater Toronto Area" data-fr="Desservant le Grand Toronto">Serving the Greater Toronto Area</p>
                     </div>
                     <div class="contact-item">
                         <h4>🕒 Business Hours</h4>
-                        <p>Mon-Fri: 9AM - 6PM</p>
-                        <p>Sat-Sun: 10AM - 4PM</p>
+                        <p data-en="Mon-Fri: 9AM - 6PM" data-fr="Lun-Ven : 9h - 18h">Mon-Fri: 9AM - 6PM</p>
+                        <p data-en="Sat-Sun: 10AM - 4PM" data-fr="Sam-Dim : 10h - 16h">Sat-Sun: 10AM - 4PM</p>
                     </div>
                 </div>
 
-                <h3>Send Us a Message</h3>
+                <h3 data-en="Send Us a Message" data-fr="Envoyez-nous un message">Send Us a Message</h3>
                 <form class="contact-form" id="contact-form">
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" id="name" name="name" required placeholder="Your name">
+                            <label for="name" data-en="Name" data-fr="Nom">Name</label>
+                            <input type="text" id="name" name="name" required placeholder="Your name" data-placeholder-en="Your name" data-placeholder-fr="Votre nom">
                         </div>
                         <div class="form-group">
-                            <label for="email">Email</label>
+                            <label for="email" data-en="Email" data-fr="Courriel">Email</label>
                             <input type="email" id="email" name="email" required placeholder="your@email.com">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="subject">Subject</label>
+                        <label for="subject" data-en="Subject" data-fr="Sujet">Subject</label>
                         <select id="subject" name="subject">
-                            <option value="general">General Inquiry</option>
-                            <option value="location">Report / Suggest a Location</option>
-                            <option value="feedback">Feedback</option>
-                            <option value="partnership">Partnership Opportunity</option>
-                            <option value="technical">Technical Support</option>
+                            <option value="general" data-en="General Inquiry" data-fr="Demande générale">General Inquiry</option>
+                            <option value="location" data-en="Report / Suggest a Location" data-fr="Signaler / Suggérer un lieu">Report / Suggest a Location</option>
+                            <option value="feedback" data-en="Feedback" data-fr="Commentaires">Feedback</option>
+                            <option value="partnership" data-en="Partnership Opportunity" data-fr="Opportunité de partenariat">Partnership Opportunity</option>
+                            <option value="technical" data-en="Technical Support" data-fr="Assistance technique">Technical Support</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="message">Message</label>
-                        <textarea id="message" name="message" required rows="5" placeholder="Tell us how we can help..."></textarea>
+                        <label for="message" data-en="Message" data-fr="Message">Message</label>
+                        <textarea id="message" name="message" required rows="5" placeholder="Tell us how we can help..." data-placeholder-en="Tell us how we can help..." data-placeholder-fr="Dites-nous comment nous pouvons vous aider..."></textarea>
                     </div>
-                    <button type="submit" class="button button-primary">Send Message</button>
+                    <button type="submit" class="button button-primary" data-en="Send Message" data-fr="Envoyer">Send Message</button>
                 </form>
                 <div class="form-success" id="form-success">
-                    <h4>Message Sent!</h4>
-                    <p>Thanks for reaching out. We'll get back to you within 24 hours.</p>
+                    <h4 data-en="Message Sent!" data-fr="Message envoyé !">Message Sent!</h4>
+                    <p data-en="Thanks for reaching out. We'll get back to you within 24 hours." data-fr="Merci de nous avoir contacté. Nous vous répondrons sous 24 heures.">Thanks for reaching out. We'll get back to you within 24 hours.</p>
                 </div>
 
                 <div style="background: #f8f6f0; padding: 2rem; border-radius: 15px; margin-top: 2rem;">
-                    <h4 style="color: #8B4513; margin-bottom: 1rem;">📝 What can we help you with?</h4>
+                    <h4 style="color: #8B4513; margin-bottom: 1rem;" data-en="📝 What can we help you with?" data-fr="📝 Comment pouvons-nous vous aider ?">📝 What can we help you with?</h4>
                     <ul style="list-style: none; padding: 0;">
-                        <li style="margin: 0.5rem 0; color: #666;">✓ Report outdated location information</li>
-                        <li style="margin: 0.5rem 0; color: #666;">✓ Suggest new skating locations</li>
-                        <li style="margin: 0.5rem 0; color: #666;">✓ Request feature improvements</li>
-                        <li style="margin: 0.5rem 0; color: #666;">✓ Partnership opportunities</li>
-                        <li style="margin: 0.5rem 0; color: #666;">✓ Technical support</li>
-                        <li style="margin: 0.5rem 0; color: #666;">✓ General feedback</li>
+                        <li style="margin: 0.5rem 0; color: #666;" data-en="✓ Report outdated location information" data-fr="✓ Signaler des informations obsolètes">✓ Report outdated location information</li>
+                        <li style="margin: 0.5rem 0; color: #666;" data-en="✓ Suggest new skating locations" data-fr="✓ Suggérer de nouveaux lieux de patinage">✓ Suggest new skating locations</li>
+                        <li style="margin: 0.5rem 0; color: #666;" data-en="✓ Request feature improvements" data-fr="✓ Demander des améliorations">✓ Request feature improvements</li>
+                        <li style="margin: 0.5rem 0; color: #666;" data-en="✓ Partnership opportunities" data-fr="✓ Opportunités de partenariat">✓ Partnership opportunities</li>
+                        <li style="margin: 0.5rem 0; color: #666;" data-en="✓ Technical support" data-fr="✓ Assistance technique">✓ Technical support</li>
+                        <li style="margin: 0.5rem 0; color: #666;" data-en="✓ General feedback" data-fr="✓ Commentaires généraux">✓ General feedback</li>
                     </ul>
                 </div>
 
-                <h3>Location Suggestions</h3>
-                <p>Know of a great skating spot that's not on our site? We love hearing about new locations! When suggesting a location, please include:</p>
+                <h3 data-en="Location Suggestions" data-fr="Suggestions de lieux">Location Suggestions</h3>
+                <p data-en="Know of a great skating spot that's not on our site? We love hearing about new locations! When suggesting a location, please include:" data-fr="Vous connaissez un excellent lieu de patinage absent de notre site ? Nous adorons découvrir de nouveaux endroits ! Pour suggérer un lieu, merci d'inclure :">Know of a great skating spot that's not on our site? We love hearing about new locations! When suggesting a location, please include:</p>
                 <ul style="list-style: disc; margin-left: 2rem; color: #555;">
-                    <li>Location name and address</li>
-                    <li>Type of skating (ice or roller)</li>
-                    <li>Operating hours and seasons</li>
-                    <li>Available amenities</li>
-                    <li>Any special features or events</li>
+                    <li data-en="Location name and address" data-fr="Nom et adresse du lieu">Location name and address</li>
+                    <li data-en="Type of skating (ice or roller)" data-fr="Type de patinage (glace ou roulettes)">Type of skating (ice or roller)</li>
+                    <li data-en="Operating hours and seasons" data-fr="Heures d'ouverture et saisons">Operating hours and seasons</li>
+                    <li data-en="Available amenities" data-fr="Commodités disponibles">Available amenities</li>
+                    <li data-en="Any special features or events" data-fr="Caractéristiques ou événements particuliers">Any special features or events</li>
                 </ul>
 
-                <h3>Partnership Opportunities</h3>
-                <p>Are you a skating facility owner, event organizer, or skating equipment retailer? We'd love to explore partnership opportunities to better serve the Toronto skating community.</p>
+                <h3 data-en="Partnership Opportunities" data-fr="Opportunités de partenariat">Partnership Opportunities</h3>
+                <p data-en="Are you a skating facility owner, event organizer, or skating equipment retailer? We'd love to explore partnership opportunities to better serve the Toronto skating community." data-fr="Vous êtes propriétaire d'une installation, organisateur d'événements ou détaillant d'équipement de patinage ? Contactez-nous pour explorer des partenariats.">Are you a skating facility owner, event organizer, or skating equipment retailer? We'd love to explore partnership opportunities to better serve the Toronto skating community.</p>
             </section>
         </main>
 
@@ -156,19 +157,19 @@
             <div class="footer-brand">
                 <i class="fas fa-snowflake footer-brand-icon"></i>
                 <div class="footer-brand-name">Ice & Wheels</div>
-                <p>Toronto's complete directory of ice and roller skating locations.</p>
+                <p data-en="Toronto's complete directory of ice and roller skating locations." data-fr="Le répertoire complet de patinoires à Toronto.">Toronto's complete directory of ice and roller skating locations.</p>
             </div>
             <div class="footer-col">
-                <h4>Explore</h4>
-                <a href="locations.html">Find Locations</a>
-                <a href="map.html">Map View</a>
-                <a href="about.html">About Us</a>
-                <a href="faq.html">FAQ</a>
+                <h4 data-en="Explore" data-fr="Explorer">Explore</h4>
+                <a href="locations.html" data-en="Find Locations" data-fr="Trouver des sites">Find Locations</a>
+                <a href="map.html" data-en="Map View" data-fr="Vue carte">Map View</a>
+                <a href="about.html" data-en="About Us" data-fr="À propos">About Us</a>
+                <a href="faq.html" data-en="FAQ" data-fr="FAQ">FAQ</a>
             </div>
             <div class="footer-col">
-                <h4>Help</h4>
-                <a href="contact.html">Contact Us</a>
-                <a href="faq.html">Support</a>
+                <h4 data-en="Help" data-fr="Aide">Help</h4>
+                <a href="contact.html" data-en="Contact Us" data-fr="Nous contacter">Contact Us</a>
+                <a href="faq.html" data-en="Support" data-fr="Assistance">Support</a>
             </div>
         </div>
         <div class="footer-bottom">

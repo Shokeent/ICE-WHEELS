@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Check-ins - Ice & Wheels</title>
+    <meta name="description" content="Your personal skating check-in history for Toronto rinks — Ice &amp; Wheels.">
+    <meta name="theme-color" content="#1a0d06">
+    <link rel="manifest" href="manifest.json">
+    <script>
+        (function() {
+            var t = localStorage.getItem('ice-wheels-theme') ||
+                    (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            document.documentElement.setAttribute('data-theme', t);
+        })();
+    </script>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inria+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="header-inner">
+            <a href="index.html" class="brand-link">
+                <i class="fas fa-snowflake brand-icon"></i>
+                <span class="brand-text">
+                    <span class="brand-name">Ice &amp; Wheels</span>
+                    <span class="brand-tagline">Toronto Skating Guide</span>
+                </span>
+            </a>
+            <button class="hamburger-btn" id="hamburger-btn" aria-label="Toggle navigation">
+                <span></span><span></span><span></span>
+            </button>
+            <nav class="nav-menu" id="nav-menu">
+                <a href="index.html" class="nav-link" data-en="Home" data-fr="Accueil"><i class="fas fa-house"></i> Home</a>
+                <a href="locations.html" class="nav-link" data-en="Find Locations" data-fr="Trouver"><i class="fas fa-location-dot"></i> Find Locations</a>
+                <a href="map.html" class="nav-link" data-en="Map" data-fr="Carte"><i class="fas fa-map"></i> Map</a>
+                <a href="about.html" class="nav-link" data-en="About" data-fr="À propos"><i class="fas fa-circle-info"></i> About</a>
+                <a href="contact.html" class="nav-link" data-en="Contact" data-fr="Contact"><i class="fas fa-envelope"></i> Contact</a>
+                <a href="faq.html" class="nav-link" data-en="FAQ" data-fr="FAQ"><i class="fas fa-circle-question"></i> FAQ</a>
+                <a href="favourites.html" class="fav-nav-icon" aria-label="My Favourites" title="My Favourites"><i class="fas fa-heart"></i></a>
+                <button class="lang-toggle-btn" id="lang-toggle" aria-label="Toggle language">FR</button>
+                <button class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle dark mode">
+                    <i id="theme-icon" class="fas fa-moon"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <main>
+            <section class="section section-content">
+
+                <!-- Page header row -->
+                <div class="fav-page-header">
+                    <h2 style="text-align:left;margin-bottom:0">
+                        <i class="fas fa-flag-checkered" style="color:#8B4513"></i>
+                        <span data-en="My Check-ins" data-fr="Mes enregistrements">My Check-ins</span>
+                    </h2>
+                    <div style="display:flex;gap:0.7rem;flex-wrap:wrap;align-items:center">
+                        <a href="locations.html" class="button button-secondary" style="font-size:0.85rem"
+                            data-en="← Browse Rinks" data-fr="← Parcourir">← Browse Rinks</a>
+                        <button id="clear-all-btn" class="button"
+                            style="font-size:0.85rem;background:#e74c3c;color:#fff;border:none;display:none"
+                            data-en="Clear All Check-ins" data-fr="Tout effacer">Clear All Check-ins</button>
+                    </div>
+                </div>
+
+                <p class="fav-page-desc"
+                    data-en="Your personal skating history."
+                    data-fr="Votre historique de patinage.">Your personal skating history.</p>
+
+                <!-- Stats bar (hidden until data renders) -->
+                <div id="checkin-stats"
+                    style="display:none;background:#f8f6f0;border-radius:12px;padding:1rem 1.5rem;margin-bottom:1.5rem;flex-wrap:wrap;gap:1.5rem;align-items:center">
+                    <div style="text-align:center;min-width:80px">
+                        <div id="stat-total-checkins"
+                            style="font-size:1.8rem;font-weight:700;color:#8B4513;line-height:1.1">0</div>
+                        <div style="font-size:0.8rem;color:#7a6050;margin-top:0.2rem"
+                            data-en="Total Visits" data-fr="Visites totales">Total Visits</div>
+                    </div>
+                    <div style="text-align:center;min-width:80px">
+                        <div id="stat-unique-rinks"
+                            style="font-size:1.8rem;font-weight:700;color:#8B4513;line-height:1.1">0</div>
+                        <div style="font-size:0.8rem;color:#7a6050;margin-top:0.2rem"
+                            data-en="Unique Rinks" data-fr="Patinoires uniques">Unique Rinks</div>
+                    </div>
+                    <div style="text-align:center;flex:1;min-width:140px">
+                        <div id="stat-top-rink"
+                            style="font-size:1rem;font-weight:600;color:#8B4513;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">—</div>
+                        <div style="font-size:0.8rem;color:#7a6050;margin-top:0.2rem"
+                            data-en="Most Visited" data-fr="Plus fréquenté">Most Visited</div>
+                    </div>
+                </div>
+
+                <!-- Check-in list (populated by JS) -->
+                <div id="checkin-list"></div>
+
+            </section>
+        </main>
+    </div>
+
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <i class="fas fa-snowflake footer-brand-icon"></i>
+                <div class="footer-brand-name">Ice &amp; Wheels</div>
+                <p data-en="Toronto's complete directory of ice and roller skating locations."
+                   data-fr="Le répertoire complet de patinoires à Toronto.">Toronto's complete directory of ice and roller skating locations.</p>
+            </div>
+            <div class="footer-col">
+                <h4 data-en="Explore" data-fr="Explorer">Explore</h4>
+                <a href="locations.html" data-en="Find Locations" data-fr="Trouver des sites">Find Locations</a>
+                <a href="map.html" data-en="Map View" data-fr="Vue carte">Map View</a>
+                <a href="about.html" data-en="About Us" data-fr="À propos">About Us</a>
+                <a href="faq.html" data-en="FAQ" data-fr="FAQ">FAQ</a>
+            </div>
+            <div class="footer-col">
+                <h4 data-en="Help" data-fr="Aide">Help</h4>
+                <a href="contact.html" data-en="Contact Us" data-fr="Nous contacter">Contact Us</a>
+                <a href="faq.html" data-en="Support" data-fr="Assistance">Support</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Ice &amp; Wheels &mdash; Your Guide to Skating in GTA</p>
+        </div>
+    </footer>
+
+    <script src="script/live-data.js"></script>
+    <script src="script/script.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+
+        // --- helpers ---
+
+        function escHtml(str) {
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;');
+        }
+
+        function getRinkName(id, lang) {
+            if (window.skatingLocations) {
+                var loc = window.skatingLocations.find(function(l) {
+                    return String(l.id) === String(id);
+                });
+                if (loc) return loc.name;
+            }
+            return lang === 'fr' ? 'Patinoire #' + id : 'Rink #' + id;
+        }
+
+        function fmtDate(ts, lang) {
+            var d = new Date(ts);
+            return d.toLocaleDateString(lang === 'fr' ? 'fr-CA' : 'en-CA', {
+                year: 'numeric', month: 'short', day: 'numeric'
+            });
+        }
+
+        // --- main render ---
+
+        function renderCheckins() {
+            var lang = localStorage.getItem('ice-wheels-lang') || 'en';
+
+            var checkins = {};
+            try {
+                checkins = JSON.parse(localStorage.getItem('ice-wheels-checkins') || '{}');
+            } catch (e) {}
+
+            var list      = document.getElementById('checkin-list');
+            var statsBar  = document.getElementById('checkin-stats');
+            var clearBtn  = document.getElementById('clear-all-btn');
+
+            // Build sorted entries array
+            var entries = [];
+            Object.keys(checkins).forEach(function(id) {
+                var ts = checkins[id];
+                if (!Array.isArray(ts) || ts.length === 0) return;
+                var sorted = ts.slice().sort(function(a, b) { return a - b; });
+                entries.push({
+                    id: id,
+                    count: sorted.length,
+                    mostRecent: sorted[sorted.length - 1],
+                    firstVisit: sorted[0]
+                });
+            });
+
+            // Sort by most recent visit descending
+            entries.sort(function(a, b) { return b.mostRecent - a.mostRecent; });
+
+            // --- Empty state ---
+            if (!entries.length) {
+                statsBar.style.display = 'none';
+                clearBtn.style.display = 'none';
+                list.innerHTML =
+                    '<div class="no-results">' +
+                    '<i class="fas fa-flag-checkered" style="font-size:2.5rem;color:#ccc;display:block;margin-bottom:1rem"></i>' +
+                    '<h3>' + (lang === 'fr' ? 'Aucun enregistrement pour l\'instant' : 'No check-ins yet') + '</h3>' +
+                    '<p>' + (lang === 'fr'
+                        ? 'Visitez une patinoire et appuyez sur Enregistrement\u00a0!'
+                        : 'Visit a rink and tap Check In!') + '</p>' +
+                    '<a href="locations.html" class="button button-primary" style="margin-top:1rem">' +
+                    (lang === 'fr' ? 'Trouver des patinoires' : 'Find Skating Locations') +
+                    '</a></div>';
+                return;
+            }
+
+            // --- Stats bar ---
+            var totalVisits = entries.reduce(function(sum, e) { return sum + e.count; }, 0);
+            var topEntry    = entries.slice().sort(function(a, b) { return b.count - a.count; })[0];
+
+            document.getElementById('stat-total-checkins').textContent = totalVisits;
+            document.getElementById('stat-unique-rinks').textContent   = entries.length;
+            document.getElementById('stat-top-rink').textContent       = getRinkName(topEntry.id, lang);
+
+            statsBar.style.display = 'flex';
+            clearBtn.style.display = '';
+
+            // --- Cards ---
+            list.innerHTML = entries.map(function(entry) {
+                var name       = getRinkName(entry.id, lang);
+                var recentDate = fmtDate(entry.mostRecent, lang);
+                var firstDate  = fmtDate(entry.firstVisit, lang);
+
+                var visitLabel = lang === 'fr'
+                    ? (entry.count === 1 ? '1\u00a0visite' : entry.count + '\u00a0visites')
+                    : (entry.count === 1 ? '1\u00a0visit'  : entry.count + '\u00a0visits');
+
+                var viewLabel   = lang === 'fr' ? 'Voir les d\u00e9tails'  : 'View Details';
+                var recentLabel = lang === 'fr' ? 'Derni\u00e8re visite'   : 'Last visit';
+                var firstLabel  = lang === 'fr' ? 'Premi\u00e8re visite'   : 'First visit';
+
+                return (
+                    '<div class="about-card" style="text-align:left;padding:1.2rem 1.5rem;margin-bottom:1rem">' +
+                        '<div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:0.5rem;margin-bottom:0.6rem">' +
+                            '<h4 style="margin:0;font-size:1.05rem;flex:1;min-width:0">' + escHtml(name) + '</h4>' +
+                            '<span style="background:#8B4513;color:#fff;padding:0.2rem 0.7rem;border-radius:20px;font-size:0.82rem;font-weight:600;white-space:nowrap;flex-shrink:0">' +
+                                '<i class="fas fa-flag-checkered" style="margin-right:0.3rem"></i>' + escHtml(visitLabel) +
+                            '</span>' +
+                        '</div>' +
+                        '<div style="display:flex;flex-wrap:wrap;gap:1rem;font-size:0.87rem;color:#7a6050;margin-bottom:0.8rem">' +
+                            '<span><i class="fas fa-clock" style="margin-right:0.3rem;opacity:0.7"></i>' +
+                                escHtml(recentLabel) + ': <strong>' + escHtml(recentDate) + '</strong>' +
+                            '</span>' +
+                            '<span><i class="fas fa-calendar-plus" style="margin-right:0.3rem;opacity:0.7"></i>' +
+                                escHtml(firstLabel) + ': <strong>' + escHtml(firstDate) + '</strong>' +
+                            '</span>' +
+                        '</div>' +
+                        '<a href="details.html?id=' + encodeURIComponent(entry.id) + '" class="button button-primary" ' +
+                            'style="font-size:0.83rem;padding:0.35rem 0.9rem">' +
+                            '<i class="fas fa-arrow-right" style="margin-right:0.35rem"></i>' + escHtml(viewLabel) +
+                        '</a>' +
+                    '</div>'
+                );
+            }).join('');
+        }
+
+        // --- Bootstrap ---
+
+        // Render immediately (shows IDs if location data not yet ready), then re-render when data arrives
+        renderCheckins();
+        if (!window.skatingLocations) {
+            window.addEventListener('skatingDataReady', renderCheckins, { once: true });
+        }
+
+        // Re-render when language changes
+        window.addEventListener('languageChanged', renderCheckins);
+
+        // Clear All handler
+        var clearBtn = document.getElementById('clear-all-btn');
+        if (clearBtn) {
+            clearBtn.addEventListener('click', function() {
+                var lang = localStorage.getItem('ice-wheels-lang') || 'en';
+                var msg = lang === 'fr'
+                    ? 'Effacer tous les enregistrements\u00a0? Cette action est irr\u00e9versible.'
+                    : 'Clear all check-ins? This cannot be undone.';
+                if (window.confirm(msg)) {
+                    localStorage.removeItem('ice-wheels-checkins');
+                    renderCheckins();
+                }
+            });
+        }
+
+    });
+    </script>
+</body>
+</html>

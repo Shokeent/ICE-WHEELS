@@ -1051,7 +1051,22 @@ footer {
    FAVOURITES
    ========================================================================== */
 
-.fav-btn {
+.fav-nav-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #e74c3c;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: background 0.2s, border-color 0.2s, transform 0.15s;
+    flex-shrink: 0;
+}
+.fav-nav-icon:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.4); transform: scale(1.1); }
+
     position: absolute;
     top: 10px;
     right: 10px;
