@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if ('caches' in window) {
         caches.keys().then(function(names) {
             names.forEach(function(name) {
-                if (name !== 'ice-wheels-v4') caches.delete(name);
+                if (name !== 'ice-wheels-v5') caches.delete(name);
             });
         });
     }
@@ -128,8 +128,23 @@ document.addEventListener('DOMContentLoaded', function() {
     if (contactForm) {
         contactForm.addEventListener('submit', function(e) {
             e.preventDefault();
-            contactForm.style.display = 'none';
-            document.getElementById('form-success').classList.add('visible');
+            var btn = contactForm.querySelector('[type=submit]');
+            if (btn) { btn.disabled = true; btn.textContent = '…'; }
+            var data = new FormData(contactForm);
+            fetch('https://formspree.io/f/xzzblpqg', { method: 'POST', body: data, headers: { 'Accept': 'application/json' } })
+                .then(function(r) {
+                    if (r.ok) {
+                        contactForm.style.display = 'none';
+                        document.getElementById('form-success').classList.add('visible');
+                    } else {
+                        if (btn) { btn.disabled = false; btn.textContent = btn.getAttribute('data-en') || 'Send Message'; }
+                        alert('Something went wrong. Please try again.');
+                    }
+                })
+                .catch(function() {
+                    if (btn) { btn.disabled = false; btn.textContent = btn.getAttribute('data-en') || 'Send Message'; }
+                    alert('Could not send message. Please check your connection.');
+                });
         });
     }
 
@@ -246,6 +261,38 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
         window.addEventListener('skatingDataReady', initHomepageData, { once: true });
     }
+
+    // ===== PWA INSTALL BANNER =====
+    var _deferredInstallPrompt = null;
+    window.addEventListener('beforeinstallprompt', function(e) {
+        e.preventDefault();
+        _deferredInstallPrompt = e;
+        var banner = document.createElement('div');
+        banner.id = 'pwa-install-banner';
+        banner.className = 'pwa-install-banner';
+        var lang = localStorage.getItem('ice-wheels-lang') || 'en';
+        var fr = lang === 'fr';
+        banner.innerHTML =
+            '<span>' + (fr ? '📲 Installez Ice & Wheels sur votre écran d\'accueil !' : '📲 Install Ice & Wheels on your home screen!') + '</span>' +
+            '<button id="pwa-install-btn" class="button button-primary" style="padding:0.35rem 1rem;font-size:0.85rem">' + (fr ? 'Installer' : 'Install') + '</button>' +
+            '<button id="pwa-install-dismiss" style="background:none;border:none;cursor:pointer;opacity:0.5;font-size:1.1rem;padding:0 0.25rem" aria-label="Dismiss">✕</button>';
+        document.body.insertAdjacentElement('afterbegin', banner);
+        document.getElementById('pwa-install-btn').addEventListener('click', function() {
+            _deferredInstallPrompt.prompt();
+            _deferredInstallPrompt.userChoice.then(function() {
+                _deferredInstallPrompt = null;
+                banner.remove();
+            });
+        });
+        document.getElementById('pwa-install-dismiss').addEventListener('click', function() {
+            banner.remove();
+            _deferredInstallPrompt = null;
+        });
+    });
+    window.addEventListener('appinstalled', function() {
+        var b = document.getElementById('pwa-install-banner');
+        if (b) b.remove();
+    });
 });
 
 function applyLanguage(lang) {

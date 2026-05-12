@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offline - Ice & Wheels</title>
+    <meta name="theme-color" content="#1a0d06">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script>
+        (function() {
+            var t = localStorage.getItem('ice-wheels-theme') ||
+                    (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            document.documentElement.setAttribute('data-theme', t);
+        })();
+    </script>
+</head>
+<body>
+    <header>
+        <div class="header-inner">
+            <a href="index.html" class="brand-link">
+                <i class="fas fa-snowflake brand-icon"></i>
+                <span class="brand-text">
+                    <span class="brand-name">Ice & Wheels</span>
+                    <span class="brand-tagline">Toronto Skating Guide</span>
+                </span>
+            </a>
+        </div>
+    </header>
+
+    <div class="container">
+        <main>
+            <section class="section-hero">
+                <div class="hero-content">
+                    <div style="font-size:4rem;margin-bottom:1rem">📡</div>
+                    <h2 id="offline-title">You're Offline</h2>
+                    <p id="offline-msg">No internet connection. Previously visited pages are still available below.</p>
+                    <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:1.5rem">
+                        <a href="index.html" class="button button-primary">🏠 <span id="home-lbl">Home</span></a>
+                        <a href="locations.html" class="button button-secondary" id="locs-lbl">Find Locations</a>
+                        <a href="favourites.html" class="button button-secondary" id="favs-lbl">My Favourites</a>
+                    </div>
+                    <p style="margin-top:2rem;font-size:0.85rem;opacity:0.6" id="retry-msg">
+                        <button onclick="window.location.reload()" class="button button-outline" style="font-size:0.85rem;padding:0.4rem 1rem">
+                            <i class="fas fa-rotate-right"></i> <span id="retry-lbl">Try Again</span>
+                        </button>
+                    </p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        (function() {
+            var lang = localStorage.getItem('ice-wheels-lang') || 'en';
+            var fr = lang === 'fr';
+            document.getElementById('offline-title').textContent = fr ? 'Vous êtes hors ligne' : "You're Offline";
+            document.getElementById('offline-msg').textContent = fr
+                ? 'Pas de connexion Internet. Les pages visitées précédemment sont toujours disponibles.'
+                : 'No internet connection. Previously visited pages are still available below.';
+            document.getElementById('home-lbl').textContent = fr ? 'Accueil' : 'Home';
+            document.getElementById('locs-lbl').textContent = fr ? 'Trouver des lieux' : 'Find Locations';
+            document.getElementById('favs-lbl').textContent = fr ? 'Mes favoris' : 'My Favourites';
+            document.getElementById('retry-lbl').textContent = fr ? 'Réessayer' : 'Try Again';
+
+            window.addEventListener('online', function() { window.location.reload(); });
+        })();
+    </script>
+</body>
+</html>

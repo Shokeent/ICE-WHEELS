@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ice-wheels-v4';
+const CACHE_NAME = 'ice-wheels-v5';
 
 // Only pre-cache HTML + CSS — JS is always fetched fresh so updates propagate instantly
 const SHELL = [
@@ -11,6 +11,7 @@ const SHELL = [
     '/details.html',
     '/favourites.html',
     '/checkins.html',
+    '/offline.html',
     '/manifest.json',
     '/css/styles.css',
     '/images/ice-skating.jpg',
@@ -74,7 +75,9 @@ self.addEventListener('fetch', function(e) {
                 }
                 return response;
             }).catch(function() {
-                return caches.match(e.request);
+                return caches.match(e.request).then(function(cached) {
+                    return cached || caches.match('/offline.html');
+                });
             })
         );
         return;
